@@ -102,6 +102,14 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
+/**
+ * The Fallout Mod
+ * 
+ * @Author blfngl
+ * @License Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ * The following code, in any form, is the copyright of blfngl
+ **/
+
 @Mod(modid = "fallout", name = "The Fallout Mod", version = "1.5")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)//, channels={"falloutchannel"}, packetHandler = FalloutPacketHandler.class)
 
