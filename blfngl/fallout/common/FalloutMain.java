@@ -107,7 +107,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  * 
  * @Author blfngl
  * @License Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
- * The following code, in any form, is the copyright of blfngl
+ * The code in this repository, in any form, is the copyright of blfngl
  **/
 
 @Mod(modid = "fallout", name = "The Fallout Mod", version = "1.5")
