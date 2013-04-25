@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class Gun44 extends Item
+public class Gun10MM extends Item
 {
 	private int damage;
 	private int reloadtick;
@@ -21,7 +21,7 @@ public class Gun44 extends Item
 	public int count = 0;
 	public int clipSize;
 
-	public Gun44(int var1, int var2, int var3, int var4, int var5, String var6, String var7)
+	public Gun10MM(int var1, int var2, int var3, int var4, int var5, String var6, String var7)
 	{
 		super(var1);
 		this.damage = var2;
@@ -66,7 +66,7 @@ public class Gun44 extends Item
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.MFCell.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.a10MM.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadtick == this.reloadmax)
 			{
@@ -74,9 +74,9 @@ public class Gun44 extends Item
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
 				while (count < clipSize)
 				{
-					var3.inventory.consumeInventoryItem(FalloutMain.a44.itemID);
+					var3.inventory.consumeInventoryItem(FalloutMain.a10MM.itemID);
 					count += 1;
-				}
+				}                
 				var1.setItemDamage(0);
 				count = 0;
 

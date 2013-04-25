@@ -23,6 +23,6 @@ public class ItemSyringe extends Item
 	
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
 	{
-		return new ItemStack(FalloutMain.BloodSyringe, 1);
+		return new ItemStack(FalloutMain.syringeBloody, 1);
 	}
 }

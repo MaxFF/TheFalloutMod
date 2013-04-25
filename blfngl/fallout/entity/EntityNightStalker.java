@@ -82,7 +82,7 @@ public class EntityNightStalker extends EntityMob
 			break;
 			
 		case 2:
-			this.dropItem(FalloutMain.NightstalkerBlood.itemID, 2);
+			this.dropItem(FalloutMain.nightstalkerBlood.itemID, 2);
 			return;
 		}
 	}

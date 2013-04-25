@@ -15,7 +15,7 @@ public final class TabFalloutMisc extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public int getTabIconItemIndex()
 	{
-		return FalloutMain.ScrapMetal.itemID;
+		return FalloutMain.scrapMetal.itemID;
 	}
 
 	public String getTranslatedTabLabel()

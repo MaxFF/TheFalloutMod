@@ -24,6 +24,6 @@ public class BlockTechnetiumOre extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.TechnetiumChunk.itemID;
+                return FalloutMain.chunkTechnetium.itemID;
         }
 }

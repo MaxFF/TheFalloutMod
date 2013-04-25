@@ -24,6 +24,6 @@ public class BlockTungstenOre extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.TungstenRod.itemID;
+                return FalloutMain.chunkTungsten.itemID;
         }
 }

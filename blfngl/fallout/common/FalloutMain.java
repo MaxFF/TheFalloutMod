@@ -10,14 +10,12 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.ItemSword;
 import net.minecraft.potion.Potion;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import blfngl.fallout.armor.ArmorBaseEnclave;
 import blfngl.fallout.armor.ArmorBaseGecko1;
 import blfngl.fallout.armor.ArmorBaseHellfire;
@@ -40,10 +38,14 @@ import blfngl.fallout.block.WorldGenTechOre;
 import blfngl.fallout.block.WorldGenTungstenOre;
 import blfngl.fallout.block.WorldGenUraniumOre;
 import blfngl.fallout.client.FalloutClientProxy;
+import blfngl.fallout.entity.EntityBOSPaladin;
 import blfngl.fallout.entity.EntityBrahmin;
 import blfngl.fallout.entity.EntityFGhoul;
+import blfngl.fallout.entity.EntityGecko;
+import blfngl.fallout.entity.EntityGiantAnt;
 import blfngl.fallout.entity.EntityGlowingOne;
 import blfngl.fallout.entity.EntityNightStalker;
+import blfngl.fallout.entity.EntityRadroach;
 import blfngl.fallout.food.BlockBananaYucca;
 import blfngl.fallout.food.BlockBarrelCactus;
 import blfngl.fallout.food.BlockBrocFlower;
@@ -60,6 +62,7 @@ import blfngl.fallout.food.ItemWeaponBinding;
 import blfngl.fallout.food.ItembCaveFungus;
 import blfngl.fallout.food.ItembXanderRoot;
 import blfngl.fallout.food.WorldGenBrocFlower;
+import blfngl.fallout.gun.Gun10MM;
 import blfngl.fallout.gun.Gun22LR;
 import blfngl.fallout.gun.Gun308;
 import blfngl.fallout.gun.Gun357;
@@ -110,8 +113,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  * The code in this repository, in any form, is the copyright of blfngl
  **/
 
-@Mod(modid = "fallout", name = "The Fallout Mod", version = "1.5")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)//, channels={"falloutchannel"}, packetHandler = FalloutPacketHandler.class)
+@Mod(modid = "fallout", name = "The Fallout Mod", version = "MC1.5.1 - TFMv1.7")
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 public class FalloutMain
 {
@@ -151,197 +154,193 @@ public class FalloutMain
 	//========================================Guns==========================================================
 
 	//KEY: ID, damage, usage size/clip, reload time, fire time, fire sound, reload sound
-	public static final Item Incinerator = (new GunIncinerator(3100)).setUnlocalizedName("Incinerator").setCreativeTab(TabFalloutGuns);
-	public static final Item LaserRCW = (new GunMFCell(3101, 2, 60, 1, 1, "blfngl.LaserFire", "blfngl.LaserFire")).setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutGuns);
-	public static final Item Compliance = new GunECell(3102, 2, 12, 2, 3, "blfngl.LaserPistolFire", "blfngl.LaserPistolFire").setUnlocalizedName("Compliance").setCreativeTab(TabFalloutGuns);
-    public static final Item LaserRifle = new GunMFCell(3103, 7, 30, 1, 4, "blfngl.LaserFire", "blfngl.LaserFire").setUnlocalizedName("LaserRifle").setCreativeTab(TabFalloutGuns);
+	public static final Item Incinerator = new GunIncinerator(509).setUnlocalizedName("Incinerator").setCreativeTab(TabFalloutGuns);
+	public static final Item LaserRCW = new GunMFCell(510, 2, 60, 2, 1, "blfngl.LaserFire", "blfngl.RCWReload").setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutGuns);
+	public static final Item Compliance = new GunECell(511, 2, 30, 2, 3, "blfngl.LaserPistolFire", "blfngl.ComplianceReload").setUnlocalizedName("Compliance").setCreativeTab(TabFalloutGuns);
+	public static final Item LaserRifle = new GunMFCell(512, 7, 24, 3, 4, "blfngl.LaserFire", "blfngl.LaserReload").setUnlocalizedName("LaserRifle").setCreativeTab(TabFalloutGuns);
 
-	public static final Item g44Mag = (new Gun44(3104, 10, 6, 3, 5, "blfngl.44Fire", "blfngl.44Fire")).setUnlocalizedName("g44Mag").setCreativeTab(TabFalloutGuns);
-	public static final Item g357Mag = (new Gun357(3105, 8, 6, 3, 5, "blfngl.357Fire", "blfngl.357Fire")).setUnlocalizedName("g357Mag").setCreativeTab(TabFalloutGuns);
-	public static final Item Silenced22 = (new Gun22LR(3106, 12, 12, 2, 2, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire")).setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutGuns);
-	public static final Item Sniper308 = (new Gun308(3107, 7, 7, 3, 4, "blfngl.SniperFire", "blfngl.SniperFire")).setUnlocalizedName("Sniper308").setCreativeTab(TabFalloutGuns);
+	public static final Item g44Mag = new Gun44(513, 10, 6, 3, 5, "blfngl.44Fire", "blfngl.44Reload").setUnlocalizedName("g44Mag").setCreativeTab(TabFalloutGuns);
+	public static final Item g357Mag = new Gun357(514, 8, 6, 1, 5, "blfngl.357Fire", "blfngl.357Reload").setUnlocalizedName("g357Mag").setCreativeTab(TabFalloutGuns);
+	public static final Item Silenced22 = new Gun22LR(515, 12, 12, 2, 2, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire").setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutGuns);
+	public static final Item Sniper308 = new Gun308(516, 7, 5, 3, 2, "blfngl.SniperFire", "blfngl.SniperReload").setUnlocalizedName("Sniper308").setCreativeTab(TabFalloutGuns);
 
 	//========================================Melee Weapons=================================================
 
-	public static final Item BotE = new WeapBotE(3005, BOTE).setUnlocalizedName("BotE").setCreativeTab(TabFalloutWeap);
-	public static final Item BumperSword = new WeapBotE(3024, EnumToolMaterial.EMERALD).setUnlocalizedName("BumperSword").setCreativeTab(TabFalloutWeap);
-	public static final Item Cleaver = new BaseMelee(3003, CLEAVE).setUnlocalizedName("Cleaver").setCreativeTab(TabFalloutWeap);
-	public static final Item ComKnife = new BaseMelee(3004, COMKNIFE).setUnlocalizedName("ComKnife").setCreativeTab(TabFalloutWeap);
-	public static final Item CosKnife = new BaseMelee(3006, COS).setUnlocalizedName("CosKnife").setCreativeTab(TabFalloutWeap);
-	public static final Item CosClean = new BaseMelee(3007, COS).setUnlocalizedName("CosClean").setCreativeTab(TabFalloutWeap);
-	public static final Item CosFire = (new WeapCosFire(3008)).setUnlocalizedName("CosFire").setCreativeTab(TabFalloutWeap);
-	public static final Item FireAxe = new BaseMelee(3010, EnumToolMaterial.IRON).setUnlocalizedName("FireAxe").setCreativeTab(TabFalloutWeap);
-	public static final Item Knife = new BaseMelee(3011, EnumToolMaterial.STONE).setUnlocalizedName("Knife").setCreativeTab(TabFalloutWeap);
-	public static final Item Machete = new BaseMelee(3012, EnumToolMaterial.IRON).setUnlocalizedName("Machete").setCreativeTab(TabFalloutWeap);
-	public static final Item Shishkebab = new WeapShishkebab(3013, EnumToolMaterial.IRON).setUnlocalizedName("Shishkebab").setCreativeTab(TabFalloutWeap);
-	public static final Item StraightRazor = new BaseMelee(3014, EnumToolMaterial.STONE).setUnlocalizedName("StraightRazor").setCreativeTab(TabFalloutWeap);
-	public static final Item Switchblade = new BaseMelee(3015, EnumToolMaterial.STONE).setUnlocalizedName("Switchblade").setCreativeTab(TabFalloutWeap);
-	public static final Item PintSizedKnife = new BaseMelee(3009, PINT).setUnlocalizedName("PintSizedKnife").setCreativeTab(TabFalloutWeap);
+	public static final Item BotE = new WeapBotE(517, BOTE).setUnlocalizedName("BotE").setCreativeTab(TabFalloutWeap);
+	public static final Item BumperSword = new WeapBotE(518, EnumToolMaterial.EMERALD).setUnlocalizedName("BumperSword").setCreativeTab(TabFalloutWeap);
+	public static final Item Cleaver = new BaseMelee(519, CLEAVE).setUnlocalizedName("Cleaver").setCreativeTab(TabFalloutWeap);
+	public static final Item ComKnife = new BaseMelee(520, COMKNIFE).setUnlocalizedName("ComKnife").setCreativeTab(TabFalloutWeap);
+	public static final Item CosKnife = new BaseMelee(521, COS).setUnlocalizedName("CosKnife").setCreativeTab(TabFalloutWeap);
+	public static final Item CosClean = new BaseMelee(522, COS).setUnlocalizedName("CosClean").setCreativeTab(TabFalloutWeap);
+	public static final Item CosFire = (new WeapCosFire(523)).setUnlocalizedName("CosFire").setCreativeTab(TabFalloutWeap);
+	public static final Item FireAxe = new BaseMelee(524, EnumToolMaterial.IRON).setUnlocalizedName("FireAxe").setCreativeTab(TabFalloutWeap);
+	public static final Item Knife = new BaseMelee(525, EnumToolMaterial.STONE).setUnlocalizedName("Knife").setCreativeTab(TabFalloutWeap);
+	public static final Item Machete = new BaseMelee(526, EnumToolMaterial.IRON).setUnlocalizedName("Machete").setCreativeTab(TabFalloutWeap);
+	public static final Item Shishkebab = new WeapShishkebab(527, EnumToolMaterial.IRON).setUnlocalizedName("Shishkebab").setCreativeTab(TabFalloutWeap);
+	public static final Item StraightRazor = new BaseMelee(528, EnumToolMaterial.STONE).setUnlocalizedName("StraightRazor").setCreativeTab(TabFalloutWeap);
+	public static final Item Switchblade = new BaseMelee(529, EnumToolMaterial.STONE).setUnlocalizedName("Switchblade").setCreativeTab(TabFalloutWeap);
+	public static final Item PintSizedKnife = new BaseMelee(530, PINT).setUnlocalizedName("PintSizedKnife").setCreativeTab(TabFalloutWeap);
 
 	//========================================Unarmed Weapons===============================================
-	
-	public static final Item BallisticFist = new WeapBallisticFist(3016, EnumToolMaterial.IRON).setUnlocalizedName("BallisticFist").setCreativeTab(TabFalloutWeap);
-	public static final Item BladedGauntlet = new BaseMelee(3017, EnumToolMaterial.IRON).setUnlocalizedName("BladedGauntlet").setCreativeTab(TabFalloutWeap);
-	public static final Item BoxingGloves = new BaseMelee(3018, EnumToolMaterial.WOOD).setUnlocalizedName("BoxingGloves").setCreativeTab(TabFalloutWeap);
-	//public static final Item BoxingTape = new WeapFalloutBaseMelee(3019, EnumToolMaterial.WOOD).setUnlocalizedName("BoxingTape").setCreativeTab(TabFalloutWeap);
-	public static final Item BrassKnuckles = new BaseMelee(3020, EnumToolMaterial.STONE).setUnlocalizedName("BrassKnuckles").setCreativeTab(TabFalloutWeap);
-	public static final Item DisplacerGlove = new WeapDisplacerGlove(3021, PFIST).setUnlocalizedName("DisplacerGlove").setCreativeTab(TabFalloutWeap);
-	public static final Item GoldenGloves = new BaseMelee(3025, EnumToolMaterial.GOLD).setUnlocalizedName("GoldenGloves").setCreativeTab(TabFalloutWeap);
-	public static final Item PowerFist = new WeapPowerFist(3001, EnumToolMaterial.EMERALD).setUnlocalizedName("PowerFist").setCreativeTab(TabFalloutWeap);
-	public static final Item SatFist = new WeapPowerFist(3023, EnumToolMaterial.EMERALD).setUnlocalizedName("SatFist").setCreativeTab(TabFalloutWeap);
-	public static final Item SatHeatFist = new WeapSatHeatFist(3000, PFIST).setUnlocalizedName("SatHeatFist").setCreativeTab(TabFalloutWeap);
-	public static final Item SciGlove = new WeapSciGlove(3002, SCI).setUnlocalizedName("SciGlove").setCreativeTab(TabFalloutWeap);
-	public static final Item ZapGlove = new WeapZapGlove(3022, EnumToolMaterial.IRON).setUnlocalizedName("ZapGlove").setCreativeTab(TabFalloutWeap);
+
+	public static final Item BallisticFist = new WeapBallisticFist(531, EnumToolMaterial.IRON).setUnlocalizedName("BallisticFist").setCreativeTab(TabFalloutWeap);
+	public static final Item BladedGauntlet = new BaseMelee(532, EnumToolMaterial.IRON).setUnlocalizedName("BladedGauntlet").setCreativeTab(TabFalloutWeap);
+	public static final Item BoxingGloves = new BaseMelee(533, EnumToolMaterial.WOOD).setUnlocalizedName("BoxingGloves").setCreativeTab(TabFalloutWeap);
+	public static final Item BrassKnuckles = new BaseMelee(534, EnumToolMaterial.STONE).setUnlocalizedName("BrassKnuckles").setCreativeTab(TabFalloutWeap);
+	public static final Item DisplacerGlove = new WeapDisplacerGlove(535, PFIST).setUnlocalizedName("DisplacerGlove").setCreativeTab(TabFalloutWeap);
+	public static final Item GoldenGloves = new BaseMelee(536, EnumToolMaterial.GOLD).setUnlocalizedName("GoldenGloves").setCreativeTab(TabFalloutWeap);
+	public static final Item PowerFist = new WeapPowerFist(537, EnumToolMaterial.EMERALD).setUnlocalizedName("PowerFist").setCreativeTab(TabFalloutWeap);
+	public static final Item SatFist = new WeapPowerFist(538, EnumToolMaterial.EMERALD).setUnlocalizedName("SatFist").setCreativeTab(TabFalloutWeap);
+	public static final Item SatHeatFist = new WeapSatHeatFist(539, PFIST).setUnlocalizedName("SatHeatFist").setCreativeTab(TabFalloutWeap);
+	public static final Item SciGlove = new WeapSciGlove(540, SCI).setUnlocalizedName("SciGlove").setCreativeTab(TabFalloutWeap);
+	public static final Item ZapGlove = new WeapZapGlove(541, EnumToolMaterial.IRON).setUnlocalizedName("ZapGlove").setCreativeTab(TabFalloutWeap);
 
 	//============================================Items==========================================================
 
-	public static final Item TungstenRod = (new BaseItem(901)).setUnlocalizedName("TungstenRod").setCreativeTab(TabFalloutMisc);
-	public static final Item TungstenIngot = (new BaseItem(902)).setUnlocalizedName("TungstenIngot").setCreativeTab(TabFalloutMisc);
-	public static final Item TechnetiumChunk = (new BaseItem(903)).setUnlocalizedName("TechnetiumChunk").setCreativeTab(TabFalloutMisc);
-	public static final Item TechnetiumIngot = (new BaseItem(904)).setUnlocalizedName("TechnetiumIngot").setCreativeTab(TabFalloutMisc);
-	public static final Item SiliconChunk = (new BaseItem(907)).setUnlocalizedName("SiliconChunk").setCreativeTab(TabFalloutMisc);
-	public static final Item SiliconBar = (new BaseItem(908)).setUnlocalizedName("SiliconBar").setCreativeTab(TabFalloutMisc);
-	public static final Item TungstenFilter = (new BaseItem(909)).setUnlocalizedName("TungstenFilter").setCreativeTab(TabFalloutMisc);
-	public static final Item AsbestosChunk = (new BaseItem(910)).setUnlocalizedName("AsbestosChunk").setCreativeTab(TabFalloutMisc);
-	public static final Item AsbestosBar = (new BaseItem(911)).setUnlocalizedName("AsbestosBar").setCreativeTab(TabFalloutMisc);
-	public static final Item UraniumIngot = (new BaseItem(912)).setUnlocalizedName("UraniumIngot").setCreativeTab(TabFalloutMisc);
-	public static final Item TungstenPlate = (new BaseItem(913)).setUnlocalizedName("TungstenPlate").setCreativeTab(TabFalloutMisc);
-	public static final Item TechnetiumPlate = (new BaseItem(914)).setUnlocalizedName("TechnetiumPlate").setCreativeTab(TabFalloutMisc);
-	public static final Item RAP = (new BaseItem(915)).setUnlocalizedName("RAP").setCreativeTab(CreativeTabs.tabMaterials).setCreativeTab(TabFalloutMisc);
-	public static final Item MFCell = (new BaseItem(916)).setUnlocalizedName("MFCell").setCreativeTab(TabFalloutMisc);
-	public static final Item MFPack = (new BaseItem(917)).setUnlocalizedName("MFPack").setCreativeTab(TabFalloutMisc);
-	public static final Item Carbon = (new BaseItem(918)).setUnlocalizedName("Carbon").setCreativeTab(TabFalloutMisc);
-	public static final Item Teflon = (new BaseItem(919)).setUnlocalizedName("Teflon").setCreativeTab(TabFalloutMisc);
-	public static final Item Polyethylene = (new BaseItem(920)).setUnlocalizedName("Polyethylene").setCreativeTab(TabFalloutMisc);
-	public static final Item BottleCap = (new BaseItem(921)).setUnlocalizedName("BottleCap").setCreativeTab(TabFalloutMisc);
-	public static final Item Fan = (new BaseItem(922)).setUnlocalizedName("Fan").setCreativeTab(TabFalloutMisc);
-	public static final Item Gear = (new BaseItem(923)).setUnlocalizedName("Gear").setCreativeTab(TabFalloutMisc);
-	public static final Item Gyro = (new BaseItem(924)).setUnlocalizedName("Gyro").setCreativeTab(TabFalloutMisc);
-	public static final Item MASM = (new BaseItem(925)).setUnlocalizedName("MASM").setCreativeTab(TabFalloutMisc);
-	public static final Item TXMF = (new BaseItem(926)).setUnlocalizedName("TXMF").setCreativeTab(TabFalloutMisc);
-	public static final Item Card = (new BaseItem(927)).setUnlocalizedName("Card").setCreativeTab(TabFalloutMisc);
-	public static final Item Deck = (new BaseItem(928)).setUnlocalizedName("Deck").setCreativeTab(TabFalloutMisc);
-	public static final Item Cardboard = (new BaseItem(929)).setUnlocalizedName("Cardboard").setCreativeTab(TabFalloutMisc);
-	public static final Item TinCan = (new BaseItem(930)).setUnlocalizedName("TinCan").setCreativeTab(TabFalloutMisc);
-	public static final Item SatRod = (new BaseItem(931)).setUnlocalizedName("SatRod").setCreativeTab(TabFalloutMisc);
-	public static final Item SatIngot = (new BaseItem(932)).setUnlocalizedName("SatIngot").setCreativeTab(TabFalloutMisc);
-	public static final Item SatAlloy = (new BaseItem(933)).setUnlocalizedName("SatAlloy").setCreativeTab(TabFalloutMisc);
-	public static final Item SatAlloyPlate= (new BaseItem(934)).setUnlocalizedName("SatAlloyPlate").setCreativeTab(TabFalloutMisc);
-	public static final Item EmptySyringe = (new ItemSyringe(935)).setUnlocalizedName("EmptySyringe").setCreativeTab(TabFalloutMisc);
-	public static final Item BloodSyringe = (new BaseItem(936)).setUnlocalizedName("BloodSyringe").setCreativeTab(TabFalloutMisc);
-	public static final Item PTorso  = (new BaseItem(2059)).setUnlocalizedName("PTorso").setCreativeTab(TabFalloutMisc);
-	public static final Item PShoulders  = (new BaseItem(2058)).setUnlocalizedName("PShoulders").setCreativeTab(TabFalloutMisc);
-	public static final Item PChest = (new BaseItem(2060)).setUnlocalizedName("PChest").setCreativeTab(TabFalloutMisc);
-	public static final Item T45Upgrade = (new BaseItem(195)).setUnlocalizedName("T45Upgrade").setCreativeTab(TabFalloutMisc);
-	public static final Item EnclaveUpgrade = (new BaseItem(196)).setUnlocalizedName("EnclaveUpgrade").setCreativeTab(TabFalloutMisc);	
-	public static final Item T51Upgrade = (new BaseItem(197)).setUnlocalizedName("T51Upgrade").setCreativeTab(TabFalloutMisc);
-	public static final Item HellfireUpgrade = (new BaseItem(198)).setUnlocalizedName("HellfireUpgrade").setCreativeTab(TabFalloutMisc);
-	public static final Item WinterizedUpgrade = (new BaseItem(199)).setUnlocalizedName("WinterizedUpgrade").setCreativeTab(TabFalloutMisc);
-	public static final Item NukaBottle = (new BaseItem(201)).setUnlocalizedName("NukaBottle").setCreativeTab(TabFalloutMisc);
-	//public static final Item PipBoy = ItemPipBoy(202)).setUnlocalizedName("PipBoy").setCreativeTab(TabFalloutGuns);
-	public static final Item Abraxo = (new BaseItem(207)).setUnlocalizedName("Abraxo").setCreativeTab(TabFalloutMisc);
-	public static final Item a22LR = (new BaseItem(203)).setUnlocalizedName("a22LR").setCreativeTab(TabFalloutMisc);
-	public static final Item a308 = (new BaseItem(204)).setUnlocalizedName("a308").setCreativeTab(TabFalloutMisc);
-	public static final Item a357 = (new BaseItem(205)).setUnlocalizedName("a357").setCreativeTab(TabFalloutMisc);
-	public static final Item a44 = (new BaseItem(206)).setUnlocalizedName("a44").setCreativeTab(TabFalloutMisc);
-	public static final Item ScrapMetal = (new BaseItem(208)).setUnlocalizedName("ScrapMetal").setCreativeTab(TabFalloutMisc);
-	public static final Item ECell = (new BaseItem(209)).setUnlocalizedName("ECell").setCreativeTab(TabFalloutMisc);
-	public static final Item HomemadeFuel = (new BaseItem(210)).setUnlocalizedName("HomemadeFuel").setCreativeTab(TabFalloutMisc);
-	public static final Item EPack = (new BaseItem(211)).setUnlocalizedName("EPack").setCreativeTab(TabFalloutMisc);
-	public static final Item LeatherBelt = (new BaseItem(212)).setUnlocalizedName("LeatherBelt").setCreativeTab(TabFalloutMisc);
-	public static final Item BottleCapMine = (new ItemBottleCapMine(213)).setUnlocalizedName("BottleCapMine").setCreativeTab(TabFalloutMisc);
-	public static final Item FragGrenade = (new ItemFragGrenade(214)).setUnlocalizedName("FragGrenade").setCreativeTab(TabFalloutMisc);
-	public static final Item Lunchbox = (new BaseItem(215)).setUnlocalizedName("Lunchbox").setCreativeTab(TabFalloutMisc);
-	public static final Item SensorModule = (new BaseItem(216)).setUnlocalizedName("SensorModule").setCreativeTab(TabFalloutMisc);
-	public static final Item Cherrybomb = (new BaseItem(217)).setUnlocalizedName("Cherrybomb").setCreativeTab(TabFalloutMisc);
-	public static final Item NightstalkerBlood = (new BaseItem(219)).setUnlocalizedName("NightstalkerBlood").setCreativeTab(TabFalloutMisc);
-	public static final Item JetInhaler = (new BaseItem(220)).setUnlocalizedName("JetInhaler").setCreativeTab(TabFalloutMisc);
-	public static final Item Wonderglue = (new BaseItem(221)).setUnlocalizedName("Wonderglue").setCreativeTab(TabFalloutMisc);
-	public static final Item Turpentine = (new BaseItem(222)).setUnlocalizedName("Turpentine").setCreativeTab(TabFalloutMisc);
-	public static final Item GeckoHide = (new BaseItem(223)).setUnlocalizedName("GeckoHide").setCreativeTab(TabFalloutMisc);
-	public static final Item Minecraft9 = (new BaseItem(224)).setUnlocalizedName("Minecraft9").setCreativeTab(TabFalloutMisc);
+	public static final Item chunkTungsten = (new BaseItem(400)).setUnlocalizedName("TungstenRod").setCreativeTab(TabFalloutMisc);
+	public static final Item ingotTungsten = (new BaseItem(401)).setUnlocalizedName("TungstenIngot").setCreativeTab(TabFalloutMisc);
+	public static final Item chunkTechnetium = (new BaseItem(402)).setUnlocalizedName("TechnetiumChunk").setCreativeTab(TabFalloutMisc);
+	public static final Item ingotTechnetium = (new BaseItem(403)).setUnlocalizedName("TechnetiumIngot").setCreativeTab(TabFalloutMisc);
+	public static final Item chunkSilicon = (new BaseItem(404)).setUnlocalizedName("SiliconChunk").setCreativeTab(TabFalloutMisc);
+	public static final Item barSilicon = (new BaseItem(405)).setUnlocalizedName("SiliconBar").setCreativeTab(TabFalloutMisc);
+	public static final Item tungstenFilter = (new BaseItem(406)).setUnlocalizedName("TungstenFilter").setCreativeTab(TabFalloutMisc);
+	public static final Item chunkAsbestos = (new BaseItem(407)).setUnlocalizedName("AsbestosChunk").setCreativeTab(TabFalloutMisc);
+	public static final Item barAsbestos = (new BaseItem(408)).setUnlocalizedName("AsbestosBar").setCreativeTab(TabFalloutMisc);
+	public static final Item ingotUranium = (new BaseItem(409)).setUnlocalizedName("UraniumIngot").setCreativeTab(TabFalloutMisc);
+	public static final Item tungstenPlate = (new BaseItem(410)).setUnlocalizedName("TungstenPlate").setCreativeTab(TabFalloutMisc);
+	public static final Item technetiumPlate = (new BaseItem(411)).setUnlocalizedName("TechnetiumPlate").setCreativeTab(TabFalloutMisc);
+	public static final Item RAP = (new BaseItem(412)).setUnlocalizedName("RAP").setCreativeTab(CreativeTabs.tabMaterials).setCreativeTab(TabFalloutMisc);
+	public static final Item MFCell = (new BaseItem(413)).setUnlocalizedName("MFCell").setCreativeTab(TabFalloutMisc);
+	public static final Item MFPack = (new BaseItem(414)).setUnlocalizedName("MFPack").setCreativeTab(TabFalloutMisc);
+	public static final Item carbon = (new BaseItem(415)).setUnlocalizedName("Carbon").setCreativeTab(TabFalloutMisc);
+	public static final Item teflon = (new BaseItem(416)).setUnlocalizedName("Teflon").setCreativeTab(TabFalloutMisc);
+	public static final Item polyethylene = (new BaseItem(417)).setUnlocalizedName("Polyethylene").setCreativeTab(TabFalloutMisc);
+	public static final Item bottleCap = (new BaseItem(418)).setUnlocalizedName("BottleCap").setCreativeTab(TabFalloutMisc);
+	public static final Item fan = (new BaseItem(419)).setUnlocalizedName("Fan").setCreativeTab(TabFalloutMisc);
+	public static final Item gear = (new BaseItem(420)).setUnlocalizedName("Gear").setCreativeTab(TabFalloutMisc);
+	public static final Item gyro = (new BaseItem(421)).setUnlocalizedName("Gyro").setCreativeTab(TabFalloutMisc);
+	public static final Item MASM = (new BaseItem(422)).setUnlocalizedName("MASM").setCreativeTab(TabFalloutMisc);
+	public static final Item TXMF = (new BaseItem(423)).setUnlocalizedName("TXMF").setCreativeTab(TabFalloutMisc);
+	public static final Item card = (new BaseItem(424)).setUnlocalizedName("Card").setCreativeTab(TabFalloutMisc);
+	public static final Item deck = (new BaseItem(425)).setUnlocalizedName("Deck").setCreativeTab(TabFalloutMisc);
+	public static final Item cardboard = (new BaseItem(426)).setUnlocalizedName("Cardboard").setCreativeTab(TabFalloutMisc);
+	public static final Item tinCan = (new BaseItem(427)).setUnlocalizedName("TinCan").setCreativeTab(TabFalloutMisc);
+	public static final Item chunkSaturnite = (new BaseItem(428)).setUnlocalizedName("SatRod").setCreativeTab(TabFalloutMisc);
+	public static final Item ingotSaturnite = (new BaseItem(429)).setUnlocalizedName("SatIngot").setCreativeTab(TabFalloutMisc);
+	public static final Item saturniteAlloy = (new BaseItem(430)).setUnlocalizedName("SatAlloy").setCreativeTab(TabFalloutMisc);
+	public static final Item syringeEmpty = (new ItemSyringe(431)).setUnlocalizedName("EmptySyringe").setCreativeTab(TabFalloutMisc);
+	public static final Item syringeBloody = (new BaseItem(432)).setUnlocalizedName("BloodSyringe").setCreativeTab(TabFalloutMisc);
+	public static final Item powerTorso  = (new BaseItem(433)).setUnlocalizedName("PTorso").setCreativeTab(TabFalloutMisc);
+	public static final Item powerShoulders  = (new BaseItem(434)).setUnlocalizedName("PShoulders").setCreativeTab(TabFalloutMisc);
+	public static final Item powerChest = (new BaseItem(435)).setUnlocalizedName("PChest").setCreativeTab(TabFalloutMisc);
+	public static final Item upgradeT45 = (new BaseItem(436)).setUnlocalizedName("T45Upgrade").setCreativeTab(TabFalloutMisc);
+	public static final Item upgradeEnclave = (new BaseItem(437)).setUnlocalizedName("EnclaveUpgrade").setCreativeTab(TabFalloutMisc);	
+	public static final Item upgradeT51 = (new BaseItem(438)).setUnlocalizedName("T51Upgrade").setCreativeTab(TabFalloutMisc);
+	public static final Item upgradeHellfire = (new BaseItem(439)).setUnlocalizedName("HellfireUpgrade").setCreativeTab(TabFalloutMisc);
+	public static final Item upgradeWinterized = (new BaseItem(440)).setUnlocalizedName("WinterizedUpgrade").setCreativeTab(TabFalloutMisc);
+	public static final Item nukaBottle = (new BaseItem(441)).setUnlocalizedName("NukaBottle").setCreativeTab(TabFalloutMisc);
+	public static final Item abraxo = (new BaseItem(442)).setUnlocalizedName("Abraxo").setCreativeTab(TabFalloutMisc);
+	public static final Item a22LR = (new BaseItem(443)).setUnlocalizedName("a22LR").setCreativeTab(TabFalloutMisc);
+	public static final Item a308 = (new BaseItem(444)).setUnlocalizedName("a308").setCreativeTab(TabFalloutMisc);
+	public static final Item a357 = (new BaseItem(445)).setUnlocalizedName("a357").setCreativeTab(TabFalloutMisc);
+	public static final Item a44 = (new BaseItem(446)).setUnlocalizedName("a44").setCreativeTab(TabFalloutMisc);
+	public static final Item scrapMetal = (new BaseItem(447)).setUnlocalizedName("ScrapMetal").setCreativeTab(TabFalloutMisc);
+	public static final Item ECell = (new BaseItem(448)).setUnlocalizedName("ECell").setCreativeTab(TabFalloutMisc);
+	public static final Item homemadeFuel = (new BaseItem(449)).setUnlocalizedName("HomemadeFuel").setCreativeTab(TabFalloutMisc);
+	public static final Item EPack = (new BaseItem(450)).setUnlocalizedName("EPack").setCreativeTab(TabFalloutMisc);
+	public static final Item leatherBelt = (new BaseItem(451)).setUnlocalizedName("LeatherBelt").setCreativeTab(TabFalloutMisc);
+	public static final Item bottleCapMine = (new ItemBottleCapMine(452)).setUnlocalizedName("BottleCapMine").setCreativeTab(TabFalloutMisc);
+	public static final Item fragGrenade = (new ItemFragGrenade(453)).setUnlocalizedName("FragGrenade").setCreativeTab(TabFalloutMisc);
+	public static final Item lunchbox = (new BaseItem(454)).setUnlocalizedName("Lunchbox").setCreativeTab(TabFalloutMisc);
+	public static final Item sensorModule = (new BaseItem(455)).setUnlocalizedName("SensorModule").setCreativeTab(TabFalloutMisc);
+	public static final Item cherrybomb = (new BaseItem(456)).setUnlocalizedName("Cherrybomb").setCreativeTab(TabFalloutMisc);
+	public static final Item nightstalkerBlood = (new BaseItem(457)).setUnlocalizedName("NightstalkerBlood").setCreativeTab(TabFalloutMisc);
+	public static final Item jetInhaler = (new BaseItem(458)).setUnlocalizedName("JetInhaler").setCreativeTab(TabFalloutMisc);
+	public static final Item wonderglue = (new BaseItem(459)).setUnlocalizedName("Wonderglue").setCreativeTab(TabFalloutMisc);
+	public static final Item turpentine = (new BaseItem(460)).setUnlocalizedName("Turpentine").setCreativeTab(TabFalloutMisc);
+	public static final Item geckoHide = (new BaseItem(461)).setUnlocalizedName("GeckoHide").setCreativeTab(TabFalloutMisc);
 
 	//============================================Food and Chems==========================================================
 
-	public static final Item Stimpak = new BaseFood(2500, 1, 0.3F, true).setPotionEffect(Potion.heal.id, 2, 0, 1F).setUnlocalizedName("Stimpak").setCreativeTab(TabFalloutFood);
-	public static final Item SuperStimpak = new ItemSuperStimpak(2501, 1, true).setUnlocalizedName("SuperStimpak").setCreativeTab(TabFalloutFood);
-	public static final Item BCMAC = new BaseFood(2502, 5, 0.3F, false).setUnlocalizedName("BCMAC").setCreativeTab(TabFalloutFood);
-	public static final Item Cram = new BaseFood(2503, 5, 0.3F, false).setUnlocalizedName("Cram").setCreativeTab(TabFalloutFood);
-	public static final Item Instamash = new BaseFood(2504, 5, 0.3F, false).setUnlocalizedName("Instamash").setCreativeTab(TabFalloutFood);
-	public static final Item PorkBeans = new BaseFood(2505, 5, 0.3F, false).setUnlocalizedName("PorkBeans").setCreativeTab(TabFalloutFood);
-	public static final Item Salisbury = new BaseFood(2506, 5, 0.3F, false).setUnlocalizedName("Salisbury").setCreativeTab(TabFalloutFood);
-	public static final Item YumYum = new BaseFood(2507, 5, 0.3F, false).setUnlocalizedName("YumYum").setCreativeTab(TabFalloutFood);
-	public static final Item Psycho = new BaseFood(2508, 1, 0.3F, false).setPotionEffect(Potion.damageBoost.id, 60, 0, 1F).setUnlocalizedName("Psycho").setCreativeTab(TabFalloutFood);
-	public static final Item MedEx = new BaseFood(2509, 1, 0.3F, false).setPotionEffect(Potion.resistance.id, 60, 0, 1F).setUnlocalizedName("MedEx").setCreativeTab(TabFalloutFood);
-	public static final Item Slasher = new ItemSlasher(2510, 1, false).setUnlocalizedName("Slasher").setCreativeTab(TabFalloutFood);
-	public static final Item Hydra = new BaseDrink(2511, 1, 0.3F, false).setPotionEffect(Potion.regeneration.id, 60, 2, 2F).setUnlocalizedName("Hydra").setCreativeTab(TabFalloutFood);
-	public static final Item NukaCola = new BaseFood(2512, 7, 0.3F, false).setUnlocalizedName("NukaCola").setCreativeTab(TabFalloutFood);
-	public static final Item HealingPowder = new BaseFood(2513, 1, 0.3F, false).setPotionEffect(Potion.heal.id, 2, 0, 1F).setUnlocalizedName("HealingPowder").setCreativeTab(TabFalloutFood);
-	public static final Item bBarrelCactus = new BaseFood(2514, 8, 0.3F, false).setUnlocalizedName("bBarrelCactus").setCreativeTab(TabFalloutFood);
-	public static final Item bBrocFlower = new BaseFood(2515, 8, 0.3F, false).setUnlocalizedName("bBrocFlower").setCreativeTab(TabFalloutFood);
-	public static final Item bXanderRoot = new ItembXanderRoot(2516, 8, 0.3F, false).setUnlocalizedName("bXanderRoot").setCreativeTab(TabFalloutFood);
-	public static final Item AntEgg = new BaseFood(2517, 5, 0.3F, false).setUnlocalizedName("AntEgg").setCreativeTab(TabFalloutFood);
-	public static final Item AntMeat = new BaseFood(2518, 6, 0.3F, true).setUnlocalizedName("AntMeat").setCreativeTab(TabFalloutFood);
-	public static final Item BighornerSteak = new BaseFood(2519, 10, 0.3F, true).setUnlocalizedName("BighornerSteak").setCreativeTab(TabFalloutFood);
-	public static final Item BloodSausage = new BaseFood(2520, 16, 0.3F, true).setUnlocalizedName("BloodSausage").setCreativeTab(TabFalloutFood);
-	public static final Item BlackBloodSausage = new BaseFood(2521, 20, 0.3F, true).setUnlocalizedName("BlackBloodSausage").setCreativeTab(TabFalloutFood);
-	public static final Item BighornerMeat = new BaseFood(2522, 4, 0.3F, true).setUnlocalizedName("BighornerMeat").setCreativeTab(TabFalloutFood);
-	public static final Item BrahminMeat = new BaseFood(2523, 3, 0.3F, true).setUnlocalizedName("BrahminMeat").setCreativeTab(TabFalloutFood);
-	public static final Item BrahminSteak = new BaseFood(2524, 8, 0.3F, true).setUnlocalizedName("BrahminSteak").setCreativeTab(TabFalloutFood);
-	public static final Item BrahminWellington = new BaseFood(2525, 14, 0.3F, true).setUnlocalizedName("BrahminWellington").setCreativeTab(TabFalloutFood);
-	public static final Item FireAntFricasse = new BaseFood(2526, 12, 0.3F, false).setPotionEffect(Potion.fireResistance.id, 60, 0, 1F).setUnlocalizedName("FireAntFricasse").setCreativeTab(TabFalloutFood);
-	public static final Item CaravanLunch = new BaseFood(2527, 15, 0.3F, false).setUnlocalizedName("CaravanLunch").setCreativeTab(TabFalloutFood);
-	public static final Item DandyApples = new BaseFood(2528, 5, 0.3F, false).setUnlocalizedName("DandyApples").setCreativeTab(TabFalloutFood);
-	public static final Item NightstalkerTail = new BaseFood(2529, 6, 0.3F, false).setUnlocalizedName("NightstalkerTail").setCreativeTab(TabFalloutFood);
-	public static final Item TrailMix = new BaseFood(2530, 12, 0.3F, false).setUnlocalizedName("TrailMix").setCreativeTab(TabFalloutFood);
-	public static final Item SugarBombs = new BaseFood(2531, 8, 0.3F, false).setUnlocalizedName("SugarBombs").setCreativeTab(TabFalloutFood);
-	public static final Item PotatoChips = new BaseFood(2532, 5, 0.3F, false).setUnlocalizedName("PotatoChips").setCreativeTab(TabFalloutFood);
-	public static final Item SunsetSass = new BaseDrink(2533, 5, 0.3F, false).setUnlocalizedName("SunsetSass").setCreativeTab(TabFalloutFood);
-	public static final Item bBananaYucca = new BaseFood(2534, 6, 0.3F, false).setUnlocalizedName("bBananaYucca").setCreativeTab(TabFalloutFood);
-	public static final Item bCaveFungus = new ItembCaveFungus(2535, 6, 0.3F, false).setUnlocalizedName("bCaveFungus").setCreativeTab(TabFalloutFood);
-	public static final Item bBuffaloGourd = new BaseFood(2536, 4, 0.3F, false).setUnlocalizedName("bBuffaloGourd").setCreativeTab(TabFalloutFood);
-	public static final Item bJalapeno = new BaseFood(2537, 4, 0.3F, false).setUnlocalizedName("bJalapeno").setCreativeTab(TabFalloutFood);
-	public static final Item Jet = new BaseDrink(2538, 1, 0.3F, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setUnlocalizedName("Jet").setCreativeTab(TabFalloutFood);
-	public static final Item Rocket = new ItemRocket(2539, 1, false).setUnlocalizedName("Rocket").setCreativeTab(TabFalloutFood);
-	public static final Item NukaQuartz = new ItemNukaQuartz(2540, 1, false).setUnlocalizedName("NukaQuartz").setCreativeTab(TabFalloutFood);
-	public static final Item NukaCold = new BaseDrink(2541, 1, 0.3F, false).setUnlocalizedName("NukaCold").setCreativeTab(TabFalloutFood);
-	public static final Item NukaVictory = new ItemNukaVictory(2542, 1, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setPotionEffect(Potion.moveSpeed.id, 60, 0, 1F).setUnlocalizedName("NukaVictory").setCreativeTab(TabFalloutFood);
-	public static final Item WeaponBinding = new ItemWeaponBinding(2546, 1, false).setUnlocalizedName("WeaponBinding").setCreativeTab(TabFalloutFood);
-	public static final Item Vodka = new BaseDrink(2543, 1, 0.3F, false).setPotionEffect(Potion.damageBoost.id, 60, 0, 1F).setPotionEffect(Potion.confusion.id, 60, 0, 1F).setPotionEffect(Potion.poison.id, 60, 0 , 1F).setUnlocalizedName("Vodka").setCreativeTab(TabFalloutFood);
-	public static final Item StealthBoy = new BaseFood(2544, 5, 0.3F, false).setPotionEffect(Potion.invisibility.id, 60, 0, 1F).setUnlocalizedName("StealthBoy").setCreativeTab(TabFalloutFood);
-	public static final Item Turbo = new BaseFood(2545, 5, 0.3F, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setPotionEffect(Potion.moveSpeed.id, 60, 0, 1F).setUnlocalizedName("Turbo").setCreativeTab(TabFalloutFood);
+	public static final Item Stimpak = new BaseFood(462, 1, 0.3F, true).setPotionEffect(Potion.heal.id, 2, 0, 1F).setUnlocalizedName("Stimpak").setCreativeTab(TabFalloutFood);
+	public static final Item SuperStimpak = new ItemSuperStimpak(463, 1, true).setUnlocalizedName("SuperStimpak").setCreativeTab(TabFalloutFood);
+	public static final Item BCMAC = new BaseFood(464, 5, 0.3F, false).setUnlocalizedName("BCMAC").setCreativeTab(TabFalloutFood);
+	public static final Item Cram = new BaseFood(465, 5, 0.3F, false).setUnlocalizedName("Cram").setCreativeTab(TabFalloutFood);
+	public static final Item Instamash = new BaseFood(466, 5, 0.3F, false).setUnlocalizedName("Instamash").setCreativeTab(TabFalloutFood);
+	public static final Item PorkBeans = new BaseFood(467, 5, 0.3F, false).setUnlocalizedName("PorkBeans").setCreativeTab(TabFalloutFood);
+	public static final Item Salisbury = new BaseFood(468, 5, 0.3F, false).setUnlocalizedName("Salisbury").setCreativeTab(TabFalloutFood);
+	public static final Item YumYum = new BaseFood(469, 5, 0.3F, false).setUnlocalizedName("YumYum").setCreativeTab(TabFalloutFood);
+	public static final Item Psycho = new BaseFood(470, 1, 0.3F, false).setPotionEffect(Potion.damageBoost.id, 60, 0, 1F).setUnlocalizedName("Psycho").setCreativeTab(TabFalloutFood);
+	public static final Item MedEx = new BaseFood(471, 1, 0.3F, false).setPotionEffect(Potion.resistance.id, 60, 0, 1F).setUnlocalizedName("MedEx").setCreativeTab(TabFalloutFood);
+	public static final Item Slasher = new ItemSlasher(472, 1, false).setUnlocalizedName("Slasher").setCreativeTab(TabFalloutFood);
+	public static final Item Hydra = new BaseDrink(473, 1, 0.3F, false).setPotionEffect(Potion.regeneration.id, 60, 2, 2F).setUnlocalizedName("Hydra").setCreativeTab(TabFalloutFood);
+	public static final Item NukaCola = new BaseFood(474, 7, 0.3F, false).setUnlocalizedName("NukaCola").setCreativeTab(TabFalloutFood);
+	public static final Item HealingPowder = new BaseFood(475, 1, 0.3F, false).setPotionEffect(Potion.heal.id, 2, 0, 1F).setUnlocalizedName("HealingPowder").setCreativeTab(TabFalloutFood);
+	public static final Item bBarrelCactus = new BaseFood(476, 8, 0.3F, false).setUnlocalizedName("bBarrelCactus").setCreativeTab(TabFalloutFood);
+	public static final Item bBrocFlower = new BaseFood(477, 8, 0.3F, false).setUnlocalizedName("bBrocFlower").setCreativeTab(TabFalloutFood);
+	public static final Item bXanderRoot = new ItembXanderRoot(478, 8, 0.3F, false).setUnlocalizedName("bXanderRoot").setCreativeTab(TabFalloutFood);
+	public static final Item AntEgg = new BaseFood(479, 5, 0.3F, false).setUnlocalizedName("AntEgg").setCreativeTab(TabFalloutFood);
+	public static final Item AntMeat = new BaseFood(480, 6, 0.3F, true).setUnlocalizedName("AntMeat").setCreativeTab(TabFalloutFood);
+	public static final Item BighornerSteak = new BaseFood(481, 10, 0.3F, true).setUnlocalizedName("BighornerSteak").setCreativeTab(TabFalloutFood);
+	public static final Item BloodSausage = new BaseFood(482, 16, 0.3F, true).setUnlocalizedName("BloodSausage").setCreativeTab(TabFalloutFood);
+	public static final Item BlackBloodSausage = new BaseFood(483, 20, 0.3F, true).setUnlocalizedName("BlackBloodSausage").setCreativeTab(TabFalloutFood);
+	public static final Item BighornerMeat = new BaseFood(484, 4, 0.3F, true).setUnlocalizedName("BighornerMeat").setCreativeTab(TabFalloutFood);
+	public static final Item BrahminMeat = new BaseFood(485, 3, 0.3F, true).setUnlocalizedName("BrahminMeat").setCreativeTab(TabFalloutFood);
+	public static final Item BrahminSteak = new BaseFood(486, 8, 0.3F, true).setUnlocalizedName("BrahminSteak").setCreativeTab(TabFalloutFood);
+	public static final Item BrahminWellington = new BaseFood(487, 14, 0.3F, true).setUnlocalizedName("BrahminWellington").setCreativeTab(TabFalloutFood);
+	public static final Item FireAntFricasse = new BaseFood(488, 12, 0.3F, false).setPotionEffect(Potion.fireResistance.id, 60, 0, 1F).setUnlocalizedName("FireAntFricasse").setCreativeTab(TabFalloutFood);
+	public static final Item CaravanLunch = new BaseFood(489, 20, 0.3F, false).setUnlocalizedName("CaravanLunch").setCreativeTab(TabFalloutFood);
+	public static final Item DandyApples = new BaseFood(490, 5, 0.3F, false).setUnlocalizedName("DandyApples").setCreativeTab(TabFalloutFood);
+	public static final Item NightstalkerTail = new BaseFood(491, 6, 0.3F, false).setUnlocalizedName("NightstalkerTail").setCreativeTab(TabFalloutFood);
+	public static final Item TrailMix = new BaseFood(492, 12, 0.3F, false).setUnlocalizedName("TrailMix").setCreativeTab(TabFalloutFood);
+	public static final Item SugarBombs = new BaseFood(493, 8, 0.3F, false).setUnlocalizedName("SugarBombs").setCreativeTab(TabFalloutFood);
+	public static final Item PotatoChips = new BaseFood(494, 5, 0.3F, false).setUnlocalizedName("PotatoChips").setCreativeTab(TabFalloutFood);
+	public static final Item SunsetSass = new BaseDrink(495, 5, 0.3F, false).setUnlocalizedName("SunsetSass").setCreativeTab(TabFalloutFood);
+	public static final Item bBananaYucca = new BaseFood(496, 6, 0.3F, false).setUnlocalizedName("bBananaYucca").setCreativeTab(TabFalloutFood);
+	public static final Item bCaveFungus = new ItembCaveFungus(497, 6, 0.3F, false).setUnlocalizedName("bCaveFungus").setCreativeTab(TabFalloutFood);
+	public static final Item bBuffaloGourd = new BaseFood(498, 4, 0.3F, false).setUnlocalizedName("bBuffaloGourd").setCreativeTab(TabFalloutFood);
+	public static final Item bJalapeno = new BaseFood(499, 4, 0.3F, false).setUnlocalizedName("bJalapeno").setCreativeTab(TabFalloutFood);
+	public static final Item Jet = new BaseDrink(500, 1, 0.3F, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setUnlocalizedName("Jet").setCreativeTab(TabFalloutFood);
+	public static final Item Rocket = new ItemRocket(501, 1, false).setUnlocalizedName("Rocket").setCreativeTab(TabFalloutFood);
+	public static final Item NukaQuartz = new ItemNukaQuartz(502, 1, false).setUnlocalizedName("NukaQuartz").setCreativeTab(TabFalloutFood);
+	public static final Item NukaCold = new BaseDrink(503, 1, 0.3F, false).setUnlocalizedName("NukaCold").setCreativeTab(TabFalloutFood);
+	public static final Item NukaVictory = new ItemNukaVictory(504, 1, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setPotionEffect(Potion.moveSpeed.id, 60, 0, 1F).setUnlocalizedName("NukaVictory").setCreativeTab(TabFalloutFood);
+	public static final Item WeaponBinding = new ItemWeaponBinding(505, 1, false).setUnlocalizedName("WeaponBinding").setCreativeTab(TabFalloutFood);
+	public static final Item Vodka = new BaseDrink(506, 1, 0.3F, false).setPotionEffect(Potion.damageBoost.id, 60, 0, 1F).setPotionEffect(Potion.confusion.id, 60, 0, 1F).setPotionEffect(Potion.poison.id, 60, 0 , 1F).setUnlocalizedName("Vodka").setCreativeTab(TabFalloutFood);
+	public static final Item StealthBoy = new BaseFood(507, 5, 0.3F, false).setPotionEffect(Potion.invisibility.id, 60, 0, 1F).setUnlocalizedName("StealthBoy").setCreativeTab(TabFalloutFood);
+	public static final Item Turbo = new BaseFood(508, 5, 0.3F, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setPotionEffect(Potion.moveSpeed.id, 60, 0, 1F).setUnlocalizedName("Turbo").setCreativeTab(TabFalloutFood);
 
 	//============================================Armor==========================================================
 
-	public static final Item T45Helm = (new ArmorBaseT45(5000, T45POWER, 1, 0)).setUnlocalizedName("T45Helm").setCreativeTab(TabFalloutArmor);
-	public static final Item T45Chest = (new ArmorBaseT45(5001, T45POWER, 1, 1)).setUnlocalizedName("T45Chest").setCreativeTab(TabFalloutArmor);
-	public static final Item T45Legs = (new ArmorBaseT45(5002, T45POWER, 1, 2)).setUnlocalizedName("T45Legs").setCreativeTab(TabFalloutArmor);
-	public static final Item T45Boots = (new ArmorBaseT45(5003, T45POWER, 1, 3)).setUnlocalizedName("T45Boots").setCreativeTab(TabFalloutArmor);
+	public static final Item T45Helm = (new ArmorBaseT45(542, T45POWER, 1, 0)).setUnlocalizedName("T45Helm").setCreativeTab(TabFalloutArmor);
+	public static final Item T45Chest = (new ArmorBaseT45(543, T45POWER, 1, 1)).setUnlocalizedName("T45Chest").setCreativeTab(TabFalloutArmor);
+	public static final Item T45Legs = (new ArmorBaseT45(544, T45POWER, 1, 2)).setUnlocalizedName("T45Legs").setCreativeTab(TabFalloutArmor);
+	public static final Item T45Boots = (new ArmorBaseT45(545, T45POWER, 1, 3)).setUnlocalizedName("T45Boots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item T51Helm = (new ArmorBaseT51(5004, T51POWER, 2, 0)).setUnlocalizedName("T51Helm").setCreativeTab(TabFalloutArmor);
-	public static final Item T51Chest = (new ArmorBaseT51(5005, T51POWER, 2, 1)).setUnlocalizedName("T51Chest").setCreativeTab(TabFalloutArmor);
-	public static final Item T51Legs = (new ArmorBaseT51(5006, T51POWER, 2, 2)).setUnlocalizedName("T51Legs").setCreativeTab(TabFalloutArmor);
-	public static final Item T51Boots = (new ArmorBaseT51(5007, T51POWER, 2, 3)).setUnlocalizedName("T51Boots").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Helm = (new ArmorBaseT51(546, T51POWER, 2, 0)).setUnlocalizedName("T51Helm").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Chest = (new ArmorBaseT51(547, T51POWER, 2, 1)).setUnlocalizedName("T51Chest").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Legs = (new ArmorBaseT51(548, T51POWER, 2, 2)).setUnlocalizedName("T51Legs").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Boots = (new ArmorBaseT51(549, T51POWER, 2, 3)).setUnlocalizedName("T51Boots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item G1Helm = (new ArmorBaseGecko1(5008, EnumArmorMaterial.CHAIN, 3, 0)).setUnlocalizedName("G1Helm").setCreativeTab(TabFalloutArmor);
-	public static final Item G1Chest = (new ArmorBaseGecko1(5009, EnumArmorMaterial.CHAIN, 3, 1)).setUnlocalizedName("G1Chest").setCreativeTab(TabFalloutArmor);
-	public static final Item G1Legs = (new ArmorBaseGecko1(5010, EnumArmorMaterial.CHAIN, 3, 2)).setUnlocalizedName("G1Legs").setCreativeTab(TabFalloutArmor);
-	public static final Item G1Boots = (new ArmorBaseGecko1(5011, EnumArmorMaterial.CHAIN, 3, 3)).setUnlocalizedName("G1Boots").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Helm = (new ArmorBaseGecko1(550, EnumArmorMaterial.CHAIN, 3, 0)).setUnlocalizedName("G1Helm").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Chest = (new ArmorBaseGecko1(551, EnumArmorMaterial.CHAIN, 3, 1)).setUnlocalizedName("G1Chest").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Legs = (new ArmorBaseGecko1(552, EnumArmorMaterial.CHAIN, 3, 2)).setUnlocalizedName("G1Legs").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Boots = (new ArmorBaseGecko1(553, EnumArmorMaterial.CHAIN, 3, 3)).setUnlocalizedName("G1Boots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item HellHelm = (new ArmorBaseHellfire(5012, HELLFIRE, 4, 0)).setUnlocalizedName("HellHelm").setCreativeTab(TabFalloutArmor);
-	public static final Item HellChest = (new ArmorBaseHellfire(5013, HELLFIRE, 4, 1)).setUnlocalizedName("HellChest").setCreativeTab(TabFalloutArmor);
-	public static final Item HellLegs = (new ArmorBaseHellfire(5014, HELLFIRE, 4, 2)).setUnlocalizedName("HellLegs").setCreativeTab(TabFalloutArmor);
-	public static final Item HellBoots = (new ArmorBaseHellfire(5015, HELLFIRE, 4, 3)).setUnlocalizedName("HellBoots").setCreativeTab(TabFalloutArmor);
+	public static final Item HellHelm = (new ArmorBaseHellfire(554, HELLFIRE, 4, 0)).setUnlocalizedName("HellHelm").setCreativeTab(TabFalloutArmor);
+	public static final Item HellChest = (new ArmorBaseHellfire(555, HELLFIRE, 4, 1)).setUnlocalizedName("HellChest").setCreativeTab(TabFalloutArmor);
+	public static final Item HellLegs = (new ArmorBaseHellfire(556, HELLFIRE, 4, 2)).setUnlocalizedName("HellLegs").setCreativeTab(TabFalloutArmor);
+	public static final Item HellBoots = (new ArmorBaseHellfire(557, HELLFIRE, 4, 3)).setUnlocalizedName("HellBoots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item WinterHelm = (new ArmorBaseWinter(5016, WINTER, 5, 0)).setUnlocalizedName("WinterHelm").setCreativeTab(TabFalloutArmor);
-	public static final Item WinterChest = (new ArmorBaseWinter(5017, WINTER, 5, 1)).setUnlocalizedName("WinterChest").setCreativeTab(TabFalloutArmor);
-	public static final Item WinterLegs = (new ArmorBaseWinter(5018, WINTER, 5, 2)).setUnlocalizedName("WinterLegs").setCreativeTab(TabFalloutArmor);
-	public static final Item WinterBoots = (new ArmorBaseWinter(5019, WINTER, 5, 3)).setUnlocalizedName("WinterBoots").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterHelm = (new ArmorBaseWinter(558, WINTER, 5, 0)).setUnlocalizedName("WinterHelm").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterChest = (new ArmorBaseWinter(559, WINTER, 5, 1)).setUnlocalizedName("WinterChest").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterLegs = (new ArmorBaseWinter(560, WINTER, 5, 2)).setUnlocalizedName("WinterLegs").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterBoots = (new ArmorBaseWinter(561, WINTER, 5, 3)).setUnlocalizedName("WinterBoots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item EnclaveHelm = (new ArmorBaseEnclave(5020, ENCLAVE, 6, 0)).setUnlocalizedName("EnclaveHelm").setCreativeTab(TabFalloutArmor);
-	public static final Item EnclaveChest = (new ArmorBaseEnclave(5021, ENCLAVE, 6, 1)).setUnlocalizedName("EnclaveChest").setCreativeTab(TabFalloutArmor);
-	public static final Item EnclaveLegs = (new ArmorBaseEnclave(5022, ENCLAVE, 6, 2)).setUnlocalizedName("EnclaveLegs").setCreativeTab(TabFalloutArmor);
-	public static final Item EnclaveBoots = (new ArmorBaseEnclave(5023, ENCLAVE, 6, 3)).setUnlocalizedName("EnclaveBoots").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveHelm = (new ArmorBaseEnclave(562, ENCLAVE, 6, 0)).setUnlocalizedName("EnclaveHelm").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveChest = (new ArmorBaseEnclave(563, ENCLAVE, 6, 1)).setUnlocalizedName("EnclaveChest").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveLegs = (new ArmorBaseEnclave(564, ENCLAVE, 6, 2)).setUnlocalizedName("EnclaveLegs").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveBoots = (new ArmorBaseEnclave(565, ENCLAVE, 6, 3)).setUnlocalizedName("EnclaveBoots").setCreativeTab(TabFalloutArmor);
 
 	//============================================Blocks=========================================================
 
@@ -361,527 +360,367 @@ public class FalloutMain
 	public static final BlockFlower BuffaloGourd = (BlockFlower) new BlockBuffaloGourd(3000, 13).setUnlocalizedName("BuffaloGourd");
 	public static final BlockFlower Jalapeno = (BlockFlower) new BlockJalapeno(3001, 14).setUnlocalizedName("Jalapeno");
 
-	//============================================Pages===========================================================
-
-	//public static AchievementPage FalloutPage = new AchievementPage("Fallout Achievements", ach1, ach2, ach3, ach4);
-	//static final Achievement TimeAchieve = new Achievement(2001, "TimeAchieve", 1, -2, TimeMachine, AchievementLib.blazeRod).registerAchievement();
-
 	//============================================Biomes==========================================================
 
 	public static final BiomeGenBase Wasteland = (new BiomeWasteland(100)).setColor(16421912).setBiomeName("Wasteland").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setMinMaxHeight(0.1F, 0.2F);
 
 	//Version 1.7
-	public static final Item grip = new BaseItem(10000);
-	
+	public static final Item grip = new BaseItem(566).setUnlocalizedName("Grip").setCreativeTab(TabFalloutGuns);
+	public static final Item barrel = new BaseItem(567).setUnlocalizedName("Barrel").setCreativeTab(TabFalloutGuns);
+	public static final Item stock = new BaseItem(568).setUnlocalizedName("Stock").setCreativeTab(TabFalloutGuns);
+	public static final Item magnifier = new BaseItem(569).setUnlocalizedName("Magnifier").setCreativeTab(TabFalloutGuns);
+	public static final Item hammer = new BaseItem(570).setUnlocalizedName("Hammer").setCreativeTab(TabFalloutGuns);
+	public static final Item gasTank = new BaseItem(571).setUnlocalizedName("GasTank").setCreativeTab(TabFalloutMisc);
+
+	//Version 1.7.1
+	//KEY: ID, damage, usage size/clip, reload time, fire time, fire sound, reload sound
+	public static final Item PlasmaRifle = new GunMFCell(572, 7, 24, 2, 2, "blfngl.PlasmaFire", "Blfngl.PlasmaReload").setUnlocalizedName("PlasmaRifle").setCreativeTab(TabFalloutGuns);
+	public static final Item magRail = new BaseItem(573).setUnlocalizedName("MagRail").setCreativeTab(TabFalloutGuns);
+	public static final Item gun10MM = new Gun10MM(574, 4, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload").setUnlocalizedName("10MM").setCreativeTab(TabFalloutGuns);
+	public static final Item a10MM = new BaseItem(575).setUnlocalizedName("a10MM").setCreativeTab(TabFalloutGuns);
+
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		proxy.registerSoundHandler();
-		//MinecraftForge.EVENT_BUS.register(new FalloutSoundHandler());
-
-		/**Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-
-		config.load();
-		config.save();
-
-		int TungstenOre = config.getBlock("TungstenOre", 200).getInt();
-		int TungstenIngot = config.getItem("TungstenIngot", 20000).getInt();**/
 	}
 
 	@Init
 	public void init(FMLInitializationEvent event)
 	{
 
-		//============================================Guns==========================================================
-
 		LanguageRegistry.addName(Incinerator, "Incinerator");
-		GameRegistry.addRecipe(new ItemStack(Incinerator), new Object [] {"XXX", " *&", " &&", 'X', Block.netherrack, '*', Item.ingotIron, '&', TungstenIngot});
-
+		GameRegistry.addRecipe(new ItemStack(Incinerator), new Object [] {"XXX", " *&", " &&", 'X', Block.netherrack, '*', Item.ingotIron, '&', ingotTungsten});
 		LanguageRegistry.addName(LaserRCW, "Laser RCW");
-		GameRegistry.addRecipe(new ItemStack(LaserRCW), new Object [] {"XXX", " *&", " &&", 'X', Block.anvil, '*', Item.ingotIron, '&', TungstenIngot});
-
+		GameRegistry.addRecipe(new ItemStack(LaserRCW), new Object [] {"X*$", " &%", "%%%", 'X', barrel, '*', magnifier, '$', stock, '&', grip, '%', ingotTungsten});
 		LanguageRegistry.addName(Compliance, "Compliance Regulator");
-		GameRegistry.addRecipe(new ItemStack(Compliance), new Object [] {"*XX", " ^&", " &&", '&', SiliconBar, 'X', TungstenIngot, '^', Block.thinGlass, '*', TungstenFilter});
-
+		GameRegistry.addRecipe(new ItemStack(Compliance), new Object [] {"X**", "&%*", " # ", 'X', barrel, '*', ingotTungsten, '#', grip, '&', MFCell, '%', Block.slowSand});
 		LanguageRegistry.addName(LaserRifle, "AER7 Laser Rifle");
-		GameRegistry.addRecipe(new ItemStack(LaserRifle), new Object [] {"*XX", "%^&", "&&", '&', SiliconBar, 'X', TechnetiumIngot, '^', Block.thinGlass, '*', TungstenFilter, '%', Item.redstone});
-
+		GameRegistry.addRecipe(new ItemStack(LaserRifle), new Object [] {"*X#", "X%X", "  ^", 'X', ingotTungsten, '*', magnifier, '#', stock, '^', grip, '%', Item.diamond});
 		LanguageRegistry.addName(g357Mag, ".357 Magnum");
-		GameRegistry.addRecipe(new ItemStack(g357Mag), new Object [] {"*XX", " *&", " &&", '&', Item.ingotIron, '*', SiliconChunk, '*', TungstenRod, 'X', TungstenIngot});
-
+		GameRegistry.addRecipe(new ItemStack(g357Mag), new Object [] {"*X^", " *#", "  &", '#', Item.ingotIron, '*', barrel, 'X', ingotTungsten, '&', grip, '^', hammer});
 		LanguageRegistry.addName(g44Mag, ".44 Magnum");
-		GameRegistry.addRecipe(new ItemStack(g44Mag), new Object [] {"*XX", " *&", " &&", '&', Item.ingotIron, '*', SiliconChunk, '*', TungstenRod, 'X', TechnetiumIngot});
-
+		GameRegistry.addRecipe(new ItemStack(g44Mag), new Object [] {"*X^", " *#", "  &", '#', Item.ingotIron, '*', barrel, 'X', ingotTechnetium, '&', grip, '^', hammer});
 		LanguageRegistry.addName(Silenced22, "Silenced .22 Pistol");
-		GameRegistry.addRecipe(new ItemStack(Silenced22), new Object [] {"*XX", " %&", " &&", 'X', Teflon, 'X', SiliconBar, '%', TungstenRod, '&', Item.ingotIron});
-
+		GameRegistry.addRecipe(new ItemStack(Silenced22), new Object [] {"*XX", " %X", "  &", '*', barrel, 'X', barSilicon, '%', chunkTungsten, '&', grip});
 		LanguageRegistry.addName(Sniper308, "Sniper's Rifle");
-		GameRegistry.addRecipe(new ItemStack(Sniper308), new Object [] {"XXX", " *&", " &&", 'X', TungstenPlate, '*', Item.ingotIron, '&', TechnetiumIngot});
+		GameRegistry.addRecipe(new ItemStack(Sniper308), new Object [] {"XX*", " *&", " %&", 'X', barrel, '*', ingotTungsten, '&', ingotTechnetium, '%', grip});
 
 		LanguageRegistry.addName(a22LR, ".22 Ammo");
-		GameRegistry.addRecipe(new ItemStack(a22LR), new Object [] {"X", "*", 'X', SiliconChunk, '*', ScrapMetal});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(a22LR, 12), new Object [] {chunkSilicon, scrapMetal});
 		LanguageRegistry.addName(a357, ".357 Ammo");
-		GameRegistry.addRecipe(new ItemStack(a357), new Object [] {"X", "*", 'X', ScrapMetal, '*', Item.ingotIron});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(a357, 3), new Object [] {scrapMetal, Item.ingotIron});
 		LanguageRegistry.addName(a44, ".44 Ammo");
-		GameRegistry.addRecipe(new ItemStack(a44), new Object [] {"X", "*", 'X', ScrapMetal, '*', Item.ingotGold});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(a44, 3), new Object [] {scrapMetal, Item.ingotGold});
 		LanguageRegistry.addName(a308, ".308 Ammo");
-		GameRegistry.addRecipe(new ItemStack(a308), new Object [] {"X", "X", "*", 'X', TungstenIngot, '*', ScrapMetal});
-
-		LanguageRegistry.addName(HomemadeFuel, "Flamer Fuel");
-		GameRegistry.addShapelessRecipe(new ItemStack(HomemadeFuel), new Object [] {Abraxo, Item.sugar, Item.wheat});
-
-		//============================================Melee Weapons==========================================================
+		GameRegistry.addShapelessRecipe(new ItemStack(a308, 2), new Object [] {ingotTungsten, scrapMetal});
+		LanguageRegistry.addName(homemadeFuel, "Flamer Fuel");
+		GameRegistry.addShapelessRecipe(new ItemStack(homemadeFuel), new Object [] {abraxo, Item.sugar, Item.wheat});
 
 		LanguageRegistry.addName(Cleaver, "Cleaver");
-		GameRegistry.addRecipe(new ItemStack(Cleaver), new Object [] {"XX", "XX", " *", 'X', net.minecraft.item.Item.ingotIron, '*', net.minecraft.item.Item.stick});
+		GameRegistry.addRecipe(new ItemStack(Cleaver), new Object [] {"XX", "XX", " *", 'X', Item.ingotIron, '*', Item.stick});
 		LanguageRegistry.addName(ComKnife, "Combat Knife");
-		GameRegistry.addRecipe(new ItemStack(ComKnife), new Object [] {"X", "*", 'X', TungstenIngot, '*', net.minecraft.item.Item.stick});
+		GameRegistry.addRecipe(new ItemStack(ComKnife), new Object [] {"X", "*", 'X', ingotTungsten, '*', Item.stick});
 		LanguageRegistry.addName(BotE, "Blade of the East");
-		GameRegistry.addRecipe(new ItemStack(BotE), new Object [] {" X ", "X*X", "X&X", 'X', TungstenPlate, '*', net.minecraft.item.ItemSword.swordDiamond, '&', TungstenRod});
 		LanguageRegistry.addName(CosKnife, "Cosmic Knife");
-		GameRegistry.addRecipe(new ItemStack(CosKnife, 1), new Object [] {"X", "X", "&", 'X', SatIngot, '&', net.minecraft.item.Item.ingotIron});
+		GameRegistry.addRecipe(new ItemStack(CosKnife), new Object [] {"X", "X", "&", 'X', ingotSaturnite, '&', Item.ingotIron});
 		LanguageRegistry.addName(CosClean, "Cosmic Knife (Clean)");
-		GameRegistry.addShapelessRecipe(new ItemStack(CosClean, 1), new Object[] {CosKnife, Abraxo});
+		GameRegistry.addShapelessRecipe(new ItemStack(CosClean), new Object[] {CosKnife, abraxo});
 		LanguageRegistry.addName(CosFire, "Cosmic Knife (Super Heated)");
-		GameRegistry.addShapelessRecipe(new ItemStack(CosFire, 1), new Object [] {CosClean, Item.bucketLava});
+		GameRegistry.addShapelessRecipe(new ItemStack(CosFire), new Object [] {CosClean, Item.bucketLava});
 		LanguageRegistry.addName(PintSizedKnife, "Pint Sized Slasher's Knife");
-	
 		LanguageRegistry.addName(BumperSword, "Bumper Sword");
-		
+		GameRegistry.addRecipe(new ItemStack(BumperSword), new Object [] {" X ", "X*X", "X&X", 'X', tungstenPlate, '*', ItemSword.swordDiamond, '&', chunkTungsten});
 		LanguageRegistry.addName(FireAxe, "Fire Axe");
-		
+		GameRegistry.addRecipe(new ItemStack(FireAxe), new Object [] {"*XX", "*^ ", " ^ ", 'X', ingotTungsten, '*', chunkTechnetium, '^', chunkTungsten});
 		LanguageRegistry.addName(Knife, "Knife");
-		
+		GameRegistry.addRecipe(new ItemStack(Knife), new Object [] {"X*", 'X', ingotTungsten, '*', chunkTungsten});
 		LanguageRegistry.addName(Machete, "Machete");
-		
+		GameRegistry.addRecipe(new ItemStack(Machete), new Object [] {"X", "X", "*", 'X', ingotTungsten, '*', chunkTungsten});
 		LanguageRegistry.addName(Shishkebab, "Shishkebab");
-
+		//GameRegistry.addRecipe(new ItemStack(Shishkebab), new Object [] {" X ", "X*X", "X&X", 'X', tungstenPlate, '*', ItemSword.swordDiamond, '&', chunkTungsten});
 		LanguageRegistry.addName(StraightRazor, "Straight Razor");
-
+		GameRegistry.addRecipe(new ItemStack(StraightRazor), new Object [] {"X  ", " X ", " * ", 'X', Item.ingotIron, '*', chunkSilicon});
 		LanguageRegistry.addName(Switchblade, "Switchblade");
-		
-		//========================================Unarmed Weapons===============================================
+		GameRegistry.addRecipe(new ItemStack(Switchblade), new Object [] {"X*X", 'X', chunkSilicon, '*', Item.ingotIron});
 
 		LanguageRegistry.addName(BallisticFist, "Ballistic Fist");
-		GameRegistry.addRecipe(new ItemStack(BallisticFist), new Object [] {"*X*", "X%X", "###", 'X', Block.pistonBase, '*', Block.tnt, '#', TungstenPlate, '%', Item.redstoneRepeater});
-		
+		GameRegistry.addRecipe(new ItemStack(BallisticFist), new Object [] {"*X*", "X%X", "###", 'X', Block.pistonBase, '*', Block.tnt, '#', tungstenPlate, '%', Item.redstoneRepeater});
 		LanguageRegistry.addName(BladedGauntlet, "Bladed Gauntlet");
 		GameRegistry.addRecipe(new ItemStack(BladedGauntlet), new Object [] {" * ", "*X*", '*', Knife, 'X', BoxingGloves});
-		
 		LanguageRegistry.addName(BoxingGloves, "Boxing Gloves");
 		GameRegistry.addRecipe(new ItemStack(BoxingGloves), new Object [] {" * ", "*X*", " * ", 'X', BrassKnuckles, '*', Item.leather});
-		
-		//LanguageRegistry.addName(BoxingTape, "Boxing Tape");
-		
 		LanguageRegistry.addName(BrassKnuckles, "Brass Knuckles");
-		GameRegistry.addRecipe(new ItemStack(BrassKnuckles), new Object [] {"XXX", "* *", 'X', Item.ingotGold, '*', TungstenIngot});
-		
+		GameRegistry.addRecipe(new ItemStack(BrassKnuckles), new Object [] {"XXX", "* *", 'X', Item.ingotGold, '*', ingotTungsten});
 		LanguageRegistry.addName(DisplacerGlove, "Displacer Glove");
-		
 		LanguageRegistry.addName(GoldenGloves, "Golden Gloves");
 		GameRegistry.addRecipe(new ItemStack(GoldenGloves), new Object [] {"XXX", "X*X", "XXX", 'X', Item.goldNugget, '*', BoxingGloves});
-		
 		LanguageRegistry.addName(SatFist, "Saturnite Power Fist");
-<<<<<<< HEAD
-		GameRegistry.addRecipe(new ItemStack(SatFist), new Object [] {"XXX"});
-=======
-		//TODO GameRegistry.addRecipe(new ItemStack(SatFist), new Object [] {"XXX"});
->>>>>>> Gun mechanics overhaul, fixed delay time/clips/reloading
-		
+		GameRegistry.addRecipe(new ItemStack(SatFist), new Object [] {"XXX", "%*%", 'X', saturniteAlloy, '%', Block.pistonBase, '*', PowerFist});
 		LanguageRegistry.addName(SatHeatFist, "Saturnite Fist (Super Heated)");
-		GameRegistry.addRecipe(new ItemStack(SatHeatFist), new Object [] {"^^^", "X*X", "& &", 'X', Block.furnaceIdle, '&', SatIngot, '*', Item.redstoneRepeater, '^', SatAlloy});
-		
+		GameRegistry.addRecipe(new ItemStack(SatHeatFist), new Object [] {"^^^", "X*X", "& &", 'X', Block.furnaceIdle, '&', ingotSaturnite, '*', SatFist, '^', saturniteAlloy});
 		LanguageRegistry.addName(PowerFist, "Power Fist");
-		GameRegistry.addRecipe(new ItemStack(PowerFist), new Object [] {"X*X", "&*&", "&*&", 'X', Block.pistonBase, '&', TungstenIngot, '*', Item.redstone});
-		
+		GameRegistry.addRecipe(new ItemStack(PowerFist), new Object [] {"X*X", "&*&", "&*&", 'X', Block.pistonBase, '&', ingotTungsten, '*', Item.redstone});
 		LanguageRegistry.addName(SciGlove, "Scientist's Glove");
-		GameRegistry.addRecipe(new ItemStack(SciGlove), new Object [] {"X*X", "X X", "X X", 'X', Polyethylene, '*', TungstenIngot});
-		
+		GameRegistry.addRecipe(new ItemStack(SciGlove), new Object [] {"X*X", "X X", "X X", 'X', polyethylene, '*', ingotTungsten});
 		LanguageRegistry.addName(ZapGlove, "Zap Glove");
-		GameRegistry.addRecipe(new ItemStack(ZapGlove), new Object [] {"XXX", "*&*", 'X', Block.blockRedstone, '*', TungstenPlate, '&', PowerFist});
-		
-		//==========================================Thrown Weapons===================================================
-		
-		LanguageRegistry.addName(BottleCapMine, "Bottle Cap Mine");
-		GameRegistry.addRecipe(new ItemStack(BottleCapMine), new Object [] {" X ", "***", "&^&", 'X', Lunchbox, '*', BottleCap, '&', Cherrybomb, '^', SensorModule});
-		
-		LanguageRegistry.addName(FragGrenade, "Frag Grenade");
-		GameRegistry.addRecipe(new ItemStack(FragGrenade), new Object [] {" * ", "X&X", "XXX", '*', SiliconChunk, 'X', TungstenIngot, '&', Block.tnt});
+		GameRegistry.addRecipe(new ItemStack(ZapGlove), new Object [] {"XXX", "*&*", 'X', Block.blockRedstone, '*', tungstenPlate, '&', PowerFist});
 
-		//============================================Items==========================================================
+		LanguageRegistry.addName(bottleCapMine, "Bottle Cap Mine");
+		GameRegistry.addRecipe(new ItemStack(bottleCapMine), new Object [] {" X ", "***", "&^&", 'X', lunchbox, '*', bottleCap, '&', cherrybomb, '^', sensorModule});
+		LanguageRegistry.addName(fragGrenade, "Frag Grenade");
+		GameRegistry.addRecipe(new ItemStack(fragGrenade), new Object [] {" * ", "X&X", "XXX", '*', chunkSilicon, 'X', ingotTungsten, '&', Block.tnt});
 
-		LanguageRegistry.addName(TungstenRod, "Tungsten Rod");
-
-		LanguageRegistry.addName(TungstenIngot, "Tungsten Ingot");
-		GameRegistry.addRecipe(new ItemStack(TungstenIngot), new Object [] {"XXX", "XXX", 'X', TungstenRod});
-
-		LanguageRegistry.addName(TechnetiumChunk, "Technetium Chunk");
-
-		LanguageRegistry.addName(TechnetiumIngot, "Technetium Ingot");
-		GameRegistry.addSmelting(TechnetiumChunk.itemID, new ItemStack(TechnetiumIngot), 1.5F);
-		GameRegistry.addRecipe(new ItemStack(TechnetiumIngot, 1), new Object [] {"###", "###", '#', TechnetiumChunk});
-
-		LanguageRegistry.addName(SiliconChunk, "Silicon Chunk");
-
-		LanguageRegistry.addName(SiliconBar, "Silicon Bar");
-		GameRegistry.addRecipe(new ItemStack(SiliconBar, 1), new Object [] {"###", "###", Character.valueOf('#'), SiliconChunk});
-
-		LanguageRegistry.addName(TungstenFilter, "Tungsten Filter");
-		GameRegistry.addRecipe(new ItemStack(TungstenFilter, 1), new Object [] {"###", "###", "###", '#', TungstenRod});
-
-		LanguageRegistry.addName(AsbestosChunk, "Asbestos Chunk");
-
-		LanguageRegistry.addName(AsbestosBar, "Asbestos Bar");
-		GameRegistry.addSmelting(AsbestosChunk.itemID, new ItemStack(AsbestosBar), 1.5F);
-		GameRegistry.addRecipe(new ItemStack(AsbestosBar, 1), new Object [] {"XXX", "XXX", Character.valueOf('X'), AsbestosChunk});
-
-		LanguageRegistry.addName(UraniumIngot, "Uranium Ingot");
-
-		LanguageRegistry.addName(TungstenPlate, "Tungsten Plate");
-		GameRegistry.addRecipe(new ItemStack(TungstenPlate), new Object [] {"X*X", "*X*", "X*X", 'X', TungstenIngot, '*', TungstenRod});
-
-		GameRegistry.addRecipe(new ItemStack(TungstenPlate, 1), new Object [] {"XX", "XX", Character.valueOf('X'), TungstenIngot});
-
-		LanguageRegistry.addName(TechnetiumPlate, "Technetium Plate");
-		GameRegistry.addRecipe(new ItemStack(TechnetiumPlate, 1), new Object [] {"XX", "XX", Character.valueOf('X'), TechnetiumIngot});
-
+		LanguageRegistry.addName(chunkTungsten, "Tungsten Rod");
+		LanguageRegistry.addName(ingotTungsten, "Tungsten Ingot");
+		GameRegistry.addRecipe(new ItemStack(ingotTungsten), new Object [] {"XXX", "XXX", 'X', chunkTungsten});
+		LanguageRegistry.addName(chunkTechnetium, "Technetium Chunk");
+		LanguageRegistry.addName(ingotTechnetium, "Technetium Ingot");
+		GameRegistry.addRecipe(new ItemStack(ingotTechnetium), new Object [] {"###", "###", '#', chunkTechnetium});
+		LanguageRegistry.addName(chunkSilicon, "Silicon Chunk");
+		LanguageRegistry.addName(barSilicon, "Silicon Bar");
+		GameRegistry.addRecipe(new ItemStack(barSilicon), new Object [] {"###", "###", '#', chunkSilicon});
+		LanguageRegistry.addName(tungstenFilter, "Tungsten Filter");
+		GameRegistry.addRecipe(new ItemStack(tungstenFilter), new Object [] {"###", "###", "###", '#', chunkTungsten});
+		LanguageRegistry.addName(chunkAsbestos, "Asbestos Chunk");
+		LanguageRegistry.addName(barAsbestos, "Asbestos Bar");
+		GameRegistry.addSmelting(chunkAsbestos.itemID, new ItemStack(barAsbestos), 1.5F);
+		GameRegistry.addRecipe(new ItemStack(barAsbestos), new Object [] {"XXX", "XXX", 'X', chunkAsbestos});
+		LanguageRegistry.addName(ingotUranium, "Uranium Ingot");
+		LanguageRegistry.addName(tungstenPlate, "Tungsten Plate");
+		GameRegistry.addRecipe(new ItemStack(tungstenPlate), new Object [] {"XX", "XX", 'X', ingotTungsten});
+		LanguageRegistry.addName(technetiumPlate, "Technetium Plate");
+		GameRegistry.addRecipe(new ItemStack(technetiumPlate, 1), new Object [] {"XX", "XX", 'X', ingotTechnetium});
 		LanguageRegistry.addName(RAP, "Reinforced Alloy Plate");
-		GameRegistry.addRecipe(new ItemStack(RAP, 2), new Object [] {"X*", "*X", Character.valueOf('X'), TungstenPlate, Character.valueOf('*'), TechnetiumPlate});
-
+		GameRegistry.addRecipe(new ItemStack(RAP, 2), new Object [] {"X*", "*X", 'X', tungstenPlate, '*', technetiumPlate});
 		LanguageRegistry.addName(MFCell, "MicroFusion Cell");
-		GameRegistry.addRecipe(new ItemStack(MFCell, 2), new Object [] {" * ", "*&*", " * ", Character.valueOf('&'), UraniumIngot, Character.valueOf('*'), TungstenPlate});
-
+		GameRegistry.addRecipe(new ItemStack(MFCell, 6), new Object [] {" * ", "*&*", " * ", '&', ingotUranium, '*', tungstenPlate});
 		LanguageRegistry.addName(MFPack, "MicroFusion Pack");
-		GameRegistry.addRecipe(new ItemStack(MFPack, 1),new Object [] {" X ", "&&&", " X ", 'X', RAP, '&', MFCell});
-
-		LanguageRegistry.addName(Carbon, "Carbon");
-
-		LanguageRegistry.addName(Teflon, "Teflon");
-		GameRegistry.addRecipe(new ItemStack(Teflon, 2), new Object [] {"**", "##", "**", Character.valueOf('*'), Item.silk, Character.valueOf('#'), Carbon});
-
-		LanguageRegistry.addName(Polyethylene, "Polyethylene");
-		GameRegistry.addRecipe(new ItemStack(Polyethylene), new Object [] {"X*X", "*X*", 'X', Carbon, '*', Teflon});
-
-		LanguageRegistry.addName(BottleCap, "Bottle Cap");
-
-		LanguageRegistry.addName(Fan, "Fan");
-		GameRegistry.addRecipe(new ItemStack(Fan), new Object [] {" * ", "*X*", " * ", '*', TungstenRod, 'X', Item.ingotIron});
-
-		LanguageRegistry.addName(Gear, "Gear");
-		GameRegistry.addRecipe(new ItemStack(Gear, 2), new Object [] {"***", "*#*", "***", '*', TungstenRod, '#', TungstenIngot});
-
-		LanguageRegistry.addName(Gyro, "Gyroscope");
-		GameRegistry.addRecipe(new ItemStack(Gyro), new Object [] {" X ", "X*X", " & ", 'X', Item.ingotGold, '*', SiliconBar, '&', Item.stick});
-
+		GameRegistry.addRecipe(new ItemStack(MFPack),new Object [] {" X ", "&&&", " X ", 'X', RAP, '&', MFCell});
+		LanguageRegistry.addName(carbon, "Carbon");
+		LanguageRegistry.addName(teflon, "Teflon");
+		GameRegistry.addRecipe(new ItemStack(teflon, 2), new Object [] {"**", "##", "**", '*', Item.silk, '#', carbon});
+		LanguageRegistry.addName(polyethylene, "Polyethylene");
+		GameRegistry.addRecipe(new ItemStack(polyethylene), new Object [] {"X*X", "*X*", 'X', carbon, '*', teflon});
+		LanguageRegistry.addName(bottleCap, "Bottle Cap");
+		LanguageRegistry.addName(fan, "Fan");
+		GameRegistry.addRecipe(new ItemStack(fan), new Object [] {" * ", "*X*", " * ", '*', chunkTungsten, 'X', Item.ingotIron});
+		LanguageRegistry.addName(gear, "Gear");
+		GameRegistry.addRecipe(new ItemStack(gear, 2), new Object [] {"***", "*#*", "***", '*', chunkTungsten, '#', ingotTungsten});
+		LanguageRegistry.addName(gyro, "Gyroscope");
+		GameRegistry.addRecipe(new ItemStack(gyro), new Object [] {" X ", "X*X", " & ", 'X', Item.ingotGold, '*', barSilicon, '&', Item.stick});
 		LanguageRegistry.addName(MASM, "Motion-Assist Servo Motor");
-		GameRegistry.addRecipe(new ItemStack(MASM), new Object [] {" XX", "*&X", " XX", 'X', SiliconBar, '*', Item.stick, '&', Gear});
-
+		GameRegistry.addRecipe(new ItemStack(MASM), new Object [] {" XX", "*&X", " XX", 'X', barSilicon, '*', Item.stick, '&', gear});
 		LanguageRegistry.addName(TXMF, "TX-28 MicroFusion Pack");
 		GameRegistry.addRecipe(new ItemStack(TXMF, 1), new Object [] {" X ", "&&&", " X ", 'X', RAP, '&', MFPack});
-
-		LanguageRegistry.addName(Card, "Caravan Card");
-		ModLoader.addRecipe(new ItemStack(Card, 1), new Object [] {"XXX", "X*X", "XXX", Character.valueOf('X'), Item.paper, Character.valueOf('*'), Item.coal});
-
-		LanguageRegistry.addName(Deck, "Caravan Deck");
-		GameRegistry.addRecipe(new ItemStack(Deck, 1), new Object [] {"XXX", "XXX", "XXX", 'X', Card});
-
-		LanguageRegistry.addName(Cardboard, "Cardboard");
-		GameRegistry.addRecipe(new ItemStack(Cardboard, 4), new Object [] {"XXX", "X X", "XXX", 'X', Item.paper});
-
-		LanguageRegistry.addName(TinCan, "Tin Can");
-
-		LanguageRegistry.addName(SatRod, "Saturnite Rod");
-
-		LanguageRegistry.addName(SatIngot, "Saturnite Ingot");
-		GameRegistry.addRecipe(new ItemStack(SatIngot), new Object [] {"XXX", "XXX", 'X', SatRod});
-
-		LanguageRegistry.addName(SatAlloy, "Saturnite Alloy");
-		GameRegistry.addRecipe(new ItemStack(SatAlloy), new Object [] {"XX", "XX", 'X', SatIngot});
-
-		LanguageRegistry.addName(SatAlloyPlate, "Saturnite Alloy Plate");
-		GameRegistry.addRecipe(new ItemStack(SatAlloyPlate), new Object [] {"XX", "XX", 'X', SatAlloy});
-
-		LanguageRegistry.addName(EmptySyringe, "Empty Syringe");
-		GameRegistry.addRecipe(new ItemStack(EmptySyringe), new Object [] {"  &", " * ", "X  ", '*', SiliconChunk, 'X', Item.ingotIron, '&', TungstenRod});
-
-		LanguageRegistry.addName(BloodSyringe, "Blood Syringe");
-
-		LanguageRegistry.addName(PTorso, "Base Power Torso");
-		GameRegistry.addRecipe(new ItemStack(PTorso, 1), new Object [] {"X X", "*&*", " $ ", 'X', RAP, '&', Fan, '*', RAP, '$', TXMF});
-
-		LanguageRegistry.addName(PShoulders, "Base Power Shoulders");
-		GameRegistry.addRecipe(new ItemStack(PShoulders, 1), new Object [] {"X X", "& &", 'X', RAP, '&', TungstenPlate});
-
-		LanguageRegistry.addName(PChest, "Base Power Chest");
-		GameRegistry.addRecipe(new ItemStack(PChest, 1),new Object [] {"X", "*", 'X', PShoulders, '*', PTorso});
-
-		LanguageRegistry.addName(T45Upgrade, "Type 45-d Power Armor Upgrade Plate");
-		GameRegistry.addRecipe(new ItemStack(T45Upgrade, 1), new Object [] {" X ", "&*&", " X ", 'X', TungstenPlate, '&', TechnetiumPlate, '*', RAP});
-
-		LanguageRegistry.addName(EnclaveUpgrade, "Enclave Power Armor Upgrade Plate");
-		GameRegistry.addRecipe(new ItemStack(EnclaveUpgrade, 1), new Object [] {" X ", "&*&", " X ", 'X', TungstenPlate, '&', TechnetiumPlate, '*', T45Upgrade});
-
-		LanguageRegistry.addName(T51Upgrade, "Type 51-b Power Armor Upgrade Plate");
-		GameRegistry.addRecipe(new ItemStack(T51Upgrade, 1), new Object [] {" X ", "&*&", " X ", 'X', TungstenPlate, '&', TechnetiumPlate, '*', EnclaveUpgrade});
-
-		LanguageRegistry.addName(HellfireUpgrade, "Enclave Hellfire Power Armor Upgrade Plate");
-		GameRegistry.addRecipe(new ItemStack(HellfireUpgrade, 1), new Object [] {" X ", "&*&", " X ", 'X', TungstenPlate, '&', TechnetiumPlate, '*', T51Upgrade});
-
-		LanguageRegistry.addName(WinterizedUpgrade, "Winterized Type 51-b Power Armor Upgrade Plate");
-		GameRegistry.addRecipe(new ItemStack(WinterizedUpgrade, 1), new Object [] {" X ", "&*&", " X ", 'X', TungstenPlate, '&', TechnetiumPlate, '*', HellfireUpgrade});
-
-		LanguageRegistry.addName(NukaBottle, "Nuka Cola Bottle");
-		GameRegistry.addRecipe(new ItemStack(NukaBottle), new Object [] {"X", "%*%", "&", 'X', BottleCap, '*', Item.sugar, '%', BarrelCactus, '&', Item.glassBottle});
-
-		//TODO LanguageRegistry.addName(PipBoy, "Pip-Boy 3000");
-		//TODO GameRegistry.addRecipe(new ItemStack(PipBoy), new Object [] {"X*X", "X&X", "X#X", 'X', TungstenIngot, '*', Block.glass, '&', Item.redstoneRepeater, '#', Item.redstone});
-
-		LanguageRegistry.addName(Abraxo, "Abraxo Cleaner");
-		GameRegistry.addRecipe(new ItemStack(Abraxo), new Object [] {" X ", "***", " X ", 'X', Cardboard, '*', Item.sugar});
-
-		LanguageRegistry.addName(ScrapMetal, "Scrap Metal");
-		GameRegistry.addShapelessRecipe(new ItemStack(ScrapMetal, 1), new Object[] {TungstenIngot, Item.ingotIron});
-
-		LanguageRegistry.addName(Lunchbox, "Lunchbox");
-		GameRegistry.addRecipe(new ItemStack(Lunchbox), new Object [] {" X ", "X X", "XXX", 'X', Item.ingotIron});
-
-		LanguageRegistry.addName(SensorModule, "Sensor Module");
-		GameRegistry.addRecipe(new ItemStack(SensorModule), new Object [] {" XX", "*&X", " XX", 'X', TungstenIngot, '*', Item.redstoneRepeater, '&', Item.redstone});
-
-		LanguageRegistry.addName(Cherrybomb, "Cherry Bomb");
-		GameRegistry.addRecipe(new ItemStack(Cherrybomb), new Object [] {"X", 'X', Block.tnt});
-
-		LanguageRegistry.addName(NightstalkerBlood, "Nightstalker Blood");
-
-		LanguageRegistry.addName(JetInhaler, "Jet Inhaler");
-		GameRegistry.addRecipe(new ItemStack(JetInhaler), new Object [] {"X  ", "X  ", "X& ", 'X', SiliconBar, '&', Block.dispenser});
-
-		LanguageRegistry.addName(Wonderglue, "Wonderglue");
-		GameRegistry.addRecipe(new ItemStack(Wonderglue), new Object [] {"X*X", "X*X", " & ", 'X', SiliconBar, '*', Item.slimeBall, '&', EmptySyringe});
-
-		LanguageRegistry.addName(Turpentine, "Turpentine");
-		GameRegistry.addShapelessRecipe(new ItemStack(Turpentine), new Object [] {Item.coal, Item.coal, Item.coal, Item.coal, Block.wood});
-
-		LanguageRegistry.addName(GeckoHide, "Gecko Hide");
-		GameRegistry.addShapelessRecipe(new ItemStack(GeckoHide), new Object [] {Block.cactus, Item.leather});
-
-		LanguageRegistry.addName(Minecraft9, "9Minecraft Can Die. Nobody Enjoys Getting Their Content Stolen.");
-		GameRegistry.addShapelessRecipe(new ItemStack(Minecraft9), new Object [] {Block.cactus});
-		
-		LanguageRegistry.addName(LeatherBelt, "Leather Belt");
-		GameRegistry.addRecipe(new ItemStack(LeatherBelt), new Object [] {"X*X", 'X', Item.leather, '*', Item.ingotIron});
-
+		LanguageRegistry.addName(card, "Caravan Card");
+		ModLoader.addRecipe(new ItemStack(card, 1), new Object [] {"XXX", "X*X", "XXX", 'X', Item.paper, '*', Item.coal});
+		LanguageRegistry.addName(deck, "Caravan Deck");
+		GameRegistry.addRecipe(new ItemStack(deck, 1), new Object [] {"XXX", "XXX", "XXX", 'X', card});
+		LanguageRegistry.addName(cardboard, "Cardboard");
+		GameRegistry.addRecipe(new ItemStack(cardboard, 4), new Object [] {"XXX", "X X", "XXX", 'X', Item.paper});
+		LanguageRegistry.addName(tinCan, "Tin Can");
+		GameRegistry.addRecipe(new ItemStack(cardboard, 4), new Object [] {"X X", " X ", 'X', ingotTungsten});
+		LanguageRegistry.addName(chunkSaturnite, "Saturnite Rod");
+		LanguageRegistry.addName(ingotSaturnite, "Saturnite Ingot");
+		GameRegistry.addRecipe(new ItemStack(ingotSaturnite), new Object [] {"XXX", "XXX", 'X', chunkSaturnite});
+		LanguageRegistry.addName(saturniteAlloy, "Saturnite Alloy");
+		GameRegistry.addRecipe(new ItemStack(saturniteAlloy), new Object [] {"XX", "XX", 'X', ingotSaturnite});
+		LanguageRegistry.addName(syringeEmpty, "Empty Syringe");
+		GameRegistry.addRecipe(new ItemStack(syringeEmpty), new Object [] {"  &", " * ", "X  ", '*', chunkSilicon, 'X', Item.ingotIron, '&', chunkTungsten});
+		LanguageRegistry.addName(syringeBloody, "Blood Syringe");
+		LanguageRegistry.addName(powerTorso, "Base Power Torso");
+		GameRegistry.addRecipe(new ItemStack(powerTorso, 1), new Object [] {"X X", "*&*", " $ ", 'X', RAP, '&', fan, '*', RAP, '$', TXMF});
+		LanguageRegistry.addName(powerShoulders, "Base Power Shoulders");
+		GameRegistry.addRecipe(new ItemStack(powerShoulders, 1), new Object [] {"X X", "& &", 'X', RAP, '&', tungstenPlate});
+		LanguageRegistry.addName(powerChest, "Base Power Chest");
+		GameRegistry.addRecipe(new ItemStack(powerChest, 1),new Object [] {"X", "*", 'X', powerShoulders, '*', powerTorso});
+		LanguageRegistry.addName(upgradeT45, "Type 45-d Power Armor Upgrade Plate");
+		GameRegistry.addRecipe(new ItemStack(upgradeT45, 1), new Object [] {" X ", "&*&", " X ", 'X', tungstenPlate, '&', technetiumPlate, '*', RAP});
+		LanguageRegistry.addName(upgradeEnclave, "Enclave Power Armor Upgrade Plate");
+		GameRegistry.addRecipe(new ItemStack(upgradeEnclave, 1), new Object [] {" X ", "&*&", " X ", 'X', tungstenPlate, '&', technetiumPlate, '*', upgradeT45});
+		LanguageRegistry.addName(upgradeT51, "Type 51-b Power Armor Upgrade Plate");
+		GameRegistry.addRecipe(new ItemStack(upgradeT51, 1), new Object [] {" X ", "&*&", " X ", 'X', tungstenPlate, '&', technetiumPlate, '*', upgradeEnclave});
+		LanguageRegistry.addName(upgradeHellfire, "Enclave Hellfire Power Armor Upgrade Plate");
+		GameRegistry.addRecipe(new ItemStack(upgradeHellfire, 1), new Object [] {" X ", "&*&", " X ", 'X', tungstenPlate, '&', technetiumPlate, '*', upgradeT51});
+		LanguageRegistry.addName(upgradeWinterized, "Winterized Type 51-b Power Armor Upgrade Plate");
+		GameRegistry.addRecipe(new ItemStack(upgradeWinterized, 1), new Object [] {" X ", "&*&", " X ", 'X', tungstenPlate, '&', technetiumPlate, '*', upgradeHellfire});
+		LanguageRegistry.addName(nukaBottle, "Nuka Cola Bottle");
+		GameRegistry.addShapelessRecipe(new ItemStack(nukaBottle), new Object [] {bottleCap, Item.glassBottle});
+		LanguageRegistry.addName(abraxo, "Abraxo Cleaner");
+		GameRegistry.addRecipe(new ItemStack(abraxo), new Object [] {" X ", "***", " X ", 'X', cardboard, '*', Item.sugar});
+		LanguageRegistry.addName(scrapMetal, "Scrap Metal");
+		GameRegistry.addShapelessRecipe(new ItemStack(scrapMetal, 1), new Object[] {ingotTungsten, Item.ingotIron});
+		LanguageRegistry.addName(lunchbox, "Lunchbox");
+		GameRegistry.addRecipe(new ItemStack(lunchbox), new Object [] {" X ", "X X", "XXX", 'X', Item.ingotIron});
+		LanguageRegistry.addName(sensorModule, "Sensor Module");
+		GameRegistry.addRecipe(new ItemStack(sensorModule), new Object [] {" XX", "*&X", " XX", 'X', ingotTungsten, '*', Item.redstoneRepeater, '&', Item.redstone});
+		LanguageRegistry.addName(cherrybomb, "Cherry Bomb");
+		GameRegistry.addRecipe(new ItemStack(cherrybomb, 3), new Object [] {"X", 'X', Block.tnt});
+		LanguageRegistry.addName(nightstalkerBlood, "Nightstalker Blood");
+		LanguageRegistry.addName(jetInhaler, "Jet Inhaler");
+		GameRegistry.addRecipe(new ItemStack(jetInhaler), new Object [] {"X  ", "X  ", "X& ", 'X', barSilicon, '&', Block.dispenser});
+		LanguageRegistry.addName(wonderglue, "Wonderglue");
+		GameRegistry.addRecipe(new ItemStack(wonderglue), new Object [] {"X*X", "X*X", " & ", 'X', barSilicon, '*', Item.slimeBall, '&', syringeEmpty});
+		LanguageRegistry.addName(turpentine, "Turpentine");
+		GameRegistry.addShapelessRecipe(new ItemStack(turpentine), new Object [] {Item.coal, Item.coal, Item.coal, Item.coal, Block.wood});
+		LanguageRegistry.addName(geckoHide, "Gecko Hide");
+		GameRegistry.addShapelessRecipe(new ItemStack(geckoHide), new Object [] {Block.cactus, Item.leather});
+		LanguageRegistry.addName(leatherBelt, "Leather Belt");
+		GameRegistry.addRecipe(new ItemStack(leatherBelt), new Object [] {"X*X", 'X', Item.leather, '*', Item.ingotIron});
 		LanguageRegistry.addName(EPack, "Electron Charge Pack");
-
+		GameRegistry.addRecipe(new ItemStack(EPack), new Object [] {"XX", "**", "XX", 'X', tungstenPlate, '*', ingotUranium});
 		LanguageRegistry.addName(ECell, "Energy Cell");
+		GameRegistry.addRecipe(new ItemStack(ECell), new Object [] {"X*", "*X", '*', ingotUranium, 'X', ingotTechnetium});
 
-		//============================================Food and Chems==========================================================
-
+		//TODO Shapeless recipes
 		LanguageRegistry.addName(Psycho, "Psycho");
-		GameRegistry.addRecipe(new ItemStack(Psycho, 3), new Object [] {"X*X", "%$%", "X*X", 'X', Item.slimeBall, '$', EmptySyringe, '%', Item.redstone, '*', Item.lightStoneDust});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Psycho, 2), new Object [] {Item.slimeBall, Item.slimeBall, Item.slimeBall, Item.slimeBall, Item.lightStoneDust, syringeEmpty, Item.redstone, Item.lightStoneDust});
 		LanguageRegistry.addName(MedEx, "Med-X");
-		GameRegistry.addRecipe(new ItemStack(MedEx, 3), new Object [] {"& &", " * ", "X X", 'X', Stimpak, '*', EmptySyringe, '&', bBananaYucca});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(MedEx, 2), new Object [] {Stimpak, syringeEmpty, bBananaYucca, bBananaYucca});
 		LanguageRegistry.addName(Slasher, "Slasher");
-		GameRegistry.addRecipe(new ItemStack(Slasher), new Object [] {"X*", 'X', Psycho, '*', MedEx});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Slasher), new Object [] {Psycho, MedEx});
 		LanguageRegistry.addName(Stimpak, "Stimpak");
-		GameRegistry.addRecipe(new ItemStack(Stimpak), new Object [] {" X ", " & ", " * ", 'X', bBrocFlower, '&', bXanderRoot, '*', EmptySyringe});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Stimpak), new Object [] {bBrocFlower, bXanderRoot, syringeEmpty});
 		LanguageRegistry.addName(SuperStimpak, "Super Stimpak");
-		GameRegistry.addRecipe(new ItemStack(SuperStimpak), new Object [] {" * ", "XXX", " & ", '*', Stimpak, 'X', Item.leather, '&', NukaCola});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(SuperStimpak), new Object [] {Stimpak, leatherBelt, NukaCola});
 		LanguageRegistry.addName(BCMAC, "Blam Co. Mac and Cheese");
-		GameRegistry.addRecipe(new ItemStack(BCMAC, 3), new Object [] {"#X#", "***", "#X#", 'X', Item.bucketMilk, '*', Item.wheat, '#', Cardboard});
-
+		GameRegistry.addRecipe(new ItemStack(BCMAC, 3), new Object [] {"#X#", "***", "#X#", 'X', Item.bucketMilk, '*', Item.wheat, '#', cardboard});
 		LanguageRegistry.addName(Cram, "Cram");
-		GameRegistry.addRecipe(new ItemStack(Cram, 3), new Object [] {" # ", " * ", " X ", 'X', TinCan, '#', Item.beefCooked, '*', Item.porkCooked});
-
+		GameRegistry.addRecipe(new ItemStack(Cram, 12), new Object [] {" # ", " * ", " X ", 'X', tinCan, '#', Item.beefCooked, '*', Item.porkCooked});
 		LanguageRegistry.addName(Instamash, "Instamash");
-		GameRegistry.addRecipe(new ItemStack(Instamash, 3), new Object [] {"X*X", "***", "X*X", 'X', Cardboard, '*', Item.potato});
-
+		GameRegistry.addRecipe(new ItemStack(Instamash, 5), new Object [] {"X*X", "***", "X*X", 'X', cardboard, '*', Item.potato});
 		LanguageRegistry.addName(PorkBeans, "Pork 'n' Beans");
-		GameRegistry.addRecipe(new ItemStack(PorkBeans, 3), new Object [] {" # ", " * ", " X ", 'X', TinCan, '#', Item.porkCooked, '*', new ItemStack(Item.dyePowder, 1, 3)});
-
+		GameRegistry.addRecipe(new ItemStack(PorkBeans, 9), new Object [] {" # ", " * ", " X ", 'X', tinCan, '#', Item.porkCooked, '*', new ItemStack(Item.dyePowder, 1, 3)});
 		LanguageRegistry.addName(Salisbury, "Salisbury Steak");
-		GameRegistry.addRecipe(new ItemStack(Salisbury, 3), new Object [] {"X*X", "#*#", "X*X", 'X', Cardboard, '#', Item.potato, '*', Item.beefCooked});
-
+		GameRegistry.addRecipe(new ItemStack(Salisbury, 12), new Object [] {"X*X", "#*#", "X*X", 'X', cardboard, '#', Item.potato, '*', Item.beefCooked});
 		LanguageRegistry.addName(YumYum, "Yum Yum Deviled Eggs");
-		GameRegistry.addRecipe(new ItemStack(YumYum, 3), new Object [] {"X*X", "*#*", "X*X", 'X', Cardboard, '*', Item.egg, '#', Item.bucketMilk});
-
+		GameRegistry.addRecipe(new ItemStack(YumYum, 3), new Object [] {"X*X", "*#*", "X*X", 'X', cardboard, '*', Item.egg, '#', Item.bucketMilk});
 		LanguageRegistry.addName(Hydra, "Hydra");
-		GameRegistry.addRecipe(new ItemStack(Hydra), new Object [] {"X*X", " & ", 'X', NightstalkerBlood, '*', bCaveFungus, '&', Item.spiderEye});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Hydra), new Object [] {nightstalkerBlood, nightstalkerBlood, bCaveFungus, Item.spiderEye, Item.glassBottle});
 		LanguageRegistry.addName(NukaCola, "Nuka Cola");
-		GameRegistry.addRecipe(new ItemStack(NukaCola), new Object [] {"X*%", " & ", 'X', Item.sugar, '*', Item.bucketWater, '&', NukaBottle, '%', UraniumIngot});
-
+		//GameRegistry.addShapelessRecipe(new ItemStack(NukaCola), new Object [] {"X*%", " & ", 'X', Item.sugar, '*', Item.bucketWater, '&', nukaBottle, '%', ingotUranium});
 		LanguageRegistry.addName(HealingPowder, "Healing Powder");
-		GameRegistry.addShapelessRecipe(new ItemStack(HealingPowder, 1), new Object[] {bXanderRoot, bBrocFlower});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(HealingPowder), new Object[] {bXanderRoot, bBrocFlower});
 		LanguageRegistry.addName(bBarrelCactus, "Barrel Cactus Fruit");
-
 		LanguageRegistry.addName(bBrocFlower, "Broc Flower");
-
 		LanguageRegistry.addName(bXanderRoot, "Xander Root");
-
 		LanguageRegistry.addName(AntMeat, "Ant Meat");
-
 		LanguageRegistry.addName(AntEgg, "Ant Egg");
-
 		LanguageRegistry.addName(BloodSausage, "Blood Sausage");
-
 		LanguageRegistry.addName(BlackBloodSausage, "Black Blood Sausage");
-
 		LanguageRegistry.addName(BrahminMeat, "Brahmin Meat");
-
 		LanguageRegistry.addName(BrahminSteak, "Brahmin Steak");
 		GameRegistry.addSmelting(BrahminMeat.itemID, new ItemStack(BrahminSteak), 5);
-
 		LanguageRegistry.addName(BighornerMeat, "Bighorner Meat");
-
 		LanguageRegistry.addName(BighornerSteak, "Bighorner Steak");
 		GameRegistry.addSmelting(BighornerMeat.itemID, new ItemStack(BighornerSteak), 5);
-
 		LanguageRegistry.addName(BrahminWellington, "Brahmin Wellington");
 		GameRegistry.addShapelessRecipe(new ItemStack(BrahminWellington), new Object [] {BrahminSteak, AntEgg, BCMAC});
-
 		LanguageRegistry.addName(FireAntFricasse, "Fire Ant Fricasse");
 		GameRegistry.addShapelessRecipe(new ItemStack(FireAntFricasse), new Object [] {Cram, AntMeat, Item.wheat});
-
 		LanguageRegistry.addName(CaravanLunch, "Caravan Lunch");
-		GameRegistry.addShapelessRecipe(new ItemStack(CaravanLunch), new Object [] {Cram, Instamash, PorkBeans, Cardboard});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(CaravanLunch), new Object [] {Cram, Instamash, PorkBeans, cardboard});
 		LanguageRegistry.addName(DandyApples, "Dandy Boy Apples");
-		GameRegistry.addRecipe(new ItemStack(DandyApples, 3), new Object [] {"X*X", "*#*", "X*X", 'X', Cardboard, '*', Item.appleRed, '#', Item.sugar});
-
+		GameRegistry.addRecipe(new ItemStack(DandyApples, 3), new Object [] {"X*X", "*#*", "X*X", 'X', cardboard, '*', Item.appleRed, '#', Item.sugar});
 		LanguageRegistry.addName(NightstalkerTail, "Nightstalker Tail");
-
 		LanguageRegistry.addName(TrailMix, "Trail Mix");
 		GameRegistry.addShapelessRecipe(new ItemStack(TrailMix), new Object [] {SugarBombs, Item.appleRed, Item.blazePowder, Item.seeds});
-
 		LanguageRegistry.addName(SugarBombs, "Sugar Bombs");
-		GameRegistry.addRecipe(new ItemStack(SugarBombs, 3), new Object [] {"X*X", "*#*", "X*X", 'X', Cardboard, '*', Item.sugar, '#', Item.wheat});
-
+		GameRegistry.addRecipe(new ItemStack(SugarBombs, 3), new Object [] {"X*X", "*#*", "X*X", 'X', cardboard, '*', Item.sugar, '#', Item.wheat});
 		LanguageRegistry.addName(PotatoChips, "Potato Crisps");
-		GameRegistry.addRecipe(new ItemStack(PotatoChips, 3), new Object [] {"X*X", "*#*", "X*X", 'X', Cardboard, '*', Item.potato, '#', Item.poisonousPotato});
-
+		GameRegistry.addRecipe(new ItemStack(PotatoChips, 3), new Object [] {"X*X", "*#*", "X*X", 'X', cardboard, '*', Item.potato, '#', Item.poisonousPotato});
 		LanguageRegistry.addName(SunsetSass, "Sunset Sasparilla");
-		GameRegistry.addRecipe(new ItemStack(SunsetSass), new Object [] {" * ", "X&X", " ^ ", '*', BottleCap, 'X', XanderRoot, '&', Item.glassBottle, '^', Item.appleRed});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(SunsetSass), new Object [] {bottleCap, XanderRoot, XanderRoot, Item.glassBottle, Item.appleRed});
 		LanguageRegistry.addName(bBananaYucca, "Banna Yucca Fruit");
-
 		LanguageRegistry.addName(bCaveFungus, "Cave Fungus");
-
 		LanguageRegistry.addName(bBuffaloGourd, "Buffalo Gourd Seed");
-
 		LanguageRegistry.addName(bJalapeno, "Jalapeno");
-
 		LanguageRegistry.addName(Jet, "Jet");
-		GameRegistry.addRecipe(new ItemStack(Jet), new Object [] {"*&*", " X ", 'X', JetInhaler, '*', Abraxo, '&', Item.sugar});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Jet), new Object [] {jetInhaler, abraxo, abraxo, Item.sugar});
 		LanguageRegistry.addName(Rocket, "Rocket");
-		GameRegistry.addShapelessRecipe(new ItemStack(Rocket), new Object [] {Jet, Abraxo, NukaCola});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Rocket), new Object [] {Jet, abraxo, NukaCola});
 		LanguageRegistry.addName(NukaCold, "Ice Cold Nuka Cola");
 		GameRegistry.addShapelessRecipe(new ItemStack(NukaCold), new Object [] {NukaCola, Block.ice});
-
 		LanguageRegistry.addName(NukaQuartz, "Nuka Cola Quartz");
-		GameRegistry.addRecipe(new ItemStack(NukaQuartz), new Object [] {"XXX", " * ", 'X', NukaCola, '*', new ItemStack(Item.dyePowder, 1, 12)});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(NukaQuartz), new Object [] {NukaCola, NukaCola, NukaCola, new ItemStack(Item.dyePowder, 1, 12)});
 		LanguageRegistry.addName(NukaVictory, "Nuka Cola Victory");
-		GameRegistry.addRecipe(new ItemStack(NukaVictory), new Object [] {"XXX", " * ", 'X', NukaCola, '*', new ItemStack(Item.dyePowder, 1, 1)});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(NukaVictory), new Object [] {NukaCola, NukaCola, NukaCola, new ItemStack(Item.dyePowder, 1, 1)});
 		LanguageRegistry.addName(WeaponBinding, "Weapon Binding Ritual");
-		GameRegistry.addRecipe(new ItemStack(WeaponBinding), new Object [] {"*&^", " # ", '*', Cleaver, '^', LeatherBelt, '&', HealingPowder, '#', Wonderglue});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(WeaponBinding), new Object [] {Cleaver, leatherBelt, HealingPowder, wonderglue});
 		LanguageRegistry.addName(Vodka, "Vodka");
-		GameRegistry.addRecipe(new ItemStack(Vodka), new Object [] {"&^%", "$X#", '#', Block.mushroomBrown, '$', Block.mushroomRed, 'X', Item.glassBottle, '&', Item.sugar, '^', Item.bucketWater, '&', Item.wheat});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(Vodka), new Object [] {Block.mushroomBrown, Block.mushroomRed, Item.glassBottle, Item.sugar, Item.bucketWater, Item.wheat});
 		LanguageRegistry.addName(StealthBoy, "Stealth Boy");
-
+		//TODO GameRegistry.addRecipe(new ItemStack(StealthBoy), new Object [] {});
 		LanguageRegistry.addName(Turbo, "Turbo");
-		GameRegistry.addRecipe(new ItemStack(Turbo), new Object [] {"*&^", " X ", 'X', Jet, '*', BrocFlower, '&', Item.spiderEye, '^', Turpentine});
-
-		//============================================Armor==========================================================
+		GameRegistry.addShapelessRecipe(new ItemStack(Turbo), new Object [] {Jet, BrocFlower, Item.spiderEye, turpentine});
 
 		LanguageRegistry.addName(T45Helm, "T-45d Power Helmet");
-		GameRegistry.addRecipe(new ItemStack(T45Helm), new Object [] {"$*X", "X&X", " % ", 'X', TungstenPlate, '*', TechnetiumPlate, '&', BPGlass, '%', T45Upgrade, '$', Item.lightStoneDust});
-
+		GameRegistry.addRecipe(new ItemStack(T45Helm), new Object [] {"$*X", "X&X", " % ", 'X', tungstenPlate, '*', technetiumPlate, '&', BPGlass, '%', upgradeT45, '$', Item.lightStoneDust});
 		LanguageRegistry.addName(T45Chest, "T-45d Power Chestplate");
-		GameRegistry.addRecipe(new ItemStack(T45Chest, 1), new Object [] {" * ", "*X*", " * ", '*', T45Upgrade, 'X', PChest});
-
+		GameRegistry.addRecipe(new ItemStack(T45Chest, 1), new Object [] {" * ", "*X*", " * ", '*', upgradeT45, 'X', powerChest});
 		LanguageRegistry.addName(T45Legs, "T-45d Power Leggings");
-		GameRegistry.addRecipe(new ItemStack(T45Legs), new Object [] {"X*X", "% %", "X X", 'X', TungstenPlate, '*', T45Upgrade, '%', MASM});
-
+		GameRegistry.addRecipe(new ItemStack(T45Legs), new Object [] {"X*X", "% %", "X X", 'X', tungstenPlate, '*', upgradeT45, '%', MASM});
 		LanguageRegistry.addName(T45Boots, "T-45d Power Boots");
-		GameRegistry.addRecipe(new ItemStack(T45Boots), new Object [] {"X*X", "X X", 'X', TungstenPlate, '*', T45Upgrade});
-
+		GameRegistry.addRecipe(new ItemStack(T45Boots), new Object [] {"X*X", "X X", 'X', tungstenPlate, '*', upgradeT45});
 		LanguageRegistry.addName(T51Helm, "T-51b Power Helmet");
-		GameRegistry.addRecipe(new ItemStack(T51Helm, 1), new Object [] {" X ", "X*X", " X ", 'X', T51Upgrade, '*', T45Helm});
-
+		GameRegistry.addRecipe(new ItemStack(T51Helm, 1), new Object [] {" X ", "X*X", " X ", 'X', upgradeT51, '*', T45Helm});
 		LanguageRegistry.addName(T51Chest, "T-51b Power Chestplate");
-		GameRegistry.addRecipe(new ItemStack(T51Chest, 1), new Object [] {" X ", "X*X", " X ", 'X', T51Upgrade, '*', T45Chest});
-
+		GameRegistry.addRecipe(new ItemStack(T51Chest, 1), new Object [] {" X ", "X*X", " X ", 'X', upgradeT51, '*', T45Chest});
 		LanguageRegistry.addName(T51Legs, "T-51b Power Leggings");
-		GameRegistry.addRecipe(new ItemStack(T51Legs, 1), new Object [] {" X ", "X*X", " X ", 'X', T51Upgrade, '*', T45Legs});
-
+		GameRegistry.addRecipe(new ItemStack(T51Legs, 1), new Object [] {" X ", "X*X", " X ", 'X', upgradeT51, '*', T45Legs});
 		LanguageRegistry.addName(T51Boots, "T-51b Power Boots");
-		GameRegistry.addRecipe(new ItemStack(T51Boots, 1), new Object [] {" X ", "X*X", " X ", 'X', T51Upgrade, '*', T45Boots});
-
+		GameRegistry.addRecipe(new ItemStack(T51Boots, 1), new Object [] {" X ", "X*X", " X ", 'X', upgradeT51, '*', T45Boots});
 		LanguageRegistry.addName(G1Helm, "Gecko Backed Leather Cap");
-		GameRegistry.addRecipe(new ItemStack(G1Helm, 1), new Object [] {"XXX", "X*X", 'X', GeckoHide, '*', Item.helmetLeather});
-
+		GameRegistry.addRecipe(new ItemStack(G1Helm, 1), new Object [] {"XXX", "X*X", 'X', geckoHide, '*', Item.helmetLeather});
 		LanguageRegistry.addName(G1Chest, "Gecko Backed Leather Tunic");
-		GameRegistry.addRecipe(new ItemStack(G1Chest, 1), new Object [] {"X X", "X*X", "XXX", 'X', GeckoHide, '*', Item.plateLeather});
-
+		GameRegistry.addRecipe(new ItemStack(G1Chest, 1), new Object [] {"X X", "X*X", "XXX", 'X', geckoHide, '*', Item.plateLeather});
 		LanguageRegistry.addName(G1Legs, "Gecko Backed Leather Leggings");
-		GameRegistry.addRecipe(new ItemStack(G1Legs, 1), new Object [] {"XXX", "X*X", "X X", 'X', GeckoHide, '*', Item.legsLeather});
-
+		GameRegistry.addRecipe(new ItemStack(G1Legs, 1), new Object [] {"XXX", "X*X", "X X", 'X', geckoHide, '*', Item.legsLeather});
 		LanguageRegistry.addName(G1Boots, "Gecko Backed Leather Boots");
-		GameRegistry.addRecipe(new ItemStack(G1Boots, 1), new Object [] {"X*X", "X X", 'X', GeckoHide, '*', Item.bootsLeather});
-
+		GameRegistry.addRecipe(new ItemStack(G1Boots, 1), new Object [] {"X*X", "X X", 'X', geckoHide, '*', Item.bootsLeather});
 		LanguageRegistry.addName(EnclaveHelm, "Enclave Powered Helmet");
 		//GameRegistry.addRecipe(new ItemStack(EnclaveHelm), new Object [] {});
-
 		LanguageRegistry.addName(EnclaveChest, "Enclave Powered Chestplate");
 		//GameRegistry.addRecipe(new ItemStack(EnclaveChest), new Object [] {});
-
 		LanguageRegistry.addName(EnclaveLegs, "Enclave Powered Leggings");
 		//GameRegistry.addRecipe(new ItemStack(EnclaveLegs), new Object [] {});
-
 		LanguageRegistry.addName(EnclaveBoots, "Enclave Powered Boots");
 		//GameRegistry.addRecipe(new ItemStack(EnclaveBoots), new Object [] {});
-
 		LanguageRegistry.addName(HellHelm, "Advanced Power Armor Helmet");
 		//GameRegistry.addRecipe(new ItemStack(HellHelm), new Object [] {});
-
 		LanguageRegistry.addName(HellChest, "Advanced Power Armor Chestplate");
 		//GameRegistry.addRecipe(new ItemStack(HellChest), new Object [] {});
-
 		LanguageRegistry.addName(HellLegs, "Advanced Power Armor Leggings");
 		//GameRegistry.addRecipe(new ItemStack(HellLegs), new Object [] {});
-
 		LanguageRegistry.addName(HellBoots, "Advanced Power Armor Boots");
 		//GameRegistry.addRecipe(new ItemStack(HellBoots), new Object [] {});
-
 		LanguageRegistry.addName(WinterHelm, "Winterized T-51b Helmet");
 		//GameRegistry.addRecipe(new ItemStack(WinterHelm), new Object [] {});
-
 		LanguageRegistry.addName(WinterChest, "Winterized T-51b Chestplate");
 		//GameRegistry.addRecipe(new ItemStack(WinterChest), new Object [] {});
-
 		LanguageRegistry.addName(WinterLegs, "Winterized T-51b Leggings");
 		//GameRegistry.addRecipe(new ItemStack(WinterLegs), new Object [] {});
-
 		LanguageRegistry.addName(WinterBoots, "Winterized T-51b Boots");
 		//GameRegistry.addRecipe(new ItemStack(WinterBoots), new Object [] {});
-		
-		//============================================Entities==========================================================
 
+		//Version 1.7
+		LanguageRegistry.addName(grip, "Gun Grip");
+		GameRegistry.addRecipe(new ItemStack(grip), new Object [] {"X*X", "X*X", " X*", 'X', Item.leather, '*', ingotTungsten});
+		LanguageRegistry.addName(stock, "Stock");
+		GameRegistry.addRecipe(new ItemStack(stock), new Object [] {"XXX", " XX", 'X', Block.planks});
+		LanguageRegistry.addName(barrel, "Gun Barrel");
+		GameRegistry.addRecipe(new ItemStack(barrel), new Object [] {"XXX", "   ", "XXX", 'X', Item.ingotIron});
+		LanguageRegistry.addName(magnifier, "Laser Magnification Device");
+		GameRegistry.addRecipe(new ItemStack(magnifier), new Object [] {"X X", " * ", "X X", 'X', ingotTechnetium, '*', Item.diamond});
+		LanguageRegistry.addName(hammer, "Hammer");
+		GameRegistry.addRecipe(new ItemStack(hammer), new Object [] {"  X", "XX ", " X ", 'X', Item.ingotIron});
+		LanguageRegistry.addName(gasTank, "Motorcycle Gas Tank");
+		GameRegistry.addRecipe(new ItemStack(gasTank), new Object [] {" X ", "X*X", "XXX", 'X', ingotTungsten, '*', homemadeFuel});
+
+		//Version 1.7.1
+		LanguageRegistry.addName(PlasmaRifle, "Plasma Rifle");
+		
 		EntityRegistry.registerGlobalEntityID(EntityFGhoul.class, "FGhoul", ModLoader.getUniqueEntityId(), 230, 78);
 		LanguageRegistry.instance().addStringLocalization("entity.FGhoul.name", "en_US", "Feral Ghoul");
 		EntityRegistry.addSpawn(EntityFGhoul.class, 5, 1, 2, EnumCreatureType.monster, Wasteland);
@@ -898,7 +737,7 @@ public class FalloutMain
 		LanguageRegistry.instance().addStringLocalization("entity.Brahmin.name", "en_US", "Brahmin");
 		EntityRegistry.addSpawn(EntityBrahmin.class, 5, 1, 2, EnumCreatureType.creature, Wasteland);
 
-		/**EntityRegistry.registerGlobalEntityID(EntityGiantAnt.class, "GiantAnt", ModLoader.getUniqueEntityId(), 230, 78);
+		EntityRegistry.registerGlobalEntityID(EntityGiantAnt.class, "GiantAnt", ModLoader.getUniqueEntityId(), 230, 78);
 		LanguageRegistry.instance().addStringLocalization("entity.GiantAnt.name", "en_US", "Giant Ant");
 		EntityRegistry.addSpawn(EntityGiantAnt.class, 5, 1, 2, EnumCreatureType.creature, Wasteland);
 
@@ -914,70 +753,47 @@ public class FalloutMain
 		LanguageRegistry.instance().addStringLocalization("entity.Gecko.name", "en_US", "Young Gecko");
 		EntityRegistry.addSpawn(EntityRadroach.class, 5, 1, 2, EnumCreatureType.creature, Wasteland);
 
-		EntityRegistry.registerGlobalEntityID(EntityGecko.class, "Gecko", ModLoader.getUniqueEntityId(), 230, 78);
-		LanguageRegistry.instance().addStringLocalization("entity.Gecko.name", "en_US", "Young Gecko Hunter");**/
-
-		//============================================Blocks==========================================================
-
 		LanguageRegistry.addName(TungstenOre, "Tungsten Ore");
 		MinecraftForge.setBlockHarvestLevel(TungstenOre, "pickaxe", 2);
 		GameRegistry.registerBlock(TungstenOre);
-
 		LanguageRegistry.addName(TechnetiumOre, "Technetium Ore");
 		MinecraftForge.setBlockHarvestLevel(TechnetiumOre, "pickaxe", 3);
 		GameRegistry.registerBlock(TechnetiumOre);
-
 		LanguageRegistry.addName(SaturniteOre, "Saturnite Ore");
 		MinecraftForge.setBlockHarvestLevel(SaturniteOre, "pickaxe", 3);
 		GameRegistry.registerBlock(SaturniteOre);
-
 		LanguageRegistry.addName(BrocFlower, "Broc Flower");
 		GameRegistry.registerBlock(BrocFlower);
-
 		LanguageRegistry.addName(XanderRoot, "Xander Root");
 		GameRegistry.registerBlock(XanderRoot);
-
 		LanguageRegistry.addName(BPGlass, "Bulletproof Glass");
 		MinecraftForge.setBlockHarvestLevel(BPGlass, "pickaxe", 3);
 		GameRegistry.registerBlock(BPGlass);
-		GameRegistry.addRecipe(new ItemStack(BPGlass), new Object [] {"***", "*X*", "***", 'X', net.minecraft.block.Block.glass, '*', TungstenPlate});
-
+		GameRegistry.addRecipe(new ItemStack(BPGlass), new Object [] {"***", "*X*", "***", 'X', net.minecraft.block.Block.glass, '*', tungstenPlate});
 		LanguageRegistry.addName(UraniumOre, "Uranium Ore");
 		MinecraftForge.setBlockHarvestLevel(UraniumOre, "pickaxe", 2);
 		GameRegistry.registerBlock(UraniumOre);
-
 		LanguageRegistry.addName(SiliconDeposit, "Silicon Deposit");
 		MinecraftForge.setBlockHarvestLevel(TungstenOre, "pickaxe", 2);
 		GameRegistry.registerBlock(SiliconDeposit);
-
 		LanguageRegistry.addName(CarbonDeposit, "Carbon Deposit");
 		MinecraftForge.setBlockHarvestLevel(CarbonDeposit, "pickaxe", 1);
 		GameRegistry.registerBlock(CarbonDeposit);
-
 		LanguageRegistry.addName(AsbestosDeposit, "Asbestos Deposit");
 		MinecraftForge.setBlockHarvestLevel(AsbestosDeposit, "pickaxe", 2);
 		GameRegistry.registerBlock(AsbestosDeposit);
-
 		LanguageRegistry.addName(BarrelCactus, "Barrel Cactus");
 		GameRegistry.registerBlock(BarrelCactus);
-
 		LanguageRegistry.addName(BananaYucca, "Banna Yucca Plant");
 		GameRegistry.registerBlock(BananaYucca);
-
 		LanguageRegistry.addName(CaveFungus, "Cave Fungus");
 		GameRegistry.registerBlock(CaveFungus);
-
 		LanguageRegistry.addName(BuffaloGourd, "Buffalo Gourd Plant");
 		GameRegistry.registerBlock(BuffaloGourd);
-
 		LanguageRegistry.addName(Jalapeno, "Jalapeno Plant");
 		GameRegistry.registerBlock(Jalapeno);
 
-		//============================================Biomes=========================================================
-
 		GameRegistry.addBiome(Wasteland);
-
-		//============================================Generation=====================================================
 
 		GameRegistry.registerWorldGenerator(new WorldGenTungstenOre());
 		GameRegistry.registerWorldGenerator(new WorldGenTechOre());
@@ -988,26 +804,7 @@ public class FalloutMain
 		GameRegistry.registerWorldGenerator(new WorldGenAsbestosDeposit());
 		GameRegistry.registerWorldGenerator(new WorldGenCarbonDeposit());
 
-		//============================================Creative Tabs===================================================
-
-		LanguageRegistry.instance().addStringLocalization("itemGroup.FalloutTab", "en_US", "The Fallout Tab");
-		//AchievementPage.registerAchievementPage(FalloutPage);
-
 		proxy.registerRenderers();
-	}
-
-	public static void oreRegistration()
-	{
-		OreDictionary.registerOre("TungstenRod", new ItemStack(TungstenRod));
-		OreDictionary.registerOre("SiliconChunk", new ItemStack(SiliconChunk));
-		OreDictionary.registerOre("UraniumIngot", new ItemStack(UraniumIngot));
-
-	}
-
-	public static void addOreRecipes()
-	{
-		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(TungstenIngot, true, new Object [] {"XXX", "XXX", 'X', TungstenRod}));
-		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(SiliconBar, true, new Object [] {"XXX", "XXX", 'X', SiliconChunk}));
 	}
 
 	@PostInit

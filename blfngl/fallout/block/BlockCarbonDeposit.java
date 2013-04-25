@@ -25,6 +25,6 @@ public class BlockCarbonDeposit extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.Carbon.itemID;
+                return FalloutMain.carbon.itemID;
         }
 }

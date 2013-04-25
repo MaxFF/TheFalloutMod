@@ -78,6 +78,8 @@ public class Gun22LR extends Item
 					count += 1;
 				}                
 				var1.setItemDamage(0);
+				count = 0;
+
 			}
 			else
 			{

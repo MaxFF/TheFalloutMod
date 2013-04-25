@@ -60,7 +60,7 @@ public class EntityBOSPaladin extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.TungstenIngot.itemID;
+		return FalloutMain.ingotTungsten.itemID;
 	}
 
 	protected void dropRareDrop(int par1)

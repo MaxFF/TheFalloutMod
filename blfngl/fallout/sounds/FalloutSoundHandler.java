@@ -22,7 +22,7 @@ public class FalloutSoundHandler
 			event.manager.soundPoolSounds.addSound("blfngl/Silenced22Fire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/Silenced22Fire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/SniperFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/SniperFire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/LaserPistolFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/LaserPistolFire.ogg"));
-			
+
 			event.manager.soundPoolSounds.addSound("blfngl/AntTalk.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/AntTalk.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/AntTalk1.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/AntTalk1.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/AntHurt.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/AntHurt.ogg"));
@@ -36,10 +36,18 @@ public class FalloutSoundHandler
 			event.manager.soundPoolSounds.addSound("blfngl/NightstalkerTalk.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/NightstalkerTalk.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/NightstalkerTalk1.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/NightstalkerTalk1.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/NightstalkerHurt.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/NightstalkerHurt.ogg"));
+
+			//Version 1.7.1
+			event.manager.soundPoolSounds.addSound("blfngl/RCWReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/RCWReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/ComplianceReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/ComplianceReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/44Reload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/44Reload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/357Reload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/357Reload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/SniperReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/SniperReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/10MMFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/10MMFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/10MMReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/10MMReload.ogg"));
 			
-			//event.manager.soundPoolSounds.addSound("blfngl/RadioNV.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/RadioNV/RadioNV.ogg"));
 		}
-		
+
 		catch (Exception e)
 		{
 			System.err.println("Failed to register one or more sounds.");

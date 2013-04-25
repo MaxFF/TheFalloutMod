@@ -1,11 +1,11 @@
 package blfngl.fallout.gun;
 
-import blfngl.fallout.common.FalloutMain;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import blfngl.fallout.common.FalloutMain;
 
 public class GunMFCell extends Item
 {
@@ -80,6 +80,8 @@ public class GunMFCell extends Item
 				}
 				//var3.inventory.consumeInventoryItem(FalloutMain.MFCell.itemID);
 				var1.setItemDamage(0);
+				count = 0;
+
 			}
 			else
 			{

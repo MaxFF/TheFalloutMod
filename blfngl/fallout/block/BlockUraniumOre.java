@@ -24,6 +24,6 @@ public class BlockUraniumOre extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.UraniumIngot.itemID;
+                return FalloutMain.ingotUranium.itemID;
         }
 }

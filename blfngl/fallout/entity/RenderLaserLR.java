@@ -7,14 +7,14 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import blfngl.fallout.gun.EntityLaserLR;
+import blfngl.fallout.gun.EntityLaser;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderLaserLR extends Render
 {
-    public void RenderLaserLR(EntityLaserLR par1EntityLaserLR, double par2, double par4, double par6, float par8, float par9)
+    public void RenderLaserLR(EntityLaser par1EntityLaserLR, double par2, double par4, double par6, float par8, float par9)
     {
         this.loadTexture("/item/arrows.png");
         GL11.glPushMatrix();
@@ -76,6 +76,6 @@ public class RenderLaserLR extends Render
      */
     public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
     {
-        this.RenderLaserLR((EntityLaserLR)par1Entity, par2, par4, par6, par8, par9);
+        this.RenderLaserLR((EntityLaser)par1Entity, par2, par4, par6, par8, par9);
     }
 }

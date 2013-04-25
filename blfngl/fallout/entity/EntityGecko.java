@@ -58,7 +58,7 @@ public class EntityGecko extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.BottleCap.itemID;
+		return FalloutMain.bottleCap.itemID;
 	}
 
 	protected void dropRareDrop(int par1)
@@ -66,15 +66,15 @@ public class EntityGecko extends EntityMob
 		switch (this.rand.nextInt(3))
 		{
 		case 0:
-			this.dropItem(FalloutMain.GeckoHide.itemID, 2);
+			this.dropItem(FalloutMain.geckoHide.itemID, 2);
 			break;
 
 		case 1:
-			this.dropItem(FalloutMain.GeckoHide.itemID, 3);
+			this.dropItem(FalloutMain.geckoHide.itemID, 3);
 			break;
 
 		case 2:
-			this.dropItem(FalloutMain.GeckoHide.itemID, 1);
+			this.dropItem(FalloutMain.geckoHide.itemID, 1);
 		}
 	}
 } 

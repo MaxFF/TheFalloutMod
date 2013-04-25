@@ -24,7 +24,7 @@ public class ItemSlasher extends ItemFood
 		entityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 1 * 120, 0));
 		entityPlayer.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 1 * 120, 0));
 
-		return new ItemStack(FalloutMain.EmptySyringe);
+		return new ItemStack(FalloutMain.syringeEmpty);
 	}
 	public void func_94581_a(IconRegister iconRegister)
 	{

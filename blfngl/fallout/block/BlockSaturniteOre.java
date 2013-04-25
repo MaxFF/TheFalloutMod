@@ -24,6 +24,6 @@ public class BlockSaturniteOre extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.SatRod.itemID;
+                return FalloutMain.chunkSaturnite.itemID;
         }
 }

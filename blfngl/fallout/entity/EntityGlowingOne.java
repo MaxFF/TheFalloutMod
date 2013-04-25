@@ -66,7 +66,7 @@ public class EntityGlowingOne extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.BottleCap.itemID;
+		return FalloutMain.bottleCap.itemID;
 	}
 
 	protected void dropRareDrop(int par1)

@@ -24,6 +24,6 @@ public class BlockSiliconDeposit extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.SiliconChunk.itemID;
+                return FalloutMain.chunkSilicon.itemID;
         }
 }
