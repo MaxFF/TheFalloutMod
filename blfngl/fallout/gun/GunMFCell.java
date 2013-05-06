@@ -72,16 +72,10 @@ public class GunMFCell extends Item
 			{
 				this.reloadTime = 0;
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
-				while (count < clipSize)
-				{
-					var3.inventory.consumeInventoryItem(FalloutMain.MFCell.itemID);
-					count += 1;
-					var1.setItemDamage(count);
-				}
-				//var3.inventory.consumeInventoryItem(FalloutMain.MFCell.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.MFCell.itemID);
+				count += 1;
 				var1.setItemDamage(0);
 				count = 0;
-
 			}
 			else
 			{

@@ -24,12 +24,12 @@ public class ArmorBaseWinter extends ItemArmor implements IArmorTextureProvider
 	{
 		if ( par1.itemID==FalloutMain.WinterHelm.itemID|| par1.itemID==FalloutMain.WinterChest.itemID|| par1.itemID==FalloutMain.WinterBoots.itemID)
 		{
-			return "/blfngl/fallout/textures/Gecko1_1.png";
+			return "/blfngl/fallout/textures/Winter.png";
 		}
 		if(par1.itemID==FalloutMain.WinterLegs.itemID)
 		{
-			return "/blfngl/fallout/textures/Gecko1_2.png";
+			return "/blfngl/fallout/textures/Winter.png";
 		}
-		return "/blfngl/fallout/textures/Gekco1_1.png";
+		return "/blfngl/fallout/textures/Winter.png";
 	}      
 }

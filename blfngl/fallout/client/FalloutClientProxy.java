@@ -27,8 +27,9 @@ import blfngl.fallout.entity.RenderGlowingOne;
 import blfngl.fallout.entity.RenderNightStalker;
 import blfngl.fallout.entity.RenderRadio;
 import blfngl.fallout.entity.RenderRadroach;
-import blfngl.fallout.gun.EntityBullet;
 import blfngl.fallout.sounds.FalloutSoundHandler;
+import blfngl.fallout.throwing.EntityFragGrenade;
+import blfngl.fallout.throwing.RenderFragGrenade;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -39,8 +40,6 @@ public class FalloutClientProxy extends FalloutCommonProxy
 	@Override
 	public void registerRenderers()
 	{
-		//MinecraftForgeClient.preloadTexture(ITEMS_PNG);
-
 		RenderingRegistry.registerEntityRenderingHandler(EntityFGhoul.class, new RenderFGhoul(new ModelBiped(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGlowingOne.class, new RenderGlowingOne(new ModelBiped(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBrahmin.class, new RenderBrahmin(new ModelBrahmin(), 0.5F));
@@ -50,7 +49,8 @@ public class FalloutClientProxy extends FalloutCommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityRadroach.class, new RenderRadroach(new ModelSilverfish(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityRadio.class, new RenderRadio(new ModelRadio(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGecko.class, new RenderGecko(new ModelGecko(), 0.5F));
-
+		//RenderingRegistry.registerEntityRenderingHandler(EntityFragGrenade.class, new RenderFragGrenade(new ModelBiped(), 0.5F));
+		
 		//TODO MinecraftForgeClient.registerItemRenderer(FalloutMain.LaserRifle.itemID, (IItemRenderer)new RenderLaserRifle());
 		//TODO MinecraftForgeClient.registerItemRenderer(FalloutMain.g357Mag.itemID, (IItemRenderer)new RenderRevolver());
 		//MinecraftForgeClient.registerItemRenderer(FalloutMain.g44Mag.itemID, (IItemRenderer)new RenderRevolver());

@@ -53,11 +53,18 @@ import blfngl.fallout.food.BlockBuffaloGourd;
 import blfngl.fallout.food.BlockCaveFungus;
 import blfngl.fallout.food.BlockJalapeno;
 import blfngl.fallout.food.BlockXanderRoot;
+import blfngl.fallout.food.ItemHP;
+import blfngl.fallout.food.ItemHydra;
+import blfngl.fallout.food.ItemJet;
+import blfngl.fallout.food.ItemMedEx;
 import blfngl.fallout.food.ItemNukaQuartz;
 import blfngl.fallout.food.ItemNukaVictory;
+import blfngl.fallout.food.ItemPsycho;
 import blfngl.fallout.food.ItemRocket;
 import blfngl.fallout.food.ItemSlasher;
+import blfngl.fallout.food.ItemStealthBoy;
 import blfngl.fallout.food.ItemSuperStimpak;
+import blfngl.fallout.food.ItemTurbo;
 import blfngl.fallout.food.ItemWeaponBinding;
 import blfngl.fallout.food.ItembCaveFungus;
 import blfngl.fallout.food.ItembXanderRoot;
@@ -79,6 +86,7 @@ import blfngl.fallout.melee.WeapBallisticFist;
 import blfngl.fallout.melee.WeapBotE;
 import blfngl.fallout.melee.WeapCosFire;
 import blfngl.fallout.melee.WeapDisplacerGlove;
+import blfngl.fallout.melee.WeapFlamingShish;
 import blfngl.fallout.melee.WeapPowerFist;
 import blfngl.fallout.melee.WeapSatHeatFist;
 import blfngl.fallout.melee.WeapSciGlove;
@@ -89,6 +97,7 @@ import blfngl.fallout.tabs.TabFalloutFood;
 import blfngl.fallout.tabs.TabFalloutGuns;
 import blfngl.fallout.tabs.TabFalloutMisc;
 import blfngl.fallout.tabs.TabFalloutWeap;
+import blfngl.fallout.throwing.EntityFragGrenade;
 import blfngl.fallout.throwing.ItemBottleCapMine;
 import blfngl.fallout.throwing.ItemFragGrenade;
 import cpw.mods.fml.common.Mod;
@@ -136,7 +145,7 @@ public class FalloutMain
 
 	public static EnumToolMaterial SATHEAT = EnumHelper.addToolMaterial("SATHEAT", 0, 595, 10.0F, 8, 27);
 	public static EnumToolMaterial PFIST = EnumHelper.addToolMaterial("PFIST", 0, 395, 10.0F, 7, 25);
-	public static EnumToolMaterial SCI = EnumHelper.addToolMaterial("SCI", 0, 316, 5.0F, 3, 6);
+	public static EnumToolMaterial SCI = EnumHelper.addToolMaterial("SCI", 0, 316, 5.0F, 1, 6);
 	public static EnumToolMaterial SAT = EnumHelper.addToolMaterial("SAT", 0, 795, 10.0F, 8, 25);
 	public static EnumToolMaterial CLEAVE = EnumHelper.addToolMaterial("CLEAVE", 0, 995, 10.0F, 3, 27);
 	public static EnumToolMaterial COMKNIFE = EnumHelper.addToolMaterial("COMKNIFE", 0, 995, 5.0F, 4, 27);
@@ -158,7 +167,6 @@ public class FalloutMain
 	public static final Item LaserRCW = new GunMFCell(510, 2, 60, 2, 1, "blfngl.LaserFire", "blfngl.RCWReload").setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutGuns);
 	public static final Item Compliance = new GunECell(511, 2, 30, 2, 3, "blfngl.LaserPistolFire", "blfngl.ComplianceReload").setUnlocalizedName("Compliance").setCreativeTab(TabFalloutGuns);
 	public static final Item LaserRifle = new GunMFCell(512, 7, 24, 3, 4, "blfngl.LaserFire", "blfngl.LaserReload").setUnlocalizedName("LaserRifle").setCreativeTab(TabFalloutGuns);
-
 	public static final Item g44Mag = new Gun44(513, 10, 6, 3, 5, "blfngl.44Fire", "blfngl.44Reload").setUnlocalizedName("g44Mag").setCreativeTab(TabFalloutGuns);
 	public static final Item g357Mag = new Gun357(514, 8, 6, 1, 5, "blfngl.357Fire", "blfngl.357Reload").setUnlocalizedName("g357Mag").setCreativeTab(TabFalloutGuns);
 	public static final Item Silenced22 = new Gun22LR(515, 12, 12, 2, 2, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire").setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutGuns);
@@ -270,12 +278,12 @@ public class FalloutMain
 	public static final Item PorkBeans = new BaseFood(467, 5, 0.3F, false).setUnlocalizedName("PorkBeans").setCreativeTab(TabFalloutFood);
 	public static final Item Salisbury = new BaseFood(468, 5, 0.3F, false).setUnlocalizedName("Salisbury").setCreativeTab(TabFalloutFood);
 	public static final Item YumYum = new BaseFood(469, 5, 0.3F, false).setUnlocalizedName("YumYum").setCreativeTab(TabFalloutFood);
-	public static final Item Psycho = new BaseFood(470, 1, 0.3F, false).setPotionEffect(Potion.damageBoost.id, 60, 0, 1F).setUnlocalizedName("Psycho").setCreativeTab(TabFalloutFood);
-	public static final Item MedEx = new BaseFood(471, 1, 0.3F, false).setPotionEffect(Potion.resistance.id, 60, 0, 1F).setUnlocalizedName("MedEx").setCreativeTab(TabFalloutFood);
+	public static final Item Psycho = new ItemPsycho(470).setUnlocalizedName("Psycho").setCreativeTab(TabFalloutFood);
+	public static final Item MedEx = new ItemMedEx(471).setUnlocalizedName("MedEx").setCreativeTab(TabFalloutFood);
 	public static final Item Slasher = new ItemSlasher(472, 1, false).setUnlocalizedName("Slasher").setCreativeTab(TabFalloutFood);
-	public static final Item Hydra = new BaseDrink(473, 1, 0.3F, false).setPotionEffect(Potion.regeneration.id, 60, 2, 2F).setUnlocalizedName("Hydra").setCreativeTab(TabFalloutFood);
+	public static final Item Hydra = new ItemHydra(473).setUnlocalizedName("Hydra").setCreativeTab(TabFalloutFood);
 	public static final Item NukaCola = new BaseFood(474, 7, 0.3F, false).setUnlocalizedName("NukaCola").setCreativeTab(TabFalloutFood);
-	public static final Item HealingPowder = new BaseFood(475, 1, 0.3F, false).setPotionEffect(Potion.heal.id, 2, 0, 1F).setUnlocalizedName("HealingPowder").setCreativeTab(TabFalloutFood);
+	public static final Item HealingPowder = new ItemHP(475).setUnlocalizedName("HealingPowder").setCreativeTab(TabFalloutFood);
 	public static final Item bBarrelCactus = new BaseFood(476, 8, 0.3F, false).setUnlocalizedName("bBarrelCactus").setCreativeTab(TabFalloutFood);
 	public static final Item bBrocFlower = new BaseFood(477, 8, 0.3F, false).setUnlocalizedName("bBrocFlower").setCreativeTab(TabFalloutFood);
 	public static final Item bXanderRoot = new ItembXanderRoot(478, 8, 0.3F, false).setUnlocalizedName("bXanderRoot").setCreativeTab(TabFalloutFood);
@@ -300,15 +308,15 @@ public class FalloutMain
 	public static final Item bCaveFungus = new ItembCaveFungus(497, 6, 0.3F, false).setUnlocalizedName("bCaveFungus").setCreativeTab(TabFalloutFood);
 	public static final Item bBuffaloGourd = new BaseFood(498, 4, 0.3F, false).setUnlocalizedName("bBuffaloGourd").setCreativeTab(TabFalloutFood);
 	public static final Item bJalapeno = new BaseFood(499, 4, 0.3F, false).setUnlocalizedName("bJalapeno").setCreativeTab(TabFalloutFood);
-	public static final Item Jet = new BaseDrink(500, 1, 0.3F, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setUnlocalizedName("Jet").setCreativeTab(TabFalloutFood);
+	public static final Item Jet = new ItemJet(500).setUnlocalizedName("Jet").setCreativeTab(TabFalloutFood);
 	public static final Item Rocket = new ItemRocket(501, 1, false).setUnlocalizedName("Rocket").setCreativeTab(TabFalloutFood);
 	public static final Item NukaQuartz = new ItemNukaQuartz(502, 1, false).setUnlocalizedName("NukaQuartz").setCreativeTab(TabFalloutFood);
 	public static final Item NukaCold = new BaseDrink(503, 1, 0.3F, false).setUnlocalizedName("NukaCold").setCreativeTab(TabFalloutFood);
 	public static final Item NukaVictory = new ItemNukaVictory(504, 1, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setPotionEffect(Potion.moveSpeed.id, 60, 0, 1F).setUnlocalizedName("NukaVictory").setCreativeTab(TabFalloutFood);
 	public static final Item WeaponBinding = new ItemWeaponBinding(505, 1, false).setUnlocalizedName("WeaponBinding").setCreativeTab(TabFalloutFood);
 	public static final Item Vodka = new BaseDrink(506, 1, 0.3F, false).setPotionEffect(Potion.damageBoost.id, 60, 0, 1F).setPotionEffect(Potion.confusion.id, 60, 0, 1F).setPotionEffect(Potion.poison.id, 60, 0 , 1F).setUnlocalizedName("Vodka").setCreativeTab(TabFalloutFood);
-	public static final Item StealthBoy = new BaseFood(507, 5, 0.3F, false).setPotionEffect(Potion.invisibility.id, 60, 0, 1F).setUnlocalizedName("StealthBoy").setCreativeTab(TabFalloutFood);
-	public static final Item Turbo = new BaseFood(508, 5, 0.3F, false).setPotionEffect(Potion.digSpeed.id, 60, 0, 1F).setPotionEffect(Potion.moveSpeed.id, 60, 0, 1F).setUnlocalizedName("Turbo").setCreativeTab(TabFalloutFood);
+	public static final Item StealthBoy = new ItemStealthBoy(507).setUnlocalizedName("StealthBoy").setCreativeTab(TabFalloutFood);
+	public static final Item Turbo = new ItemTurbo(508).setUnlocalizedName("Turbo").setCreativeTab(TabFalloutFood);
 
 	//============================================Armor==========================================================
 
@@ -317,30 +325,31 @@ public class FalloutMain
 	public static final Item T45Legs = (new ArmorBaseT45(544, T45POWER, 1, 2)).setUnlocalizedName("T45Legs").setCreativeTab(TabFalloutArmor);
 	public static final Item T45Boots = (new ArmorBaseT45(545, T45POWER, 1, 3)).setUnlocalizedName("T45Boots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item T51Helm = (new ArmorBaseT51(546, T51POWER, 2, 0)).setUnlocalizedName("T51Helm").setCreativeTab(TabFalloutArmor);
-	public static final Item T51Chest = (new ArmorBaseT51(547, T51POWER, 2, 1)).setUnlocalizedName("T51Chest").setCreativeTab(TabFalloutArmor);
-	public static final Item T51Legs = (new ArmorBaseT51(548, T51POWER, 2, 2)).setUnlocalizedName("T51Legs").setCreativeTab(TabFalloutArmor);
-	public static final Item T51Boots = (new ArmorBaseT51(549, T51POWER, 2, 3)).setUnlocalizedName("T51Boots").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Helm = (new ArmorBaseT51(546, T51POWER, 1, 0)).setUnlocalizedName("T51Helm").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Chest = (new ArmorBaseT51(547, T51POWER, 1, 1)).setUnlocalizedName("T51Chest").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Legs = (new ArmorBaseT51(548, T51POWER, 1, 2)).setUnlocalizedName("T51Legs").setCreativeTab(TabFalloutArmor);
+	public static final Item T51Boots = (new ArmorBaseT51(549, T51POWER, 1, 3)).setUnlocalizedName("T51Boots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item G1Helm = (new ArmorBaseGecko1(550, EnumArmorMaterial.CHAIN, 3, 0)).setUnlocalizedName("G1Helm").setCreativeTab(TabFalloutArmor);
-	public static final Item G1Chest = (new ArmorBaseGecko1(551, EnumArmorMaterial.CHAIN, 3, 1)).setUnlocalizedName("G1Chest").setCreativeTab(TabFalloutArmor);
-	public static final Item G1Legs = (new ArmorBaseGecko1(552, EnumArmorMaterial.CHAIN, 3, 2)).setUnlocalizedName("G1Legs").setCreativeTab(TabFalloutArmor);
-	public static final Item G1Boots = (new ArmorBaseGecko1(553, EnumArmorMaterial.CHAIN, 3, 3)).setUnlocalizedName("G1Boots").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Helm = (new ArmorBaseGecko1(550, EnumArmorMaterial.CHAIN, 1, 0)).setUnlocalizedName("G1Helm").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Chest = (new ArmorBaseGecko1(551, EnumArmorMaterial.CHAIN, 1, 1)).setUnlocalizedName("G1Chest").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Legs = (new ArmorBaseGecko1(552, EnumArmorMaterial.CHAIN, 1, 2)).setUnlocalizedName("G1Legs").setCreativeTab(TabFalloutArmor);
+	public static final Item G1Boots = (new ArmorBaseGecko1(553, EnumArmorMaterial.CHAIN, 1, 3)).setUnlocalizedName("G1Boots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item HellHelm = (new ArmorBaseHellfire(554, HELLFIRE, 4, 0)).setUnlocalizedName("HellHelm").setCreativeTab(TabFalloutArmor);
-	public static final Item HellChest = (new ArmorBaseHellfire(555, HELLFIRE, 4, 1)).setUnlocalizedName("HellChest").setCreativeTab(TabFalloutArmor);
-	public static final Item HellLegs = (new ArmorBaseHellfire(556, HELLFIRE, 4, 2)).setUnlocalizedName("HellLegs").setCreativeTab(TabFalloutArmor);
-	public static final Item HellBoots = (new ArmorBaseHellfire(557, HELLFIRE, 4, 3)).setUnlocalizedName("HellBoots").setCreativeTab(TabFalloutArmor);
+	public static final Item HellHelm = (new ArmorBaseHellfire(554, HELLFIRE, 1, 0)).setUnlocalizedName("HellHelm").setCreativeTab(TabFalloutArmor);
+	public static final Item HellChest = (new ArmorBaseHellfire(555, HELLFIRE, 1, 1)).setUnlocalizedName("HellChest").setCreativeTab(TabFalloutArmor);
+	public static final Item HellLegs = (new ArmorBaseHellfire(556, HELLFIRE, 1, 2)).setUnlocalizedName("HellLegs").setCreativeTab(TabFalloutArmor);
+	public static final Item HellBoots = (new ArmorBaseHellfire(557, HELLFIRE, 1, 3)).setUnlocalizedName("HellBoots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item WinterHelm = (new ArmorBaseWinter(558, WINTER, 5, 0)).setUnlocalizedName("WinterHelm").setCreativeTab(TabFalloutArmor);
-	public static final Item WinterChest = (new ArmorBaseWinter(559, WINTER, 5, 1)).setUnlocalizedName("WinterChest").setCreativeTab(TabFalloutArmor);
-	public static final Item WinterLegs = (new ArmorBaseWinter(560, WINTER, 5, 2)).setUnlocalizedName("WinterLegs").setCreativeTab(TabFalloutArmor);
-	public static final Item WinterBoots = (new ArmorBaseWinter(561, WINTER, 5, 3)).setUnlocalizedName("WinterBoots").setCreativeTab(TabFalloutArmor);
+	//Skins creds: BillSkins
+	public static final Item WinterHelm = (new ArmorBaseWinter(558, WINTER, 1, 0)).setUnlocalizedName("WinterHelm").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterChest = (new ArmorBaseWinter(559, WINTER, 1, 1)).setUnlocalizedName("WinterChest").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterLegs = (new ArmorBaseWinter(560, WINTER, 1, 2)).setUnlocalizedName("WinterLegs").setCreativeTab(TabFalloutArmor);
+	public static final Item WinterBoots = (new ArmorBaseWinter(561, WINTER, 1, 3)).setUnlocalizedName("WinterBoots").setCreativeTab(TabFalloutArmor);
 
-	public static final Item EnclaveHelm = (new ArmorBaseEnclave(562, ENCLAVE, 6, 0)).setUnlocalizedName("EnclaveHelm").setCreativeTab(TabFalloutArmor);
-	public static final Item EnclaveChest = (new ArmorBaseEnclave(563, ENCLAVE, 6, 1)).setUnlocalizedName("EnclaveChest").setCreativeTab(TabFalloutArmor);
-	public static final Item EnclaveLegs = (new ArmorBaseEnclave(564, ENCLAVE, 6, 2)).setUnlocalizedName("EnclaveLegs").setCreativeTab(TabFalloutArmor);
-	public static final Item EnclaveBoots = (new ArmorBaseEnclave(565, ENCLAVE, 6, 3)).setUnlocalizedName("EnclaveBoots").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveHelm = (new ArmorBaseEnclave(562, ENCLAVE, 1, 0)).setUnlocalizedName("EnclaveHelm").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveChest = (new ArmorBaseEnclave(563, ENCLAVE, 1, 1)).setUnlocalizedName("EnclaveChest").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveLegs = (new ArmorBaseEnclave(564, ENCLAVE, 1, 2)).setUnlocalizedName("EnclaveLegs").setCreativeTab(TabFalloutArmor);
+	public static final Item EnclaveBoots = (new ArmorBaseEnclave(565, ENCLAVE, 1, 3)).setUnlocalizedName("EnclaveBoots").setCreativeTab(TabFalloutArmor);
 
 	//============================================Blocks=========================================================
 
@@ -378,7 +387,8 @@ public class FalloutMain
 	public static final Item magRail = new BaseItem(573).setUnlocalizedName("MagRail").setCreativeTab(TabFalloutGuns);
 	public static final Item gun10MM = new Gun10MM(574, 4, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload").setUnlocalizedName("10MM").setCreativeTab(TabFalloutGuns);
 	public static final Item a10MM = new BaseItem(575).setUnlocalizedName("a10MM").setCreativeTab(TabFalloutGuns);
-
+	public static final Item shiskebabFlaming = new WeapFlamingShish(576).setUnlocalizedName("Shishkebab").setCreativeTab(TabFalloutWeap);
+	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -396,7 +406,7 @@ public class FalloutMain
 		LanguageRegistry.addName(Compliance, "Compliance Regulator");
 		GameRegistry.addRecipe(new ItemStack(Compliance), new Object [] {"X**", "&%*", " # ", 'X', barrel, '*', ingotTungsten, '#', grip, '&', MFCell, '%', Block.slowSand});
 		LanguageRegistry.addName(LaserRifle, "AER7 Laser Rifle");
-		GameRegistry.addRecipe(new ItemStack(LaserRifle), new Object [] {"*X#", "X%X", "  ^", 'X', ingotTungsten, '*', magnifier, '#', stock, '^', grip, '%', Item.diamond});
+		GameRegistry.addRecipe(new ItemStack(LaserRifle), new Object [] {"*X#", "X%X", "  ^", 'X', ingotTungsten, '*', magRail, '#', stock, '^', grip, '%', Item.diamond});
 		LanguageRegistry.addName(g357Mag, ".357 Magnum");
 		GameRegistry.addRecipe(new ItemStack(g357Mag), new Object [] {"*X^", " *#", "  &", '#', Item.ingotIron, '*', barrel, 'X', ingotTungsten, '&', grip, '^', hammer});
 		LanguageRegistry.addName(g44Mag, ".44 Magnum");
@@ -752,6 +762,8 @@ public class FalloutMain
 		EntityRegistry.registerGlobalEntityID(EntityGecko.class, "Gecko", ModLoader.getUniqueEntityId(), 230, 78);
 		LanguageRegistry.instance().addStringLocalization("entity.Gecko.name", "en_US", "Young Gecko");
 		EntityRegistry.addSpawn(EntityRadroach.class, 5, 1, 2, EnumCreatureType.creature, Wasteland);
+		
+		EntityRegistry.registerGlobalEntityID(EntityFragGrenade.class, "FragGrenade", ModLoader.getUniqueEntityId());
 
 		LanguageRegistry.addName(TungstenOre, "Tungsten Ore");
 		MinecraftForge.setBlockHarvestLevel(TungstenOre, "pickaxe", 2);
