@@ -16,7 +16,7 @@ public class ArmorBaseT51 extends ItemArmor implements IArmorTextureProvider{
 
 	public void func_94581_a(IconRegister iconRegister)
 	{
-		iconIndex = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
 
 	public String getArmorTextureFile(ItemStack par1){

@@ -22,6 +22,6 @@ public class BaseMelee extends ItemSword
 	
 	public void func_94581_a(IconRegister iconRegister)
 	{
-		iconIndex = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
 }
