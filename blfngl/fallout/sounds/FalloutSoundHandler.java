@@ -45,7 +45,9 @@ public class FalloutSoundHandler
 			event.manager.soundPoolSounds.addSound("blfngl/SniperReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/SniperReload.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/10MMFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/10MMFire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/10MMReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/10MMReload.ogg"));
-			
+			event.manager.soundPoolSounds.addSound("blfngl/ShotgunFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/ShotgunFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/ShotgunReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/ShotgunReload.ogg"));
+
 		}
 
 		catch (Exception e)

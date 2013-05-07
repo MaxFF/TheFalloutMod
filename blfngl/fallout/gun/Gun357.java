@@ -1,13 +1,14 @@
 package blfngl.fallout.gun;
 
-import blfngl.fallout.common.FalloutMain;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
+import blfngl.fallout.common.FalloutMain;
 
-public class Gun357 extends Item
+public class Gun357 extends ItemSword
 {
 	private int damage;
 	private int reloadtick;
@@ -21,9 +22,9 @@ public class Gun357 extends Item
 	public int count = 0;
 	public int clipSize;
 
-	public Gun357(int var1, int var2, int var3, int var4, int var5, String var6, String var7)
+	public Gun357(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
 	{
-		super(var1);
+		super(var1, var8);
 		this.damage = var2;
 		this.firemax = var5;
 		this.firetick = this.firemax;

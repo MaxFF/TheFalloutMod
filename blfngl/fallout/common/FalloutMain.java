@@ -75,6 +75,7 @@ import blfngl.fallout.gun.Gun308;
 import blfngl.fallout.gun.Gun357;
 import blfngl.fallout.gun.Gun44;
 import blfngl.fallout.gun.GunECell;
+import blfngl.fallout.gun.GunGauge12;
 import blfngl.fallout.gun.GunIncinerator;
 import blfngl.fallout.gun.GunMFCell;
 import blfngl.fallout.item.BaseDrink;
@@ -122,7 +123,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  * The code in this repository, in any form, is the copyright of blfngl
  **/
 
-@Mod(modid = "fallout", name = "The Fallout Mod", version = "MC1.5.1 - TFMv1.7")
+@Mod(modid = "fallout", name = "The Fallout Mod", version = "MC1.5.2 - TFMv1.7.1")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
 public class FalloutMain
@@ -153,6 +154,7 @@ public class FalloutMain
 	public static EnumToolMaterial COS = EnumHelper.addToolMaterial("COS", 0, 995, 10.0F, 10, 27);
 	public static EnumToolMaterial COSFIRE = EnumHelper.addToolMaterial("COSKNIFE", 0, 1024, 10.0F, 12, 27);
 	public static EnumToolMaterial PINT = EnumHelper.addToolMaterial("PINT", 0, 100, 200.0F, 200, 10);
+	public static EnumToolMaterial GUN = EnumHelper.addToolMaterial("GUN", 0, 0, 0.0F, 0, 0);
 
 	public static EnumArmorMaterial T45POWER = EnumHelper.addArmorMaterial("T45POWER", 35, new int[]{2, 6, 5, 2}, 25);
 	public static EnumArmorMaterial ENCLAVE = EnumHelper.addArmorMaterial("ENCLAVE", 37, new int[]{2, 6, 5, 2}, 28);
@@ -160,19 +162,15 @@ public class FalloutMain
 	public static EnumArmorMaterial HELLFIRE = EnumHelper.addArmorMaterial("HELLFIRE", 41, new int []{2, 6, 5, 2}, 35);
 	public static EnumArmorMaterial WINTER = EnumHelper.addArmorMaterial("WINTER", 42, new int []{2, 6, 5, 2}, 35);
 
-	//========================================Guns==========================================================
-
 	//KEY: ID, damage, usage size/clip, reload time, fire time, fire sound, reload sound
 	public static final Item Incinerator = new GunIncinerator(509).setUnlocalizedName("Incinerator").setCreativeTab(TabFalloutGuns);
-	public static final Item LaserRCW = new GunMFCell(510, 2, 60, 2, 1, "blfngl.LaserFire", "blfngl.RCWReload").setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutGuns);
-	public static final Item Compliance = new GunECell(511, 2, 30, 2, 3, "blfngl.LaserPistolFire", "blfngl.ComplianceReload").setUnlocalizedName("Compliance").setCreativeTab(TabFalloutGuns);
-	public static final Item LaserRifle = new GunMFCell(512, 7, 24, 3, 4, "blfngl.LaserFire", "blfngl.LaserReload").setUnlocalizedName("LaserRifle").setCreativeTab(TabFalloutGuns);
-	public static final Item g44Mag = new Gun44(513, 10, 6, 3, 5, "blfngl.44Fire", "blfngl.44Reload").setUnlocalizedName("g44Mag").setCreativeTab(TabFalloutGuns);
-	public static final Item g357Mag = new Gun357(514, 8, 6, 1, 5, "blfngl.357Fire", "blfngl.357Reload").setUnlocalizedName("g357Mag").setCreativeTab(TabFalloutGuns);
-	public static final Item Silenced22 = new Gun22LR(515, 12, 12, 2, 2, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire").setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutGuns);
-	public static final Item Sniper308 = new Gun308(516, 7, 5, 3, 2, "blfngl.SniperFire", "blfngl.SniperReload").setUnlocalizedName("Sniper308").setCreativeTab(TabFalloutGuns);
-
-	//========================================Melee Weapons=================================================
+	public static final Item LaserRCW = new GunMFCell(510, 2, 60, 2, 1, "blfngl.LaserFire", "blfngl.RCWReload", GUN).setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutGuns);
+	public static final Item Compliance = new GunECell(511, 2, 30, 2, 3, "blfngl.LaserPistolFire", "blfngl.ComplianceReload", GUN).setUnlocalizedName("Compliance").setCreativeTab(TabFalloutGuns);
+	public static final Item LaserRifle = new GunMFCell(512, 7, 24, 3, 4, "blfngl.LaserFire", "blfngl.LaserReload", GUN).setUnlocalizedName("LaserRifle").setCreativeTab(TabFalloutGuns);
+	public static final Item g44Mag = new Gun44(513, 10, 6, 3, 5, "blfngl.44Fire", "blfngl.44Reload", GUN).setUnlocalizedName("g44Mag").setCreativeTab(TabFalloutGuns);
+	public static final Item g357Mag = new Gun357(514, 8, 6, 1, 5, "blfngl.357Fire", "blfngl.357Reload", GUN).setUnlocalizedName("g357Mag").setCreativeTab(TabFalloutGuns);
+	public static final Item Silenced22 = new Gun22LR(515, 12, 12, 2, 2, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire", GUN).setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutGuns);
+	public static final Item Sniper308 = new Gun308(516, 7, 5, 3, 2, "blfngl.SniperFire", "blfngl.SniperReload", GUN).setUnlocalizedName("Sniper308").setCreativeTab(TabFalloutGuns);
 
 	public static final Item BotE = new WeapBotE(517, BOTE).setUnlocalizedName("BotE").setCreativeTab(TabFalloutWeap);
 	public static final Item BumperSword = new WeapBotE(518, EnumToolMaterial.EMERALD).setUnlocalizedName("BumperSword").setCreativeTab(TabFalloutWeap);
@@ -189,8 +187,6 @@ public class FalloutMain
 	public static final Item Switchblade = new BaseMelee(529, EnumToolMaterial.STONE).setUnlocalizedName("Switchblade").setCreativeTab(TabFalloutWeap);
 	public static final Item PintSizedKnife = new BaseMelee(530, PINT).setUnlocalizedName("PintSizedKnife").setCreativeTab(TabFalloutWeap);
 
-	//========================================Unarmed Weapons===============================================
-
 	public static final Item BallisticFist = new WeapBallisticFist(531, EnumToolMaterial.IRON).setUnlocalizedName("BallisticFist").setCreativeTab(TabFalloutWeap);
 	public static final Item BladedGauntlet = new BaseMelee(532, EnumToolMaterial.IRON).setUnlocalizedName("BladedGauntlet").setCreativeTab(TabFalloutWeap);
 	public static final Item BoxingGloves = new BaseMelee(533, EnumToolMaterial.WOOD).setUnlocalizedName("BoxingGloves").setCreativeTab(TabFalloutWeap);
@@ -202,8 +198,6 @@ public class FalloutMain
 	public static final Item SatHeatFist = new WeapSatHeatFist(539, PFIST).setUnlocalizedName("SatHeatFist").setCreativeTab(TabFalloutWeap);
 	public static final Item SciGlove = new WeapSciGlove(540, SCI).setUnlocalizedName("SciGlove").setCreativeTab(TabFalloutWeap);
 	public static final Item ZapGlove = new WeapZapGlove(541, EnumToolMaterial.IRON).setUnlocalizedName("ZapGlove").setCreativeTab(TabFalloutWeap);
-
-	//============================================Items==========================================================
 
 	public static final Item chunkTungsten = (new BaseItem(400)).setUnlocalizedName("TungstenRod").setCreativeTab(TabFalloutMisc);
 	public static final Item ingotTungsten = (new BaseItem(401)).setUnlocalizedName("TungstenIngot").setCreativeTab(TabFalloutMisc);
@@ -366,14 +360,12 @@ public class FalloutMain
 	public static final BlockFlower BarrelCactus = (BlockFlower) new BlockBarrelCactus(180, 11).setUnlocalizedName("BarrelCactus");
 	public static final BlockFlower BananaYucca = (BlockFlower) new BlockBananaYucca(181, 15).setUnlocalizedName("BananaYucca");
 	public static final BlockFlower CaveFungus = (BlockFlower) new BlockCaveFungus(182, 29).setUnlocalizedName("CaveFungus");
-	public static final BlockFlower BuffaloGourd = (BlockFlower) new BlockBuffaloGourd(3000, 13).setUnlocalizedName("BuffaloGourd");
-	public static final BlockFlower Jalapeno = (BlockFlower) new BlockJalapeno(3001, 14).setUnlocalizedName("Jalapeno");
-
-	//============================================Biomes==========================================================
+	public static final BlockFlower BuffaloGourd = (BlockFlower) new BlockBuffaloGourd(183, 13).setUnlocalizedName("BuffaloGourd");
+	public static final BlockFlower Jalapeno = (BlockFlower) new BlockJalapeno(184, 14).setUnlocalizedName("Jalapeno");
 
 	public static final BiomeGenBase Wasteland = (new BiomeWasteland(100)).setColor(16421912).setBiomeName("Wasteland").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setMinMaxHeight(0.1F, 0.2F);
 
-	//Version 1.7
+	//TODO Version 1.7
 	public static final Item grip = new BaseItem(566).setUnlocalizedName("Grip").setCreativeTab(TabFalloutGuns);
 	public static final Item barrel = new BaseItem(567).setUnlocalizedName("Barrel").setCreativeTab(TabFalloutGuns);
 	public static final Item stock = new BaseItem(568).setUnlocalizedName("Stock").setCreativeTab(TabFalloutGuns);
@@ -381,14 +373,26 @@ public class FalloutMain
 	public static final Item hammer = new BaseItem(570).setUnlocalizedName("Hammer").setCreativeTab(TabFalloutGuns);
 	public static final Item gasTank = new BaseItem(571).setUnlocalizedName("GasTank").setCreativeTab(TabFalloutMisc);
 
-	//Version 1.7.1
+	//TODO Version 1.7.1
 	//KEY: ID, damage, usage size/clip, reload time, fire time, fire sound, reload sound
-	public static final Item PlasmaRifle = new GunMFCell(572, 7, 24, 2, 2, "blfngl.PlasmaFire", "Blfngl.PlasmaReload").setUnlocalizedName("PlasmaRifle").setCreativeTab(TabFalloutGuns);
+	public static final Item PlasmaRifle = new GunMFCell(572, 7, 24, 2, 2, "blfngl.PlasmaFire", "Blfngl.PlasmaReload", GUN).setUnlocalizedName("PlasmaRifle").setCreativeTab(TabFalloutGuns);
 	public static final Item magRail = new BaseItem(573).setUnlocalizedName("MagRail").setCreativeTab(TabFalloutGuns);
-	public static final Item gun10MM = new Gun10MM(574, 4, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload").setUnlocalizedName("10MM").setCreativeTab(TabFalloutGuns);
+	public static final Item gun10MM = new Gun10MM(574, 4, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload", GUN).setUnlocalizedName("10MM").setCreativeTab(TabFalloutGuns);
 	public static final Item a10MM = new BaseItem(575).setUnlocalizedName("a10MM").setCreativeTab(TabFalloutGuns);
 	public static final Item shiskebabFlaming = new WeapFlamingShish(576).setUnlocalizedName("Shishkebab").setCreativeTab(TabFalloutWeap);
-	
+	public static final Item GaussRifle = new GunMFCell(577, 12, 1, 4, 1, "blfngl.GaussFire", "blfngl.GaussReload", GUN).setUnlocalizedName("GaussRifle").setCreativeTab(TabFalloutGuns);
+	public static final Item bubbleGum = new BaseFood(578, 1, 0.3F, false).setUnlocalizedName("BubbleGum").setCreativeTab(TabFalloutFood);
+	public static final Item beer = new BaseDrink(578, 2, 0.3F, false).setUnlocalizedName("Beer").setCreativeTab(TabFalloutFood);
+	public static final Item fiendStew = new BaseFood(580, 12, 0.3F, false).setUnlocalizedName("FiendStew").setCreativeTab(TabFalloutFood);
+	public static final Item shotgunCombat = new GunGauge12(581, 7, 12, 2, 2, "blfngl.ShotgunFire", "blfngl.ShotgunReload", GUN).setUnlocalizedName("CombatShotgun").setCreativeTab(TabFalloutGuns);
+	public static final Item shotgunRiot = new GunGauge12(582, 7, 12, 2, 2, "blfngl.ShotgunFire", "blfngl.ShotgunReload", GUN).setUnlocalizedName("RiotShotgun").setCreativeTab(TabFalloutGuns);
+	public static final Item aGauge12 = new BaseItem(583).setUnlocalizedName("Gauge12").setCreativeTab(TabFalloutGuns);
+	public static final Item powderRifle = new BaseItem(584).setUnlocalizedName("PowderRifle").setCreativeTab(TabFalloutMisc);
+	public static final Item primerRifle = new BaseItem(585).setUnlocalizedName("PrimerRifle").setCreativeTab(TabFalloutMisc);
+	public static final Item lead = new BaseItem(586).setUnlocalizedName("Lead").setCreativeTab(TabFalloutMisc);
+	public static final Item powderPistol = new BaseItem(587).setUnlocalizedName("PowderPistol").setCreativeTab(TabFalloutMisc);
+	public static final Item primerPistol = new BaseItem(588).setUnlocalizedName("PrimerPistol").setCreativeTab(TabFalloutMisc);
+
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -417,13 +421,13 @@ public class FalloutMain
 		GameRegistry.addRecipe(new ItemStack(Sniper308), new Object [] {"XX*", " *&", " %&", 'X', barrel, '*', ingotTungsten, '&', ingotTechnetium, '%', grip});
 
 		LanguageRegistry.addName(a22LR, ".22 Ammo");
-		GameRegistry.addShapelessRecipe(new ItemStack(a22LR, 12), new Object [] {chunkSilicon, scrapMetal});
+		GameRegistry.addShapelessRecipe(new ItemStack(a22LR, 12), new Object [] {powderPistol, powderPistol, powderPistol, primerPistol});
 		LanguageRegistry.addName(a357, ".357 Ammo");
-		GameRegistry.addShapelessRecipe(new ItemStack(a357, 3), new Object [] {scrapMetal, Item.ingotIron});
+		GameRegistry.addShapelessRecipe(new ItemStack(a357, 3), new Object [] {powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, primerPistol});
 		LanguageRegistry.addName(a44, ".44 Ammo");
-		GameRegistry.addShapelessRecipe(new ItemStack(a44, 3), new Object [] {scrapMetal, Item.ingotGold});
+		GameRegistry.addShapelessRecipe(new ItemStack(a44, 3), new Object [] {powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, powderPistol, primerPistol});
 		LanguageRegistry.addName(a308, ".308 Ammo");
-		GameRegistry.addShapelessRecipe(new ItemStack(a308, 2), new Object [] {ingotTungsten, scrapMetal});
+		GameRegistry.addShapelessRecipe(new ItemStack(a308, 2), new Object [] {powderRifle, primerRifle, powderRifle, powderRifle, powderRifle, powderRifle, lead, lead});
 		LanguageRegistry.addName(homemadeFuel, "Flamer Fuel");
 		GameRegistry.addShapelessRecipe(new ItemStack(homemadeFuel), new Object [] {abraxo, Item.sugar, Item.wheat});
 
@@ -583,7 +587,6 @@ public class FalloutMain
 		LanguageRegistry.addName(ECell, "Energy Cell");
 		GameRegistry.addRecipe(new ItemStack(ECell), new Object [] {"X*", "*X", '*', ingotUranium, 'X', ingotTechnetium});
 
-		//TODO Shapeless recipes
 		LanguageRegistry.addName(Psycho, "Psycho");
 		GameRegistry.addShapelessRecipe(new ItemStack(Psycho, 2), new Object [] {Item.slimeBall, Item.slimeBall, Item.slimeBall, Item.slimeBall, Item.lightStoneDust, syringeEmpty, Item.redstone, Item.lightStoneDust});
 		LanguageRegistry.addName(MedEx, "Med-X");
@@ -714,7 +717,7 @@ public class FalloutMain
 		LanguageRegistry.addName(WinterBoots, "Winterized T-51b Boots");
 		//GameRegistry.addRecipe(new ItemStack(WinterBoots), new Object [] {});
 
-		//Version 1.7
+		//TODO Version 1.7
 		LanguageRegistry.addName(grip, "Gun Grip");
 		GameRegistry.addRecipe(new ItemStack(grip), new Object [] {"X*X", "X*X", " X*", 'X', Item.leather, '*', ingotTungsten});
 		LanguageRegistry.addName(stock, "Stock");
@@ -728,9 +731,32 @@ public class FalloutMain
 		LanguageRegistry.addName(gasTank, "Motorcycle Gas Tank");
 		GameRegistry.addRecipe(new ItemStack(gasTank), new Object [] {" X ", "X*X", "XXX", 'X', ingotTungsten, '*', homemadeFuel});
 
-		//Version 1.7.1
+		//TODO Version 1.7.1
 		LanguageRegistry.addName(PlasmaRifle, "Plasma Rifle");
-		
+		LanguageRegistry.addName(magRail, "Magnifier Rail");
+		GameRegistry.addRecipe(new ItemStack(magRail), new Object [] {"XXX", 'X', magnifier});
+		LanguageRegistry.addName(gun10MM, "10mm Pistol");
+		LanguageRegistry.addName(a10MM, "10mm Rounds");
+		LanguageRegistry.addName(shiskebabFlaming, "Shishkebab");
+		LanguageRegistry.addName(GaussRifle, "Gauss Rifle");
+		LanguageRegistry.addName(bubbleGum, "Bubble Gum");
+		LanguageRegistry.addName(beer, "Beer");
+		LanguageRegistry.addName(fiendStew, "Cook Cook's Fiend Stew");
+		GameRegistry.addShapelessRecipe(new ItemStack(fiendStew), new Object [] {beer, beer, Item.potato, BrahminMeat, bJalapeno});
+		LanguageRegistry.addName(shotgunCombat, "Combat Shotgun");
+		LanguageRegistry.addName(shotgunRiot, "Riot Shotgun");
+		LanguageRegistry.addName(aGauge12, "12 Gauge Rounds");
+		LanguageRegistry.addName(powderRifle, "Powder - Rifle");
+		GameRegistry.addShapelessRecipe(new ItemStack(powderRifle, 5), new Object [] {Item.gunpowder, Item.gunpowder});
+		LanguageRegistry.addName(primerRifle, "Primer - Rifle");
+		GameRegistry.addShapelessRecipe(new ItemStack(primerRifle, 3), new Object [] {powderRifle, powderRifle, ingotTungsten});
+		LanguageRegistry.addName(lead, "Lead");
+		GameRegistry.addShapelessRecipe(new ItemStack(lead, 2), new Object [] {scrapMetal, ingotTungsten});
+		LanguageRegistry.addName(powderPistol, "Powder - Pistol");
+		GameRegistry.addShapelessRecipe(new ItemStack(primerRifle, 3), new Object [] {powderRifle, powderRifle, ingotTungsten});
+		LanguageRegistry.addName(primerPistol, "Primer - Pistol");
+		GameRegistry.addShapelessRecipe(new ItemStack(primerPistol, 3), new Object [] {powderPistol, powderPistol, ingotTungsten});
+
 		EntityRegistry.registerGlobalEntityID(EntityFGhoul.class, "FGhoul", ModLoader.getUniqueEntityId(), 230, 78);
 		LanguageRegistry.instance().addStringLocalization("entity.FGhoul.name", "en_US", "Feral Ghoul");
 		EntityRegistry.addSpawn(EntityFGhoul.class, 5, 1, 2, EnumCreatureType.monster, Wasteland);
@@ -762,7 +788,7 @@ public class FalloutMain
 		EntityRegistry.registerGlobalEntityID(EntityGecko.class, "Gecko", ModLoader.getUniqueEntityId(), 230, 78);
 		LanguageRegistry.instance().addStringLocalization("entity.Gecko.name", "en_US", "Young Gecko");
 		EntityRegistry.addSpawn(EntityRadroach.class, 5, 1, 2, EnumCreatureType.creature, Wasteland);
-		
+
 		EntityRegistry.registerGlobalEntityID(EntityFragGrenade.class, "FragGrenade", ModLoader.getUniqueEntityId());
 
 		LanguageRegistry.addName(TungstenOre, "Tungsten Ore");
