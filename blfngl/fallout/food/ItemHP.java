@@ -1,5 +1,6 @@
 package blfngl.fallout.food;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,5 +22,10 @@ public class ItemHP extends Item
 		par3.addPotionEffect(new PotionEffect(Potion.heal.getId(), 1200, 0));
 		par1.damageItem(2, par3);
 		return par1;
+	}
+	
+	public void func_94581_a(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
 }

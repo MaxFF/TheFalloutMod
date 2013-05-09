@@ -1,6 +1,7 @@
 package blfngl.fallout.melee;
 
 import blfngl.fallout.common.FalloutMain;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,5 +24,10 @@ public class WeapFlamingShish extends Item
 	public ItemStack onItemRightClick(ItemStack par1)
 	{
 		return new ItemStack(FalloutMain.Shishkebab, 1);
+	}
+	
+	public void func_94581_a(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
 }

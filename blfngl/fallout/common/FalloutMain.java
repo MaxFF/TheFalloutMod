@@ -377,8 +377,8 @@ public class FalloutMain
 	//KEY: ID, damage, usage size/clip, reload time, fire time, fire sound, reload sound
 	public static final Item PlasmaRifle = new GunMFCell(572, 7, 24, 2, 2, "blfngl.PlasmaFire", "Blfngl.PlasmaReload", GUN).setUnlocalizedName("PlasmaRifle").setCreativeTab(TabFalloutGuns);
 	public static final Item magRail = new BaseItem(573).setUnlocalizedName("MagRail").setCreativeTab(TabFalloutGuns);
-	public static final Item gun10MM = new Gun10MM(574, 4, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload", GUN).setUnlocalizedName("10MM").setCreativeTab(TabFalloutGuns);
-	public static final Item a10MM = new BaseItem(575).setUnlocalizedName("a10MM").setCreativeTab(TabFalloutGuns);
+	public static final Item gun10MM = new Gun10MM(574, 4, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload", GUN).setUnlocalizedName("10mm").setCreativeTab(TabFalloutGuns);
+	public static final Item a10MM = new BaseItem(575).setUnlocalizedName("a10mm").setCreativeTab(TabFalloutGuns);
 	public static final Item shiskebabFlaming = new WeapFlamingShish(576).setUnlocalizedName("Shishkebab").setCreativeTab(TabFalloutWeap);
 	public static final Item GaussRifle = new GunMFCell(577, 12, 1, 4, 1, "blfngl.GaussFire", "blfngl.GaussReload", GUN).setUnlocalizedName("GaussRifle").setCreativeTab(TabFalloutGuns);
 	public static final Item bubbleGum = new BaseFood(578, 1, 0.3F, false).setUnlocalizedName("BubbleGum").setCreativeTab(TabFalloutFood);
@@ -737,7 +737,7 @@ public class FalloutMain
 		GameRegistry.addRecipe(new ItemStack(magRail), new Object [] {"XXX", 'X', magnifier});
 		LanguageRegistry.addName(gun10MM, "10mm Pistol");
 		LanguageRegistry.addName(a10MM, "10mm Rounds");
-		LanguageRegistry.addName(shiskebabFlaming, "Shishkebab");
+		LanguageRegistry.addName(shiskebabFlaming, "Shishkebab (Flaming)");
 		LanguageRegistry.addName(GaussRifle, "Gauss Rifle");
 		LanguageRegistry.addName(bubbleGum, "Bubble Gum");
 		LanguageRegistry.addName(beer, "Beer");
