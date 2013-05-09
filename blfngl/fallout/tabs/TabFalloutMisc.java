@@ -20,6 +20,6 @@ public final class TabFalloutMisc extends CreativeTabs
 
 	public String getTranslatedTabLabel()
 	{
-		return "Fallout - Miscellaneous";
+		return "Fallout - Crafting";
 	}
 }

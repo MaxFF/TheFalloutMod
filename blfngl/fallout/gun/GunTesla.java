@@ -8,7 +8,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
 import blfngl.fallout.common.FalloutMain;
 
-public class GunECell extends ItemSword
+public class GunTesla extends ItemSword
 {
 	private int damage;
 	private int reloadTime;
@@ -22,7 +22,7 @@ public class GunECell extends ItemSword
 	public int count = 0;
 	public int clipSize;
 
-	public GunECell(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
+	public GunTesla(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
 	{
 		super(var1, var8);
 		this.damage = var2;
@@ -64,24 +64,38 @@ public class GunECell extends ItemSword
 			{
 				var2.spawnEntityInWorld(new EntityBullet(var2, var3, this.damage, 1));
 				var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
-				var1.damageItem(1, var3);
+				var1.damageItem(5, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellEnergy.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadTime == this.reloadTotal)
 			{
 				this.reloadTime = 0;
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
-				while (count < clipSize)
-				{
-					var3.inventory.consumeInventoryItem(FalloutMain.cellEnergy.itemID);
-					count += 1;
-					var1.setItemDamage(count);
-				}
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				count += 1;
 				var1.setItemDamage(0);
 				count = 0;
-
 			}
 			else
 			{

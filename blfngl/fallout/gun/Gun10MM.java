@@ -8,7 +8,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
 import blfngl.fallout.common.FalloutMain;
 
-public class Gun10MM extends ItemSword
+public class Gun10mm extends ItemSword
 {
 	private int damage;
 	private int reloadtick;
@@ -22,7 +22,7 @@ public class Gun10MM extends ItemSword
 	public int count = 0;
 	public int clipSize;
 
-	public Gun10MM(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
+	public Gun10mm(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
 	{
 		super(var1, var8);
 		this.damage = var2;
@@ -67,7 +67,7 @@ public class Gun10MM extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.a10MM.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.a10mm.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadtick == this.reloadmax)
 			{
@@ -75,7 +75,7 @@ public class Gun10MM extends ItemSword
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
 				while (count < clipSize)
 				{
-					var3.inventory.consumeInventoryItem(FalloutMain.a10MM.itemID);
+					var3.inventory.consumeInventoryItem(FalloutMain.a10mm.itemID);
 					count += 1;
 				}                
 				var1.setItemDamage(0);

@@ -67,13 +67,13 @@ public class GunMFCell extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.MFCell.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadTime == this.reloadTotal)
 			{
 				this.reloadTime = 0;
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
-				var3.inventory.consumeInventoryItem(FalloutMain.MFCell.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
 				count += 1;
 				var1.setItemDamage(0);
 				count = 0;

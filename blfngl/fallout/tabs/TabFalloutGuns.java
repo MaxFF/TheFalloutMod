@@ -15,7 +15,7 @@ public final class TabFalloutGuns extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public int getTabIconItemIndex()
 	{
-		return FalloutMain.LaserRifle.itemID;
+		return FalloutMain.rifleLaser.itemID;
 	}
 
 	public String getTranslatedTabLabel()

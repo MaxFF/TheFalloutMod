@@ -72,7 +72,7 @@ public class EntityBOSPaladin extends EntityMob
 			break;
 
 		case 1:
-			this.dropItem(FalloutMain.MFCell.itemID, 3);
+			this.dropItem(FalloutMain.cellMF.itemID, 3);
 			break;
 
 		case 2:

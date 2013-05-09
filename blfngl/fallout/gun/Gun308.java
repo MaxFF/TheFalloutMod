@@ -67,7 +67,7 @@ public class Gun308 extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.MFCell.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadtick == this.reloadmax)
 			{

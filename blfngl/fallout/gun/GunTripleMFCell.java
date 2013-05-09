@@ -8,28 +8,28 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
 import blfngl.fallout.common.FalloutMain;
 
-public class Gun22lr extends ItemSword
+public class GunTripleMFCell extends ItemSword
 {
 	private int damage;
-	private int reloadtick;
-	private int reloadmax;
+	private int reloadTime;
+	private int reloadTotal;
 	private int clipid;
 	private int ammo;
-	private int firetick;
-	private int firemax;
+	private int fireTime;
+	private int fireTotal;
 	private String firesound;
 	private String reloadsound;
 	public int count = 0;
 	public int clipSize;
 
-	public Gun22lr(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
+	public GunTripleMFCell(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
 	{
 		super(var1, var8);
 		this.damage = var2;
-		this.firemax = var5;
-		this.firetick = this.firemax;
-		this.reloadmax = 5;
-		this.reloadtick = var4;
+		this.fireTotal = var5;
+		this.fireTime = this.fireTotal;
+		this.reloadTotal = 5;
+		this.reloadTime = var4;
 		this.ammo = var3;
 		this.clipid = var4;
 		this.firesound = var6;
@@ -48,43 +48,41 @@ public class Gun22lr extends ItemSword
 
 		if (!var2.isRemote && var1.getItemDamage() < this.ammo)
 		{
-			if (this.firetick == this.firemax && this.firemax != 0)
+			if (this.fireTime == this.fireTotal && this.fireTotal != 0)
 			{
 				var2.spawnEntityInWorld(new EntityBullet(var2, var3, this.damage, 1));
 				var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
 				var1.damageItem(1, var3);
-				this.firetick = 0;
+				this.fireTime = 0;
 			}
 			else
 			{
-				++this.firetick;
+				++this.fireTime;
 			}
 
-			if (this.firemax == 0)
+			if (this.fireTotal == 0)
 			{
 				var2.spawnEntityInWorld(new EntityBullet(var2, var3, this.damage, 1));
 				var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
-				var1.damageItem(1, var3);
+				var1.damageItem(3, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.a22LR.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == this.ammo)
 		{
-			if (this.reloadtick == this.reloadmax)
+			if (this.reloadTime == this.reloadTotal)
 			{
-				this.reloadtick = 0;
+				this.reloadTime = 0;
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
-				while (count < clipSize)
-				{
-					var3.inventory.consumeInventoryItem(FalloutMain.cellEnergy.itemID);
-					count += 1;
-				}                
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				count += 1;
 				var1.setItemDamage(0);
 				count = 0;
-
 			}
 			else
 			{
-				++this.reloadtick;
+				++this.reloadTime;
 			}
 		}
 
@@ -96,7 +94,7 @@ public class Gun22lr extends ItemSword
 	 */
 	public void onPlayerStoppedUsing(ItemStack var1, World var2, EntityPlayer var3, int var4)
 	{
-		this.firetick = this.firemax;
+		this.fireTime = this.fireTotal;
 	}
 
 	public void func_94581_a(IconRegister iconRegister)
