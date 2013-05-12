@@ -49,7 +49,7 @@ public class FalloutSoundHandler
 			event.manager.soundPoolSounds.addSound("blfngl/ShotgunReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/ShotgunReload.ogg"));
 
 			//Version 1.7.2
-			event.manager.soundPoolSounds.addSound("blfngl/45Reload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/45Reload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/45Fire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/45Fire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/MinigunReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/MinigunReload.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/MultiplasFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/MultiplasFire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/MysteriousMagnumThrown.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/MysteriousMagnumThrown.ogg"));
@@ -74,6 +74,26 @@ public class FalloutSoundHandler
 			event.manager.soundPoolSounds.addSound("blfngl/RechargerFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/RechargerFire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/TeslaFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/TeslaFire.ogg"));
 			event.manager.soundPoolSounds.addSound("blfngl/TeslaReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/TeslaReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/RedGlareFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/RedGlareFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/RedGlareReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/RedGlareReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/MissileFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/MissileFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/MissileReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/MissileReload.ogg"));
+			
+			event.manager.soundPoolSounds.addSound("blfngl/AutomaticRifleFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/AutomaticRifleFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/BattleRifleFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/BattleRifleFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/BattleRifleReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/BattleRifleReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/BrushGunFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/BrushGunFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/CowboyRepeaterFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/CowboyRepeaterFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/HuntingRifleFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/HuntingRifleFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/HuntingRifleReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/HuntingRifleReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/RepeaterReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/RepeaterReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/HuntingShotgunFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/HuntingShotgunFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/HuntingShotgunReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/HuntingShotgunReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/AlienBlasterFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/AlienBlasterFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/AlienBlasterReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/AlienBlasterReload.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/PulseFire.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/PulseFire.ogg"));
+			event.manager.soundPoolSounds.addSound("blfngl/LaserPistolReload.ogg", FalloutMain.class.getResource("/blfngl/fallout/sounds/LaserPistolReload.ogg"));
+
 		}
 
 		catch (Exception e)

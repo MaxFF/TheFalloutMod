@@ -393,14 +393,6 @@ public class EntityBullet extends Entity
 		}
 	}
 
-//	protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
-//	{
-//		if (par1MovingObjectPosition.entityHit != null)
-//		{
-//			par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
-//		}
-//	}
-
 	public void setKnockbackStrength(int var1)
 	{
 		this.knockbackStrength = 2;

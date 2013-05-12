@@ -21,6 +21,7 @@ public class GunGauge12 extends ItemSword
 	private String reloadsound;
 	public int count = 0;
 	public int clipSize;
+	public EntityPlayer owner;
 
 	public GunGauge12(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
 	{
@@ -38,6 +39,7 @@ public class GunGauge12 extends ItemSword
 		this.setMaxStackSize(1);
 		this.setMaxDamage(var3);
 		clipSize = var3;
+		//owner = EntityPlayer;
 	}
 
 	/**

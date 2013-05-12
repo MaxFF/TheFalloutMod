@@ -1,14 +1,15 @@
-package blfngl.fallout.gun;
+package blfngl.fallout.throwing;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
 import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.gun.EntityRocket;
 
-public class GunRocket extends ItemSword
+public class ItemThrowingExplosive extends Item
 {
 	private int damage;
 	private int reloadTime;
@@ -22,9 +23,9 @@ public class GunRocket extends ItemSword
 	public int count = 0;
 	public int clipSize;
 
-	public GunRocket(int par1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
+	public ItemThrowingExplosive(int par1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
 	{
-		super(par1, var8);
+		super(par1);
 		this.damage = var2;
 		this.fireTotal = var5;
 		this.fireTime = this.fireTotal;
@@ -41,14 +42,10 @@ public class GunRocket extends ItemSword
 
 	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3)
 	{
-		if (var3.inventory.hasItem(FalloutMain.aRocket.itemID))
-		{
-			var2.playSoundAtEntity(var3, this.firesound, 2.0F, 1.0F);
-			EntityRocket var4 = new EntityRocket(var2, var3);
-			var2.spawnEntityInWorld(var4);
-			var3.inventory.consumeInventoryItem(FalloutMain.aRocket.itemID);
-			return var1;
-		}
+		var2.playSoundAtEntity(var3, this.firesound, 2.0F, 1.0F);
+		EntityRocket var4 = new EntityRocket(var2, var3);
+		var2.spawnEntityInWorld(var4);
+		var3.inventory.consumeInventoryItem(var1.itemID);
 		return var1;
 	}
 
