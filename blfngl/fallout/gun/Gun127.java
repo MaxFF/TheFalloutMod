@@ -1,5 +1,7 @@
 package blfngl.fallout.gun;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
@@ -7,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
 import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.model.EntityBullet;
 
 public class Gun127 extends ItemSword
 {
@@ -98,5 +101,12 @@ public class Gun127 extends ItemSword
 	public void func_94581_a(IconRegister iconRegister)
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+	}
+	
+	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
+	{
+		var3.add("DAM: " + (double) damage/2);
+		var3.add("Clip size: " + clipSize);
+		var3.add("Ammo type: 12.7mm Rounds");
 	}
 }

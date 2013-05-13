@@ -27,7 +27,7 @@ import blfngl.fallout.entity.RenderGlowingOne;
 import blfngl.fallout.entity.RenderNightStalker;
 import blfngl.fallout.entity.RenderRadio;
 import blfngl.fallout.entity.RenderRadroach;
-import blfngl.fallout.sounds.FalloutSoundHandler;
+import blfngl.fallout.handler.SoundHandler;
 import blfngl.fallout.throwing.EntityFragGrenade;
 import blfngl.fallout.throwing.RenderFragGrenade;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -66,6 +66,6 @@ public class FalloutClientProxy extends FalloutCommonProxy
 	@SideOnly(Side.CLIENT)
     public void registerSoundHandler()
 	{
-		MinecraftForge.EVENT_BUS.register(new FalloutSoundHandler());
+		MinecraftForge.EVENT_BUS.register(new SoundHandler());
     }
 }

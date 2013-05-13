@@ -1,12 +1,20 @@
 package blfngl.fallout.gun;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.model.EntityBullet;
+import blfngl.fallout.render.RenderRatslayer;
+import blfngl.fallout.render.RenderRatslayerScoped;
 
 public class Gun5mm extends ItemSword
 {
@@ -21,8 +29,9 @@ public class Gun5mm extends ItemSword
 	private String reloadsound;
 	public int count = 0;
 	public int clipSize;
-
-	public Gun5mm(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
+	public float scopeDist;
+	
+	public Gun5mm(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, float var9)
 	{
 		super(var1, var8);
 		this.damage = var2;
@@ -37,6 +46,7 @@ public class Gun5mm extends ItemSword
 		this.setMaxStackSize(1);
 		this.setMaxDamage(var3);
 		clipSize = var3;
+		scopeDist = var9;
 	}
 
 	/**
@@ -103,5 +113,25 @@ public class Gun5mm extends ItemSword
 	public void func_94581_a(IconRegister iconRegister)
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+	}
+	
+	public void onUpdate(ItemStack var1, World var2, Entity var3, int var4, boolean var5)
+	{
+
+		if (FalloutMain.isScoped)
+		{
+			ModLoader.getMinecraftInstance().gameSettings.fovSetting = scopeDist;
+		}
+		else
+		{
+			ModLoader.getMinecraftInstance().gameSettings.fovSetting = 0.0F;
+		}
+	}
+	
+	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
+	{
+		var3.add("DAM: " + (double) damage/2);
+		var3.add("Clip size: " + clipSize);
+		var3.add("Ammo type: 5mm Rounds");
 	}
 }
