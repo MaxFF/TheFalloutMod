@@ -105,8 +105,8 @@ import blfngl.fallout.melee.WeapSatHeatFist;
 import blfngl.fallout.melee.WeapSciGlove;
 import blfngl.fallout.melee.WeapShishkebab;
 import blfngl.fallout.melee.WeapZapGlove;
-import blfngl.fallout.proxy.FalloutClientProxy;
-import blfngl.fallout.proxy.FalloutCommonProxy;
+import blfngl.fallout.proxy.ClientProxy;
+import blfngl.fallout.proxy.CommonProxy;
 import blfngl.fallout.tab.TabFalloutAmmo;
 import blfngl.fallout.tab.TabFalloutArmor;
 import blfngl.fallout.tab.TabFalloutEnergy;
@@ -152,9 +152,9 @@ public class FalloutMain
 	@Instance("fallout")
 	public static FalloutMain instance;
 
-	@SidedProxy(clientSide="blfngl.fallout.proxy.FalloutClientProxy", serverSide="blfngl.fallout.common.proxy")
-	public static FalloutCommonProxy proxy;
-	public static FalloutClientProxy cproxy;
+	@SidedProxy(clientSide="blfngl.fallout.proxy.ClientProxy", serverSide="blfngl.fallout.proxy.CommonProxy")
+	public static CommonProxy proxy;
+	public static ClientProxy cproxy;
 
 	public static boolean isScoped = false;
 
