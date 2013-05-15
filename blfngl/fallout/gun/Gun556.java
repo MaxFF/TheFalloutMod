@@ -11,7 +11,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 import blfngl.fallout.render.RenderChineseAssaultRifle;
 import blfngl.fallout.render.RenderChineseAssaultRifleScoped;
@@ -113,10 +113,9 @@ public class Gun556 extends ItemSword
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + getUnlocalizedName().substring(getUnlocalizedName().indexOf(".") + 1));
 	}
-	
-	public void onUpdate(ItemStack var1, World var2, Entity var3, int var4, boolean var5)
-	{
 
+	/**public void onUpdate(ItemStack var1, World var2, Entity var3, int var4, boolean var5)
+	{		
 		if (FalloutMain.isScoped)
 		{
 			ModLoader.getMinecraftInstance().gameSettings.fovSetting = scopeDist;
@@ -131,10 +130,9 @@ public class Gun556 extends ItemSword
 			MinecraftForgeClient.registerItemRenderer(FalloutMain.rifleChineseAssault.itemID, new RenderChineseAssaultRifle());
 			MinecraftForgeClient.registerItemRenderer(FalloutMain.rifleRatslayer.itemID, new RenderRatslayer());
 			MinecraftForgeClient.registerItemRenderer(FalloutMain.rifleBozar.itemID, new RenderBozar());
-
 		}
-	}
-	
+	}**/
+
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
 		var3.add("DAM: " + (double) damage/2);

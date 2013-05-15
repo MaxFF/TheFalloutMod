@@ -1,6 +1,5 @@
 package blfngl.fallout.food;
 
-import blfngl.fallout.FalloutMain;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -9,18 +8,16 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
-public class ItemRocket extends Item
+public class ItemStimpak extends Item
 {
-	public ItemRocket(int i)
+	public ItemStimpak(int i)
 	{
 		super(i);
 	}
 
-	public ItemStack onItemRightClick(ItemStack par1, World par2, EntityPlayer par3) //, PotionID pot, PotionLevel potl, PotionDuration potd)
+	public ItemStack onItemRightClick(ItemStack par1, World par2, EntityPlayer par3)
 	{
-		par3.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 1 * 120, 0));
-		par3.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 1 * 120, 0));
-		par3.inventory.consumeInventoryItem(FalloutMain.Rocket.itemID);
+		par3.addPotionEffect(new PotionEffect(Potion.heal.id, 2, 0));
 		return par1;
 	}
 

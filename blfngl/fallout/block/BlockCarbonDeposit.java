@@ -7,7 +7,7 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
 public class BlockCarbonDeposit extends BlockOre {
         public BlockCarbonDeposit(int id, int texture, Material material) {

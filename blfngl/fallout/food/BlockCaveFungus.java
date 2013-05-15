@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockFlower;
 import net.minecraft.client.renderer.texture.IconRegister;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
  
 public class BlockCaveFungus extends BlockFlower{
  

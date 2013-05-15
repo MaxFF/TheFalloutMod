@@ -2,7 +2,7 @@ package blfngl.fallout.handler;
 
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

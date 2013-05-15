@@ -2,7 +2,7 @@ package blfngl.fallout.gun;
 
 import javax.swing.text.html.parser.Entity;
 
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;

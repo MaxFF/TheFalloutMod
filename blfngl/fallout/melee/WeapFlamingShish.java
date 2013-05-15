@@ -1,6 +1,6 @@
 package blfngl.fallout.melee;
 
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.Item;

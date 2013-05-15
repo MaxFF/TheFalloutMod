@@ -2,7 +2,7 @@ package blfngl.fallout.handler;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.src.ModLoader;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import blfngl.fallout.entity.EntityBOSPaladin;
 import blfngl.fallout.entity.EntityBrahmin;
 import blfngl.fallout.entity.EntityFGhoul;
@@ -11,7 +11,7 @@ import blfngl.fallout.entity.EntityGiantAnt;
 import blfngl.fallout.entity.EntityGlowingOne;
 import blfngl.fallout.entity.EntityNightStalker;
 import blfngl.fallout.entity.EntityRadroach;
-import blfngl.fallout.throwing.EntityFragGrenade;
+import blfngl.fallout.model.EntityBullet;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -51,7 +51,7 @@ public class EntityHandler
 		LanguageRegistry.instance().addStringLocalization("entity.Gecko.name", "en_US", "Young Gecko");
 		EntityRegistry.addSpawn(EntityRadroach.class, 5, 1, 2, EnumCreatureType.creature, FalloutMain.Wasteland);
 
-		EntityRegistry.registerGlobalEntityID(EntityFragGrenade.class, "FragGrenade", ModLoader.getUniqueEntityId());
-
+		EntityRegistry.registerGlobalEntityID(EntityBullet.class, "Bullet", ModLoader.getUniqueEntityId());
+		LanguageRegistry.instance().addStringLocalization("entity.Bullet.name", "en_US", "Bullet");
 	}
 }

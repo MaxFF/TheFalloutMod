@@ -13,7 +13,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
 public class EntityBrahmin extends EntityAnimal
 {

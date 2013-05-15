@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
 public class EntityGlowingOne extends EntityMob
 {

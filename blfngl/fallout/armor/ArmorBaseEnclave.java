@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
 public class ArmorBaseEnclave extends ItemArmor implements IArmorTextureProvider
 {

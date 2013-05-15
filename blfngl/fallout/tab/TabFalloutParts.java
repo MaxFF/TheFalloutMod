@@ -5,9 +5,9 @@ import blfngl.fallout.FalloutMain;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public final class TabFalloutSMG extends CreativeTabs
+public class TabFalloutParts extends CreativeTabs
 {
-	public TabFalloutSMG(int par1, String par2Str)
+	public TabFalloutParts(int par1, String par2Str)
 	{
 		super(par1, par2Str);
 	}
@@ -15,11 +15,11 @@ public final class TabFalloutSMG extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public int getTabIconItemIndex()
 	{
-		return FalloutMain.smg9mm.itemID;
+		return FalloutMain.mod357LongBarrel.itemID;
 	}
 
 	public String getTranslatedTabLabel()
 	{
-		return "Fallout - SMG";
+		return "Fallout - Weapon Mods";
 	}
 }

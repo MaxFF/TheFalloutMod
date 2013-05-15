@@ -8,7 +8,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 
 public class Gun44 extends ItemSword

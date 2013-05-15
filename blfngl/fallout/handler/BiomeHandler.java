@@ -1,5 +1,6 @@
 package blfngl.fallout.handler;
 
+import blfngl.fallout.FalloutMain;
 import blfngl.fallout.block.WorldGenAsbestosDeposit;
 import blfngl.fallout.block.WorldGenCarbonDeposit;
 import blfngl.fallout.block.WorldGenSatOre;
@@ -7,7 +8,6 @@ import blfngl.fallout.block.WorldGenSiliconDeposit;
 import blfngl.fallout.block.WorldGenTechOre;
 import blfngl.fallout.block.WorldGenTungstenOre;
 import blfngl.fallout.block.WorldGenUraniumOre;
-import blfngl.fallout.common.FalloutMain;
 import blfngl.fallout.food.WorldGenBrocFlower;
 import cpw.mods.fml.common.registry.GameRegistry;
 

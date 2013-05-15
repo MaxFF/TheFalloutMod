@@ -21,7 +21,7 @@ public class ItemHydra extends Item
 	{
 		par3.addPotionEffect(new PotionEffect(Potion.regeneration.getId(), 1200, 0));
 		par1.damageItem(2, par3);
-		return par1;
+		return new ItemStack(glassBottle, 1);
 	}
 	
 	public void func_94581_a(IconRegister iconRegister)

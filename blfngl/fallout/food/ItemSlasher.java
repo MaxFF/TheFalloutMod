@@ -2,30 +2,27 @@ package blfngl.fallout.food;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
-public class ItemSlasher extends ItemFood
+public class ItemSlasher extends Item
 {
-	public ItemSlasher(int i, int j, boolean B)
+	public ItemSlasher(int i)
 	{
-		super(i, j, B);
+		super(i);
 	}
-	public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer entityPlayer)
+	
+	public ItemStack onItemRightClick(ItemStack par1, World par2, EntityPlayer entityPlayer)
 	{
-		entityPlayer.getFoodStats().addStats(this);
-		world.playSoundAtEntity(entityPlayer, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-		itemStack.stackSize--;
-
 		entityPlayer.addPotionEffect(new PotionEffect(Potion.resistance.id, 1 * 120, 0));
 		entityPlayer.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 1 * 120, 0));
-
-		return new ItemStack(FalloutMain.syringeEmpty);
+		return new ItemStack(FalloutMain.syringeEmpty, 1);
 	}
+	
 	public void func_94581_a(IconRegister iconRegister)
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));

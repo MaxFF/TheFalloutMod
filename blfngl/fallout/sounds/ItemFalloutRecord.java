@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukeBox;

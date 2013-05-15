@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 
 public class GunMFCell extends ItemSword
@@ -107,18 +107,18 @@ public class GunMFCell extends ItemSword
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + getUnlocalizedName().substring(getUnlocalizedName().indexOf(".") + 1));
 	}
 
-	public void onUpdate(ItemStack var1, World var2, Entity var3, int var4, boolean var5)
-	{
-
-		if (FalloutMain.isScoped)
-		{
-			ModLoader.getMinecraftInstance().gameSettings.fovSetting = scopeDist;
-		}
-		else
-		{
-			ModLoader.getMinecraftInstance().gameSettings.fovSetting = 0.0F;
-		}
-	}
+//	public void onUpdate(ItemStack var1, World var2, Entity var3, int var4, boolean var5)
+//	{
+//
+//		if (FalloutMain.isScoped)
+//		{
+//			ModLoader.getMinecraftInstance().gameSettings.fovSetting = scopeDist;
+//		}
+//		else
+//		{
+//			ModLoader.getMinecraftInstance().gameSettings.fovSetting = 0.0F;
+//		}
+//	}
 
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{

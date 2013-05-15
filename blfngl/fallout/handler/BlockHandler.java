@@ -3,7 +3,7 @@ package blfngl.fallout.handler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 

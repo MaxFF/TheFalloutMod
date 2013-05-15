@@ -8,7 +8,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
-import blfngl.fallout.common.FalloutMain;
+import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 
 public class Gun50MG extends ItemSword
@@ -49,6 +49,7 @@ public class Gun50MG extends ItemSword
 	{
 		//var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
 
+		int var9;
 		if (!var2.isRemote && var1.getItemDamage() < this.ammo)
 		{
 			if (this.firetick == this.firemax && this.firemax != 0)
@@ -70,7 +71,7 @@ public class Gun50MG extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.a50MG.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadtick == this.reloadmax)
 			{
@@ -78,7 +79,7 @@ public class Gun50MG extends ItemSword
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
 				while (count < clipSize)
 				{
-					var3.inventory.consumeInventoryItem(FalloutMain.a308.itemID);
+					var3.inventory.consumeInventoryItem(FalloutMain.a50MG.itemID);
 					count += 1;
 				}
 				var1.setItemDamage(0);
