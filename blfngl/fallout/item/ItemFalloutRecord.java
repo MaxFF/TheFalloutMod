@@ -8,6 +8,7 @@ import blfngl.fallout.FalloutMain;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukeBox;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemRecord;
@@ -68,7 +69,7 @@ public class ItemFalloutRecord extends ItemRecord
 			var3.add("Frank Sinatra - " + this.recordName);
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 
 	/**
@@ -76,7 +77,7 @@ public class ItemFalloutRecord extends ItemRecord
 	 */
 	public String getRecordTitle()
 	{
-		return this.recordName; // == "Dont Fear The Reaper" ? "Blue Oyster Cult - " + this.recordName : (this.recordName == "Always" ? "Erasure - " + this.recordName : (this.recordName == "Blue" ? "Eiffel65 - " + this.recordName : (this.recordName == "Ghosts N Stuff" ? "Deadmau5 - " + this.recordName : (this.recordName == "Somebody That I Use To Know" ? "Gotye - " + this.recordName : (this.recordName == "Whistle" ? "Flo Rida - " + this.recordName : (this.recordName == "Take On Me" ? "Ah-Ha - " + this.recordName : (this.recordName == "Sail" ? "Awolnation - " + this.recordName : (this.recordName == "Killer Queen" ? "Queen - " + this.recordName : (this.recordName == "Call Me Maybe" ? "Carly Rae Jepsen - " + this.recordName : (this.recordName == "Viva La Vida" ? "Coldplay - " + this.recordName : (this.recordName == "Lights" ? "Ellie Goulding - " + this.recordName : (this.recordName == "Barbra Striesand" ? "Duck Sauce - " + this.recordName : (this.recordName == "Enter Sandman" ? "Metallica - " + this.recordName : (this.recordName == "Moves Like Jagger" ? "Maroon5 - " + this.recordName : (this.recordName == "Say It Aint So" ? "Weezer - " + this.recordName : (this.recordName == "Payphone" ? "Maroon5 - " + this.recordName : (this.recordName == "Carry On My Wayward Son" ? "Kansas - " + this.recordName : (this.recordName == "Dragostea Din Tei" ? "Ozone - " + this.recordName : (this.recordName == "Now You\'re Gone" ? "Basshunter - " + this.recordName : (this.recordName == "All The Small Things" ? "Blink182 - " + this.recordName : (this.recordName == "Twenty One Guns" ? "Green Day - " + this.recordName : (this.recordName == "Beat It" ? "Michael Jackson - " + this.recordName : (this.recordName == "Don\'t You Worry Bout A Thing Child" ? "Sweedish House Mafia - " + this.recordName : (this.recordName == "Land Of Confusion" ? "Genesis - " + this.recordName : (this.recordName == "Little Talks" ? "Of Monsters And Men - " + this.recordName : (this.recordName == "Sweet Dreams" ? "Eurythmics - " + this.recordName : this.recordName))))))))))))))))))))))))));
+		return this.recordName;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -93,5 +94,10 @@ public class ItemFalloutRecord extends ItemRecord
 	public static ItemFalloutRecord getRecord(String var0)
 	{
 		return (ItemFalloutRecord)records.get(var0);
+	}
+
+	public void func_94581_a(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
 }

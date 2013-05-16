@@ -594,7 +594,7 @@ public class FalloutMain
 		var2.credits = "Mojang, MinecraftForge and everyone that uses this mod :)";
 		var2.logoFile = "/blfngl/fallout/textures/blflogo.png";
 		var2.url = "http://www.minecraftforum.net/topic/1667023-/";
-		System.out.println("Blfngl's Fallout Mod Loaded. </3.");
+		System.out.println("Blfngl's Fallout Mod Loaded. Lololololol.");
 
 		proxy.registerSoundHandler();
 	}

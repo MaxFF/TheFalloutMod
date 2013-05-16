@@ -4,14 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import blfngl.fallout.FalloutMain;
-import blfngl.fallout.gun.Gun556;
-import blfngl.fallout.gun.GunECell;
-import blfngl.fallout.gun.GunFuel;
-import blfngl.fallout.gun.GunGauge12;
-import blfngl.fallout.gun.GunGauge20;
-import blfngl.fallout.gun.GunMFCell;
-import blfngl.fallout.gun.GunRecharger;
-import blfngl.fallout.item.BaseItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
