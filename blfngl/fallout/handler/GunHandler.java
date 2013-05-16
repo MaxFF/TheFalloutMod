@@ -4,6 +4,14 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import blfngl.fallout.FalloutMain;
+import blfngl.fallout.gun.Gun556;
+import blfngl.fallout.gun.GunECell;
+import blfngl.fallout.gun.GunFuel;
+import blfngl.fallout.gun.GunGauge12;
+import blfngl.fallout.gun.GunGauge20;
+import blfngl.fallout.gun.GunMFCell;
+import blfngl.fallout.gun.GunRecharger;
+import blfngl.fallout.item.BaseItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -109,7 +117,7 @@ public class GunHandler extends FalloutMain
 		LanguageRegistry.addName(aNail, "Nails");
 		LanguageRegistry.addName(CZ57, "CZ57 Avenger");
 		LanguageRegistry.addName(pistolWeathered10mm, "Weathered 10mm Pistol");
-		
+
 		LanguageRegistry.addName(riflePlasma, "Plasma Rifle");
 		LanguageRegistry.addName(pistol10mm, "10mm Pistol");
 		LanguageRegistry.addName(a10mm, "10mm Rounds");
@@ -117,5 +125,23 @@ public class GunHandler extends FalloutMain
 		LanguageRegistry.addName(shotgunCombat, "Combat Shotgun");
 		LanguageRegistry.addName(shotgunRiot, "Riot Shotgun");
 		LanguageRegistry.addName(aGauge12, "12 Gauge Rounds");
+
+		LanguageRegistry.addName(rifleYCS186, "YCS/186");
+		LanguageRegistry.addName(rifleAdvancedLAER, "Elijah's Advanced LAER");
+		LanguageRegistry.addName(rifleAER14, "AER14 Prototype");
+
+		LanguageRegistry.addName(shotgunCaravan, "Caravan Shotgun");
+		LanguageRegistry.addName(shotgunSturdyCaravan, "Sturdy Caravan Shotgun");
+		LanguageRegistry.addName(shotgunLever, "Lever Action Shotgun");
+		LanguageRegistry.addName(shotgunSawed, "Sawed Off Shotgun");
+		LanguageRegistry.addName(shotgunBigBoomer, "Big Boomer");
+		LanguageRegistry.addName(shotgunSingle, "Single Shotgun");
+
+		LanguageRegistry.addName(rifleChineseAssault, "Chinese Assault Rifle");
+		LanguageRegistry.addName(pistolFlareGun, "Flare Gun");
+		LanguageRegistry.addName(pistolPewPew, "Pew Pew");
+		LanguageRegistry.addName(pistolPulseGun, "Pulse Gun");
+		LanguageRegistry.addName(pistolHyperbreederAlpha, "MF Hyperbreeder Alpha");
+		LanguageRegistry.addName(pistolSonicEmitter, "Sonic Emitter - Revalation");
 	}
 }

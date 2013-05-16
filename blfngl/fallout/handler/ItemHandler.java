@@ -151,6 +151,49 @@ public class ItemHandler extends FalloutMain
 		LanguageRegistry.addName(primerPistol, "Primer - Pistol");
 		GameRegistry.addShapelessRecipe(new ItemStack(primerPistol, 3), new Object [] {powderPistol, powderPistol, ingotTungsten});
 
+		//TODO 1.7.3
+		LanguageRegistry.addName(mod357LongBarrel, ".357 Long Barrel");
+		LanguageRegistry.addName(mod357HDCylinder, ".357 HD Cylinder");
+		LanguageRegistry.addName(mod45APHDSlide, ".45 AP Slide");
+		LanguageRegistry.addName(mod45APSilencer, ".45 AP Silencer");
+		LanguageRegistry.addName(mod9mmPistolExtMag, "9mm Pistol Extended Mags");
+		LanguageRegistry.addName(mod10mmPistolExtenderMags, "10mm Pistol Extended Mags");
+		LanguageRegistry.addName(mod10mmPistolSilencer, "10mm Pistol Silencer");
+		LanguageRegistry.addName(mod127mmPistolSilencer, "12.7mm Pistol Silencer");
+		LanguageRegistry.addName(modHuntingRevolver6Shot, "Hunting Revolver Six Shot Cylinder");
+
+		LanguageRegistry.addName(modAntiMaterielSupressor, "Anti Materiel Rifle Supressor");
+		LanguageRegistry.addName(modAntiMaterielCustomBolt, "Anti Materiel Rifle Custom Bolt");
+		LanguageRegistry.addName(modAssaultCarbineExtendedMags, "Assault Carbine Extended Mags");
+		LanguageRegistry.addName(modAssaultCarbineForgedReciever, "Assault Carbine Forged Receiver");
+		LanguageRegistry.addName(modAssaultCarbineLightBolt, "Assault Cabine Light Bolt");
+		LanguageRegistry.addName(modAutomaticRifleInternals, "Automatic Rifle Upgraded Internals");
+		LanguageRegistry.addName(modBrushGunForgedReciever, "Brush Gun Forged Receiver");
+		LanguageRegistry.addName(modCowboyRepeaterCustomAction, "Cowboy Repeater Custom Action");
+		LanguageRegistry.addName(modCowboyRepeaterLongTube, "Cowboy Repeater Long Tube");
+		LanguageRegistry.addName(modHuntingRifleExtendedMag, "Hunting Rifle Extended Mags");
+		LanguageRegistry.addName(modHuntingRifleCustomAction, "Hunting Rifle Custom Action");
+		LanguageRegistry.addName(modLMGExpandedDrums, "Light Machine Gun Expanded Drums");
+		LanguageRegistry.addName(modServiceRifleForgedReciever, "Service Rifle Forged Receiver");
+		LanguageRegistry.addName(modServiceRifleCustomSprings, "Service Rifle Custom Springs");
+		LanguageRegistry.addName(modSniperSupressor, "Sniper Rifle Supressor");
+		LanguageRegistry.addName(modVarmintNightScope, "Varmint Rifle Night Scope");
+		LanguageRegistry.addName(modVarmintExtendedMags, "Varmint Rifle Extended Mags");
+		LanguageRegistry.addName(modVarmintSilencer, "Varmint Rifle Silencer");
+
+		LanguageRegistry.addName(fixer, "Fixer");
+
+		LanguageRegistry.addName(superConductor, "Super Conductor");
+		LanguageRegistry.addName(plasmaChamber, "Plasma Chamber");
+		LanguageRegistry.addName(electroMagnet, "Electromagnet");
+		LanguageRegistry.addName(magnetClaws, "Electromagnetic Claws");
+		LanguageRegistry.addName(particleDiverter, "Particle Diverter");
+		LanguageRegistry.addName(carbonFiberHousing, "Carbon Fiber Housing");
+		LanguageRegistry.addName(energyRifleBarrel, "Energy Rifle Barrel");
+		LanguageRegistry.addName(drum, "Drum");
+		LanguageRegistry.addName(cylinder, "Cylinder");		
 		
+		LanguageRegistry.addName(aGauge20, "20 Gauge Shotgun Shells");
+
 	}
 }

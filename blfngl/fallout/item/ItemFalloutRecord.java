@@ -1,4 +1,4 @@
-package blfngl.fallout.sounds;
+package blfngl.fallout.item;
 
 import java.util.HashMap;
 import java.util.List;

@@ -11,6 +11,8 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import blfngl.fallout.FalloutMain;
 
@@ -21,7 +23,7 @@ public class EntityBOSPaladin extends EntityMob
 	public EntityBOSPaladin (World world)
 	{
 		super (world);
-		texture = "/blfngl/fallout/textures/BOSPaladin.png";
+		texture = "/blfngl/fallout/textures/T45Power_1.png";
 		moveSpeed = 0.5F;
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIAttackOnCollide(this, EntityPlayer.class, this.moveSpeed, false));
@@ -31,10 +33,24 @@ public class EntityBOSPaladin extends EntityMob
 		this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, false));
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 25.0F, 0, true));
 	}
+	
+	@Override
+    public void initCreature()
+    {
+    	super.initCreature();
+    	this.setCurrentItemOrArmor(0, new ItemStack(Item.swordDiamond));    	
+    	
+        for (int i = 0; i < this.equipmentDropChances.length; ++i)
+        {
+            this.equipmentDropChances[i] = 0F;
+        }
+    }
+
 	public boolean isAIEnabled()
 	{
 		return true;
 	}
+	
 	public void setAttackTarget(EntityLiving par1EntityLiving)
 	{
 		super.setAttackTarget(par1EntityLiving);
@@ -44,10 +60,12 @@ public class EntityBOSPaladin extends EntityMob
 	{
 		return 100;
 	}
+	
 	protected String getHurtSound()
 	{
 		return "mob.zombiehurt";
 	}
+	
 	protected String getDeathSound()
 	{
 		return "mob.zombiedeath";

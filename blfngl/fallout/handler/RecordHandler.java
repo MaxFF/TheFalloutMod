@@ -1,7 +1,7 @@
 package blfngl.fallout.handler;
 
 import blfngl.fallout.FalloutMain;
-import blfngl.fallout.sounds.ItemFalloutRecord;
+import blfngl.fallout.item.ItemFalloutRecord;
 import net.minecraft.item.Item;
 
 public class RecordHandler

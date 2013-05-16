@@ -5,7 +5,6 @@ import java.util.Arrays;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
@@ -19,6 +18,7 @@ import blfngl.fallout.armor.ArmorBaseHellfire;
 import blfngl.fallout.armor.ArmorBaseT45;
 import blfngl.fallout.armor.ArmorBaseT51;
 import blfngl.fallout.armor.ArmorBaseWinter;
+import blfngl.fallout.block.BlockAlien;
 import blfngl.fallout.block.BlockAsbestosDeposit;
 import blfngl.fallout.block.BlockBPGlass;
 import blfngl.fallout.block.BlockCarbonDeposit;
@@ -113,15 +113,14 @@ import blfngl.fallout.tab.TabFalloutEnergy;
 import blfngl.fallout.tab.TabFalloutFood;
 import blfngl.fallout.tab.TabFalloutHeavy;
 import blfngl.fallout.tab.TabFalloutMisc;
-import blfngl.fallout.tab.TabFalloutParts;
 import blfngl.fallout.tab.TabFalloutMusic;
+import blfngl.fallout.tab.TabFalloutParts;
 import blfngl.fallout.tab.TabFalloutPistol;
 import blfngl.fallout.tab.TabFalloutRifle;
 import blfngl.fallout.tab.TabFalloutSMG;
 import blfngl.fallout.tab.TabFalloutShotgun;
 import blfngl.fallout.tab.TabFalloutWeap;
 import blfngl.fallout.throwing.ItemThrowingExplosive;
-import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -157,6 +156,7 @@ public class FalloutMain
 	public static ClientProxy cproxy;
 
 	public static boolean isScoped = false;
+	public static int dimensionAlien = 18;
 
 	public static CreativeTabs TabFalloutArmor = new TabFalloutArmor(CreativeTabs.getNextID(), "TabFalloutArmor");
 	public static CreativeTabs TabFalloutPistol = new TabFalloutPistol(CreativeTabs.getNextID(), "TabFalloutPistol");
@@ -393,6 +393,7 @@ public class FalloutMain
 	public static final BlockFlower BuffaloGourd = (BlockFlower) new BlockBuffaloGourd(183, 13).setUnlocalizedName("BuffaloGourd");
 	public static final BlockFlower Jalapeno = (BlockFlower) new BlockJalapeno(184, 14).setUnlocalizedName("Jalapeno");
 	//public static final Block benchReload = new BlockReloadBench(185).setCreativeTab(CreativeTabs.tabBlock);
+	public static final BlockOre blockAlien = (BlockOre) new BlockAlien(185, 15, Material.rock).setUnlocalizedName("AlienBlock");
 
 	public static final BiomeGenBase Wasteland = (new BiomeWasteland(100)).setColor(16421912).setBiomeName("Wasteland").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setMinMaxHeight(0.1F, 0.2F);
 
@@ -523,25 +524,24 @@ public class FalloutMain
 	public static final Item shotgunSingle = new GunGauge20(673, 4, 1, 2, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("SingleShotgun").setCreativeTab(TabFalloutShotgun);
 	public static final Item aGauge20 = new BaseItem(674).setUnlocalizedName("20Gauge").setCreativeTab(TabFalloutAmmo);
 
-	public static final Item rifleChineseAssault = new Gun556(675, 4, 24, (int) 2.2, (int) 0.5, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN, -0.5F).setUnlocalizedName("ChineseAssaultRifle").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolFlareGun = new GunFuel(676, 1, 1, (int) 2.3, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("FlareGun").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolPewPew = new GunECell(677, 6, 2, 3, 1, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("PewPew").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolPulseGun = new GunECell(678, 3, 5, 2, 3, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("PulseGun").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolHyperbreederAlpha = new GunRecharger(679, 4, 10, 3, 1, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("HyperbreederAlpha").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolSonicEmitter = new GunECell(680, 4, 24, 2, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("SonicEmitter").setCreativeTab(TabFalloutShotgun);
+	public static final Item rifleChineseAssault = new Gun556(675, 4, 24, (int) 2.2, (int) 0.5, "blfngl.ChineseAssaultFire", "Blfngl.ChineseAssaultReload", GUN, -0.5F).setUnlocalizedName("ChineseAssaultRifle").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolFlareGun = new GunFuel(676, 1, 1, (int) 2.3, 2, "blfngl.FlareGunFire", "Blfngl.FlareGunReload", GUN).setUnlocalizedName("FlareGun").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolPewPew = new GunECell(677, 6, 2, 3, 1, "blfngl.LaserFire", "Blfngl.LaserPistolReload", GUN).setUnlocalizedName("PewPew").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolPulseGun = new GunECell(678, 3, 5, 2, 3, "blfngl.PulseFire", "Blfngl.PulseGunReload", GUN).setUnlocalizedName("PulseGun").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolHyperbreederAlpha = new GunRecharger(679, 4, 10, 3, 1, "blfngl.RechargerFire", "Blfngl.LeverShotgunReload", GUN).setUnlocalizedName("HyperbreederAlpha").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolSonicEmitter = new GunECell(680, 4, 24, 2, 2, "blfngl.PulseFire", "Blfngl.PulseGunReload", GUN).setUnlocalizedName("SonicEmitter").setCreativeTab(TabFalloutShotgun);
 
-	//TODO Lang
 	public static final Item fixer = new ItemFixer(681).setUnlocalizedName("Fixer").setCreativeTab(TabFalloutFood);
 
-	public static final Item rifleYCS186 = new GunMFCell(682, 14, 1, (int) 2.3, (int) 2.5, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN, -3.5F).setUnlocalizedName("YCS186").setCreativeTab(TabFalloutShotgun);
-	public static final Item rifleAdvancedLAER = new GunMFCell(683, 10, 15, 3, (int) 1.5, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN, -1.5F).setUnlocalizedName("AdvancedLAER").setCreativeTab(TabFalloutShotgun);
-	public static final Item rifleAER14 = new GunMFCell(684, 10, 12, (int) 2.5, 1, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN, -1.0F).setUnlocalizedName("AER14Proto").setCreativeTab(TabFalloutShotgun);
+	public static final Item rifleYCS186 = new GunMFCell(682, 14, 1, (int) 2.3, (int) 2.5, "blfngl.GaussFire", "Blfngl.GaussReload", GUN, -3.5F).setUnlocalizedName("YCS186").setCreativeTab(TabFalloutShotgun);
+	public static final Item rifleAdvancedLAER = new GunMFCell(683, 10, 15, 3, (int) 1.5, "blfngl.PulseFire", "Blfngl.PlasmaRifleReload", GUN, -1.5F).setUnlocalizedName("AdvancedLAER").setCreativeTab(TabFalloutShotgun);
+	public static final Item rifleAER14 = new GunMFCell(684, 10, 12, (int) 2.5, 1, "blfngl.LaserFire", "Blfngl.LaserReload", GUN, -1.0F).setUnlocalizedName("AER14Proto").setCreativeTab(TabFalloutShotgun);
 
 	public static final Item mod357LongBarrel = new BaseItem(685).setUnlocalizedName("357LongBarrel").setCreativeTab(TabFalloutParts);
 	public static final Item mod357HDCylinder = new BaseItem(686).setUnlocalizedName("357HDCylinder").setCreativeTab(TabFalloutParts);
 	public static final Item mod45APHDSlide = new BaseItem(688).setUnlocalizedName("45APHDSlide").setCreativeTab(TabFalloutParts);
 	public static final Item mod45APSilencer = new BaseItem(689).setUnlocalizedName("45APSilencer").setCreativeTab(TabFalloutParts);
-	public static final Item mod9mmPistolExtendedMags = new BaseItem(690).setUnlocalizedName("9mmPistolExtMag").setCreativeTab(TabFalloutParts);
+	public static final Item mod9mmPistolExtMag = new BaseItem(690).setUnlocalizedName("9mmPistolExtMag").setCreativeTab(TabFalloutParts);
 	public static final Item mod10mmPistolExtenderMags = new BaseItem(691).setUnlocalizedName("10mmPistolExtMag").setCreativeTab(TabFalloutParts);
 	public static final Item mod10mmPistolSilencer = new BaseItem(692).setUnlocalizedName("10mmPistolSilencer").setCreativeTab(TabFalloutParts);
 	public static final Item mod127mmPistolSilencer = new BaseItem(693).setUnlocalizedName("127mmPistolsilencer").setCreativeTab(TabFalloutParts);
@@ -574,8 +574,8 @@ public class FalloutMain
 	public static final Item particleDiverter = new BaseItem(719).setUnlocalizedName("ParticleDiverter").setCreativeTab(TabFalloutParts);
 	public static final Item carbonFiberHousing = new BaseItem(720).setUnlocalizedName("CFHousing").setCreativeTab(TabFalloutParts);
 	public static final Item energyRifleBarrel = new BaseItem(721).setUnlocalizedName("ERBarrel").setCreativeTab(TabFalloutParts);
-	public static final Item drum = new BaseItem(722).setUnlocalizedName("Fixer").setCreativeTab(TabFalloutParts);
-	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Fixer").setCreativeTab(TabFalloutParts);
+	public static final Item drum = new BaseItem(722).setUnlocalizedName("Drum").setCreativeTab(TabFalloutParts);
+	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Cylinder").setCreativeTab(TabFalloutParts);
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
@@ -594,7 +594,7 @@ public class FalloutMain
 		var2.credits = "Mojang, MinecraftForge and everyone that uses this mod :)";
 		var2.logoFile = "/blfngl/fallout/textures/blflogo.png";
 		var2.url = "http://www.minecraftforum.net/topic/1667023-/";
-		System.out.println("Blfngl's Fallout Mod Loaded. PEW PEW.");
+		System.out.println("Blfngl's Fallout Mod Loaded. </3.");
 
 		proxy.registerSoundHandler();
 	}
@@ -638,6 +638,9 @@ public class FalloutMain
 		LanguageRegistry.addName(RecordHandler.Track14, "Stars Of The Midnight Ranger");
 		LanguageRegistry.addName(RecordHandler.Track15, "Streets Of New Reno");
 		LanguageRegistry.addName(RecordHandler.Track16, "Why Don't You Do Right");
+
+		//TODO DimensionManager.registerProviderType(FalloutMain.dimensionAlien, DimensionAlienHandler.class, true);
+		//TODO DimensionManager.registerDimension(FalloutMain.dimensionAlien , FalloutMain.dimensionAlien);
 
 		proxy.registerRenderers();
 	}
