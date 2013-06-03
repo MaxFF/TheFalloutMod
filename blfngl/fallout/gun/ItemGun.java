@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 
-public class GunNail extends ItemSword
+public class ItemGun extends ItemSword
 {
 	private int damage;
 	private int reloadtick;
@@ -24,22 +24,25 @@ public class GunNail extends ItemSword
 	private String reloadsound;
 	public int count = 0;
 	public int clipSize;
-
-	public GunNail(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8)
+	public int ammoType;
+	public String ammoName;
+	
+	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, int var9)
 	{
 		super(var1, var8);
-		this.damage = var2;
-		this.firemax = var5;
-		this.firetick = this.firemax;
-		this.reloadmax = 5;
-		this.reloadtick = var4;
-		this.ammo = var3;
-		this.clipid = var4;
-		this.firesound = var6;
-		this.reloadsound = var7;
-		this.setMaxStackSize(1);
-		this.setMaxDamage(var3);
+		damage = var2;
+		firemax = var5;
+		firetick = firemax;
+		reloadmax = 5;
+		reloadtick = var4;
+		ammo = var3;
+		clipid = var4;
+		firesound = var6;
+		reloadsound = var7;
+		setMaxStackSize(1);
+		setMaxDamage(var3);
 		clipSize = var3;
+		ammoType = var9;
 	}
 
 	/**
@@ -47,47 +50,47 @@ public class GunNail extends ItemSword
 	 */
 	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3)
 	{
-		//var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
+		//var2.playSoundAtEntity(var3, firesound, 1.0F, 1.0F);
 
-		if (!var2.isRemote && var1.getItemDamage() < this.ammo)
+		if (!var2.isRemote && var1.getItemDamage() < ammo)
 		{
-			if (this.firetick == this.firemax && this.firemax != 0)
+			if (firetick == firemax && firemax != 0)
 			{
-				var2.spawnEntityInWorld(new EntityBullet(var2, var3, this.damage, 1));
-				var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
+				var2.spawnEntityInWorld(new EntityBullet(var2, var3, damage, 1));
+				var2.playSoundAtEntity(var3, firesound, 1.0F, 1.0F);
 				var1.damageItem(1, var3);
-				this.firetick = 0;
+				firetick = 0;
 			}
 			else
 			{
-				++this.firetick;
+				++firetick;
 			}
 
-			if (this.firemax == 0)
+			if (firemax == 0)
 			{
-				var2.spawnEntityInWorld(new EntityBullet(var2, var3, this.damage, 1));
-				var2.playSoundAtEntity(var3, this.firesound, 1.0F, 1.0F);
+				var2.spawnEntityInWorld(new EntityBullet(var2, var3, damage, 1));
+				var2.playSoundAtEntity(var3, firesound, 1.0F, 1.0F);
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.aNail.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(ammoType) && var1.getItemDamage() == ammo)
 		{
-			if (this.reloadtick == this.reloadmax)
+			if (reloadtick == reloadmax)
 			{
-				this.reloadtick = 0;
-				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
+				reloadtick = 0;
+				var2.playSoundAtEntity(var3, reloadsound, 1.0F, 1.0F);
 				while (count < clipSize)
 				{
-					var3.inventory.consumeInventoryItem(FalloutMain.aNail.itemID);
+					var3.inventory.consumeInventoryItem(ammoType);
 					count += 1;
-				}
+				}                
 				var1.setItemDamage(0);
 				count = 0;
 
 			}
 			else
 			{
-				++this.reloadtick;
+				++reloadtick;
 			}
 		}
 
@@ -99,7 +102,7 @@ public class GunNail extends ItemSword
 	 */
 	public void onPlayerStoppedUsing(ItemStack var1, World var2, EntityPlayer var3, int var4)
 	{
-		this.firetick = this.firemax;
+		firetick = firemax;
 	}
 
 	public void func_94581_a(IconRegister iconRegister)
@@ -111,6 +114,10 @@ public class GunNail extends ItemSword
 	{
 		var3.add("DAM: " + (double) damage/2);
 		var3.add("Clip size: " + clipSize);
-		var3.add("Ammo type: Nails");
+		//var3.add("Ammo type: " + ammoType);
+		if (this.ammo == FalloutMain.a10mm.itemID)
+		{
+			var3.add("Ammo type: 10mm Rounds");
+		}
 	}
 }

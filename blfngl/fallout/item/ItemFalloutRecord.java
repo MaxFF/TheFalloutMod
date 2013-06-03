@@ -25,9 +25,9 @@ public class ItemFalloutRecord extends ItemRecord
 	public ItemFalloutRecord(int var1, String var2)
 	{
 		super(var1, var2);
-		this.recordName = var2;
-		this.maxStackSize = 1;
-		this.setCreativeTab(FalloutMain.TabFalloutMusic);
+		recordName = var2;
+		maxStackSize = 1;
+		setCreativeTab(FalloutMain.TabFalloutMusic);
 		records.put(var2, this);
 	}
 
@@ -46,7 +46,7 @@ public class ItemFalloutRecord extends ItemRecord
 			else
 			{
 				((BlockJukeBox)Block.jukebox).insertRecord(var3, var4, var5, var6, var1);
-				var3.playAuxSFXAtEntity((EntityPlayer)null, 1005, var4, var5, var6, this.itemID);
+				var3.playAuxSFXAtEntity((EntityPlayer)null, 1005, var4, var5, var6, itemID);
 				--var1.stackSize;
 				return true;
 			}
@@ -64,9 +64,9 @@ public class ItemFalloutRecord extends ItemRecord
 	 */
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
-		if (this.recordName == "Blue Moon")
+		if (recordName == "Blue Moon")
 		{
-			var3.add("Frank Sinatra - " + this.recordName);
+			var3.add("Frank Sinatra - " + recordName);
 		}
 	}
 
@@ -77,7 +77,7 @@ public class ItemFalloutRecord extends ItemRecord
 	 */
 	public String getRecordTitle()
 	{
-		return this.recordName;
+		return recordName;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -98,6 +98,6 @@ public class ItemFalloutRecord extends ItemRecord
 
 	public void func_94581_a(IconRegister iconRegister)
 	{
-		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + getUnlocalizedName().substring(getUnlocalizedName().indexOf(".") + 1));
 	}
 }
