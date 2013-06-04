@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
@@ -25,9 +26,9 @@ public class ItemGun extends ItemSword
 	public int count = 0;
 	public int clipSize;
 	public int ammoType;
-	public String ammoName;
+	public Item ammoName;
 	
-	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, int var9)
+	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, Item var9)
 	{
 		super(var1, var8);
 		damage = var2;
@@ -42,7 +43,8 @@ public class ItemGun extends ItemSword
 		setMaxStackSize(1);
 		setMaxDamage(var3);
 		clipSize = var3;
-		ammoType = var9;
+		ammoType = var9.itemID;
+		ammoName = var9;
 	}
 
 	/**
@@ -114,10 +116,10 @@ public class ItemGun extends ItemSword
 	{
 		var3.add("DAM: " + (double) damage/2);
 		var3.add("Clip size: " + clipSize);
-		//var3.add("Ammo type: " + ammoType);
-		if (this.ammo == FalloutMain.a10mm.itemID)
-		{
-			var3.add("Ammo type: 10mm Rounds");
-		}
+		var3.add("Ammo type: " + ammoName.getItemDisplayName(new ItemStack(ammoName)));
+//		if (this.ammo == FalloutMain.a10mm.itemID)
+//		{
+//			var3.add("Ammo type: 10mm Rounds");
+//		}
 	}
 }
