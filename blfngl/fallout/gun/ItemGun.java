@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 
-public class ItemGun extends ItemSword
+public class ItemGun extends Item
 {
 	private int damage;
 	private int reloadtick;
@@ -25,12 +25,16 @@ public class ItemGun extends ItemSword
 	private String reloadsound;
 	public int count = 0;
 	public int clipSize;
-	public int ammoType;
-	public Item ammoName;
-	
-	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, Item var9)
+	public Item ammoType;
+
+	public boolean isFull3D()
 	{
-		super(var1, var8);
+		return true;
+	}
+
+	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, Item var9)
+	{
+		super(var1);
 		damage = var2;
 		firemax = var5;
 		firetick = firemax;
@@ -43,8 +47,7 @@ public class ItemGun extends ItemSword
 		setMaxStackSize(1);
 		setMaxDamage(var3);
 		clipSize = var3;
-		ammoType = var9.itemID;
-		ammoName = var9;
+		ammoType = var9;
 	}
 
 	/**
@@ -75,7 +78,7 @@ public class ItemGun extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(ammoType) && var1.getItemDamage() == ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(ammoType.itemID) && var1.getItemDamage() == ammo)
 		{
 			if (reloadtick == reloadmax)
 			{
@@ -83,7 +86,7 @@ public class ItemGun extends ItemSword
 				var2.playSoundAtEntity(var3, reloadsound, 1.0F, 1.0F);
 				while (count < clipSize)
 				{
-					var3.inventory.consumeInventoryItem(ammoType);
+					var3.inventory.consumeInventoryItem(ammoType.itemID);
 					count += 1;
 				}                
 				var1.setItemDamage(0);
@@ -111,15 +114,15 @@ public class ItemGun extends ItemSword
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
-	
+
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
 		var3.add("DAM: " + (double) damage/2);
 		var3.add("Clip size: " + clipSize);
-		var3.add("Ammo type: " + ammoName.getItemDisplayName(new ItemStack(ammoName)));
-//		if (this.ammo == FalloutMain.a10mm.itemID)
-//		{
-//			var3.add("Ammo type: 10mm Rounds");
-//		}
+		var3.add("Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
+		//		if (this.ammo == FalloutMain.a10mm.itemID)
+		//		{
+		//			var3.add("Ammo type: 10mm Rounds");
+		//		}
 	}
 }
