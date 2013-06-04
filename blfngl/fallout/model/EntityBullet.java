@@ -170,19 +170,7 @@ public class EntityBullet extends Entity
 
 		if (this.inGround)
 		{
-			int var15 = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
-
-			if (var15 == this.inTile)
-			{
-				++this.timeTillDeath;
-
-				if (this.timeTillDeath == 1200)
-				{
-					this.setDead();
-				}
-
-				return;
-			}
+			this.setDead();
 
 			this.inGround = false;
 			this.motionX *= (double)(this.rand.nextFloat() * 0.2F);
@@ -246,7 +234,7 @@ public class EntityBullet extends Entity
 		{
 			if (var3.entityHit != null)
 			{
-				if (var3.entityHit.attackEntityFrom(new EntityDamageSource("player", this.owner), this.damage))
+				if (var3.entityHit.attackEntityFrom(DamageSource.generic, this.damage))
 				{
 					this.worldObj.playSoundAtEntity(this, "BulletHit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.setDead();
@@ -267,7 +255,7 @@ public class EntityBullet extends Entity
 				this.zTile = var3.blockZ;
 				this.inTile = this.worldObj.getBlockId(this.xTile, this.yTile, this.zTile);
 
-				if (this.inTile != Block.glass.blockID && this.inTile != Block.glowStone.blockID && this.inTile != Block.leaves.blockID && this.inTile != Block.thinGlass.blockID)
+				if (this.inTile != Block.glass.blockID && this.inTile != Block.glowStone.blockID && this.inTile != Block.leaves.blockID && this.inTile != Block.thinGlass.blockID && this.inTile != Block.torchWood.blockID && this.inTile != Block.torchRedstoneIdle.blockID && this.inTile != Block.torchRedstoneActive.blockID && this.inTile != Block.ladder.blockID && this.inTile != Block.vine.blockID && this.inTile != Block.tallGrass.blockID)
 				{
 					this.motionX = (double)((float)(var3.hitVec.xCoord - this.posX));
 					this.motionY = (double)((float)(var3.hitVec.yCoord - this.posY));
@@ -282,7 +270,7 @@ public class EntityBullet extends Entity
 				else
 				{
 					Block var10000 = Block.blocksList[this.inTile];
-					this.worldObj.setBlock(this.xTile, this.yTile, this.zTile, 0);
+					this.worldObj.destroyBlock(this.xTile, this.yTile, this.zTile, true);
 				}
 			}
 		}
@@ -369,28 +357,6 @@ public class EntityBullet extends Entity
 		Vec3 var18 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ);
 		Vec3 var19 = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 		MovingObjectPosition var4 = this.worldObj.rayTraceBlocks_do_do(var18, var19, false, true);
-
-		if (!this.worldObj.isRemote)
-		{
-			float var21;
-
-			if (this.inGround && this.shootingEntity == var1 && this.arrowShake <= 0 && var1.inventory.addItemStackToInventory(new ItemStack(Item.arrow, 1)))
-			{
-				this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-				var1.onItemPickup(this, 1);
-				this.setDead();
-
-				if (this.knockbackStrength > 0)
-				{
-					var21 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-
-					if (var21 > 0.0F)
-					{
-						var4.entityHit.addVelocity(this.motionX * (double)this.knockbackStrength * 0.6000000238418579D / (double)var21, 0.1D, this.motionZ * (double)this.knockbackStrength * 0.6000000238418579D / (double)var21);
-					}
-				}
-			}
-		}
 	}
 
 	public void setKnockbackStrength(int var1)
