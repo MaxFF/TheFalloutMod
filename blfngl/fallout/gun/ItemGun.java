@@ -1,17 +1,19 @@
 package blfngl.fallout.gun;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
 import blfngl.fallout.FalloutMain;
 import blfngl.fallout.model.EntityBullet;
 
-public class ItemGun extends ItemSword
+public class ItemGun extends Item
 {
 	private int damage;
 	private int reloadtick;
@@ -24,12 +26,19 @@ public class ItemGun extends ItemSword
 	private String reloadsound;
 	public int count = 0;
 	public int clipSize;
-	public int ammoType;
-	public String ammoName;
+	public Item ammoType;
 	
-	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, int var9)
+    /**
+     * Returns True is the item is renderer in full 3D when hold.
+     */
+    public boolean isFull3D()
+    {
+        return true;
+    }
+
+	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, Item var9)
 	{
-		super(var1, var8);
+		super(var1);
 		damage = var2;
 		firemax = var5;
 		firetick = firemax;
@@ -73,7 +82,7 @@ public class ItemGun extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(ammoType) && var1.getItemDamage() == ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(ammoType.itemID) && var1.getItemDamage() == ammo)
 		{
 			if (reloadtick == reloadmax)
 			{
@@ -81,7 +90,7 @@ public class ItemGun extends ItemSword
 				var2.playSoundAtEntity(var3, reloadsound, 1.0F, 1.0F);
 				while (count < clipSize)
 				{
-					var3.inventory.consumeInventoryItem(ammoType);
+					var3.inventory.consumeInventoryItem(ammoType.itemID);
 					count += 1;
 				}                
 				var1.setItemDamage(0);
@@ -93,6 +102,15 @@ public class ItemGun extends ItemSword
 				++reloadtick;
 			}
 		}
+		
+		//if (var1.getItemDamage() < this.ammo)
+		//{
+			Random rand = new Random();
+			if (this.firetick == this.firemax && this.firemax != 0)
+			{
+				var3.cameraPitch -= 7.0F;
+			}
+		//}
 
 		return var1;
 	}
@@ -109,15 +127,11 @@ public class ItemGun extends ItemSword
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
-	
+
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
 		var3.add("DAM: " + (double) damage/2);
 		var3.add("Clip size: " + clipSize);
-		//var3.add("Ammo type: " + ammoType);
-		if (this.ammo == FalloutMain.a10mm.itemID)
-		{
-			var3.add("Ammo type: 10mm Rounds");
-		}
+		var3.add("Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
 	}
 }
