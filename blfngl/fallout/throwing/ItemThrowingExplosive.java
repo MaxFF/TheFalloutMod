@@ -10,7 +10,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import blfngl.fallout.FalloutMain;
-import blfngl.fallout.model.EntityRocket;
+import blfngl.fallout.entity.EntityRocket;
 import blfngl.fallout.render.RenderBozar;
 import blfngl.fallout.render.RenderBozarScope;
 

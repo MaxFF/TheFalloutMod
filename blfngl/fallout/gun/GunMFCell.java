@@ -11,7 +11,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
 import blfngl.fallout.FalloutMain;
-import blfngl.fallout.model.EntityBullet;
+import blfngl.fallout.entity.EntityBullet;
 
 public class GunMFCell extends ItemSword
 {

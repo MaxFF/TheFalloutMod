@@ -5,13 +5,13 @@ import net.minecraft.src.ModLoader;
 import blfngl.fallout.FalloutMain;
 import blfngl.fallout.entity.EntityBOSPaladin;
 import blfngl.fallout.entity.EntityBrahmin;
+import blfngl.fallout.entity.EntityBullet;
 import blfngl.fallout.entity.EntityFGhoul;
 import blfngl.fallout.entity.EntityGecko;
 import blfngl.fallout.entity.EntityGiantAnt;
 import blfngl.fallout.entity.EntityGlowingOne;
 import blfngl.fallout.entity.EntityNightStalker;
 import blfngl.fallout.entity.EntityRadroach;
-import blfngl.fallout.model.EntityBullet;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
