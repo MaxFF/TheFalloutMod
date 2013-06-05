@@ -184,6 +184,7 @@ public class ItemHandler extends FalloutMain
 		LanguageRegistry.addName(fixer, "Fixer");
 
 		LanguageRegistry.addName(superConductor, "Super Conductor");
+		GameRegistry.addRecipe(new ItemStack(superConductor), new Object [] {"X*X", "X*X", 'X', Item.ingotIron, '*', Item.ingotGold});
 		LanguageRegistry.addName(plasmaChamber, "Plasma Chamber");
 		LanguageRegistry.addName(electroMagnet, "Electromagnet");
 		LanguageRegistry.addName(magnetClaws, "Electromagnetic Claws");
@@ -191,8 +192,10 @@ public class ItemHandler extends FalloutMain
 		LanguageRegistry.addName(carbonFiberHousing, "Carbon Fiber Housing");
 		LanguageRegistry.addName(energyRifleBarrel, "Energy Rifle Barrel");
 		LanguageRegistry.addName(drum, "Drum");
-		LanguageRegistry.addName(cylinder, "Cylinder");		
-		
+		GameRegistry.addRecipe(new ItemStack(drum), new Object [] {"X*X", "* *", "X*X", 'X', Item.leather, '*', Item.ingotIron});
+		LanguageRegistry.addName(cylinder, "Cylinder");
+		GameRegistry.addRecipe(new ItemStack(cylinder), new Object [] {"XXX", "X*X", 'X', Item.ingotIron, '*', ingotTungsten});
+
 		LanguageRegistry.addName(aGauge20, "20 Gauge Shotgun Shells");
 
 	}
