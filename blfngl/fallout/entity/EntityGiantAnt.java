@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class EntityGiantAnt extends EntityMob
 {
@@ -61,7 +61,7 @@ public class EntityGiantAnt extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.AntMeat.itemID;
+		return Fallout.AntMeat.itemID;
 	}
 
 	protected void dropRareDrop(int par1)
@@ -69,7 +69,7 @@ public class EntityGiantAnt extends EntityMob
 		switch (this.rand.nextInt(3))
 		{
 		case 0:
-			this.dropItem(FalloutMain.AntEgg.itemID, 1);
+			this.dropItem(Fallout.AntEgg.itemID, 1);
 			break;
 
 		case 1:

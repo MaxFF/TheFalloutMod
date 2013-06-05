@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ArmorBaseT51 extends ItemArmor implements IArmorTextureProvider{
 
@@ -20,11 +20,11 @@ public class ArmorBaseT51 extends ItemArmor implements IArmorTextureProvider{
 	}
 
 	public String getArmorTextureFile(ItemStack par1){
-		if ( par1.itemID==FalloutMain.T51Helm.itemID|| par1.itemID==FalloutMain.T51Chest.itemID||par1.itemID==FalloutMain.T51Boots.itemID)
+		if ( par1.itemID==Fallout.T51Helm.itemID|| par1.itemID==Fallout.T51Chest.itemID||par1.itemID==Fallout.T51Boots.itemID)
 		{
 			return "/blfngl/fallout/textures/T51Power_1.png";
 		}
-		if(par1.itemID==FalloutMain.T51Legs.itemID)
+		if(par1.itemID==Fallout.T51Legs.itemID)
 		{
 			return "/blfngl/fallout/textures/T51Power_2.png";
 		}

@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ArmorBaseGecko1 extends ItemArmor implements IArmorTextureProvider
 {
@@ -22,11 +22,11 @@ public class ArmorBaseGecko1 extends ItemArmor implements IArmorTextureProvider
 
 	public String getArmorTextureFile(ItemStack par1)
 	{
-		if ( par1.itemID==FalloutMain.G1Helm.itemID|| par1.itemID==FalloutMain.G1Chest.itemID|| par1.itemID==FalloutMain.G1Boots.itemID)
+		if ( par1.itemID==Fallout.G1Helm.itemID|| par1.itemID==Fallout.G1Chest.itemID|| par1.itemID==Fallout.G1Boots.itemID)
 		{
 			return "/blfngl/fallout/textures/Gecko1_1.png";
 		}
-		if(par1.itemID==FalloutMain.G1Legs.itemID)
+		if(par1.itemID==Fallout.G1Legs.itemID)
 		{
 			return "/blfngl/fallout/textures/Gecko1_2.png";
 		}

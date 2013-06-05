@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class WeapCosFire extends ItemSword
 {
@@ -16,7 +16,7 @@ public class WeapCosFire extends ItemSword
 	protected int enchantability;
 
 	public WeapCosFire(int par1){
-		super(par1, FalloutMain.COSFIRE);
+		super(par1, Fallout.COSFIRE);
 		setMaxDamage(400);
 		damage = 7; 
 		enchantability = 14;

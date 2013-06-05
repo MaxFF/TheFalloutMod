@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukeBox;
@@ -27,7 +27,7 @@ public class ItemFalloutRecord extends ItemRecord
 		super(var1, var2);
 		recordName = var2;
 		maxStackSize = 1;
-		setCreativeTab(FalloutMain.TabFalloutMusic);
+		setCreativeTab(Fallout.TabFalloutMusic);
 		records.put(var2, this);
 	}
 

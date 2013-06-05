@@ -14,11 +14,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class EntityBOSPaladin extends EntityMob
 {
-	private static final int HeldItem = FalloutMain.SatHeatFist.itemID;
+	private static final int HeldItem = Fallout.SatHeatFist.itemID;
 
 	public EntityBOSPaladin (World world)
 	{
@@ -78,7 +78,7 @@ public class EntityBOSPaladin extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.ingotTungsten.itemID;
+		return Fallout.ingotTungsten.itemID;
 	}
 
 	protected void dropRareDrop(int par1)
@@ -90,7 +90,7 @@ public class EntityBOSPaladin extends EntityMob
 			break;
 
 		case 1:
-			this.dropItem(FalloutMain.cellMF.itemID, 3);
+			this.dropItem(Fallout.cellMF.itemID, 3);
 			break;
 
 		case 2:

@@ -6,7 +6,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import blfngl.fallout.entity.EntityBOSPaladin;
 import blfngl.fallout.entity.EntityBrahmin;
 import blfngl.fallout.entity.EntityFGhoul;
@@ -55,8 +55,8 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityGecko.class, new RenderGecko(new ModelGecko(), 0.5F));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityFragGrenade.class, new RenderFragGrenade(new ModelBiped(), 0.5F));
 
-		MinecraftForgeClient.registerItemRenderer(FalloutMain.rifleBozar.itemID, (IItemRenderer)new RenderBozar());
-		MinecraftForgeClient.registerItemRenderer(FalloutMain.rifleRatslayer.itemID, (IItemRenderer)new RenderRatslayer());
+		MinecraftForgeClient.registerItemRenderer(Fallout.rifleBozar.itemID, (IItemRenderer)new RenderBozar());
+		MinecraftForgeClient.registerItemRenderer(Fallout.rifleRatslayer.itemID, (IItemRenderer)new RenderRatslayer());
 
 		KeyBinding[] var1 = new KeyBinding[] {new KeyBinding("Scope", 33)};
 		boolean[] var2 = new boolean[] {false};

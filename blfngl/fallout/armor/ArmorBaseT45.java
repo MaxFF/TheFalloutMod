@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ArmorBaseT45 extends ItemArmor implements IArmorTextureProvider
 {
@@ -22,11 +22,11 @@ public class ArmorBaseT45 extends ItemArmor implements IArmorTextureProvider
 
 	public String getArmorTextureFile(ItemStack par1)
 	{
-		if ( par1.itemID==FalloutMain.T45Helm.itemID||par1.itemID==FalloutMain.T45Chest.itemID||par1.itemID==FalloutMain.T45Boots.itemID)
+		if ( par1.itemID==Fallout.T45Helm.itemID||par1.itemID==Fallout.T45Chest.itemID||par1.itemID==Fallout.T45Boots.itemID)
 		{
 			return "/blfngl/fallout/textures/T45Power_1.png";
 		}
-		if(par1.itemID==FalloutMain.T45Legs.itemID)
+		if(par1.itemID==Fallout.T45Legs.itemID)
 		{
 			return "/blfngl/fallout/textures/T45Power_2.png";
 		}

@@ -8,7 +8,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import blfngl.fallout.entity.EntityBullet;
 
 public class GunGauss extends ItemSword
@@ -70,17 +70,17 @@ public class GunGauss extends ItemSword
 				var1.damageItem(5, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == this.ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(Fallout.cellMF.itemID) && var1.getItemDamage() == this.ammo)
 		{
 			if (this.reloadTime == this.reloadTotal)
 			{
 				this.reloadTime = 0;
 				var2.playSoundAtEntity(var3, this.reloadsound, 1.0F, 1.0F);
-				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
-				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
-				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
-				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
-				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(Fallout.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(Fallout.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(Fallout.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(Fallout.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(Fallout.cellMF.itemID);
 				count += 1;
 				var1.setItemDamage(0);
 				count = 0;

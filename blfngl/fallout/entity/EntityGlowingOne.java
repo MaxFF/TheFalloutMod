@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class EntityGlowingOne extends EntityMob
 {
@@ -66,7 +66,7 @@ public class EntityGlowingOne extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.bottleCap.itemID;
+		return Fallout.bottleCap.itemID;
 	}
 
 	protected void dropRareDrop(int par1)
@@ -74,15 +74,15 @@ public class EntityGlowingOne extends EntityMob
 		switch (this.rand.nextInt(3))
 		{
 		case 0:
-			this.dropItem(FalloutMain.BCMAC.itemID, 1);
+			this.dropItem(Fallout.BCMAC.itemID, 1);
 			break;
 
 		case 1:
-			this.dropItem(FalloutMain.Salisbury.itemID, 1);
+			this.dropItem(Fallout.Salisbury.itemID, 1);
 			break;
 
 		case 2:
-			this.dropItem(FalloutMain.YumYum.itemID, 1);
+			this.dropItem(Fallout.YumYum.itemID, 1);
 		}
 	}
 

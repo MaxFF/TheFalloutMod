@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenSiliconDeposit implements IWorldGenerator {
@@ -27,7 +27,7 @@ int randPosX = chunkX + rand.nextInt(16);
 int randPosY = rand.nextInt(80);
 int randPosZ = chunkZ + rand.nextInt(16);
 
-(new WorldGenMinable(FalloutMain.SiliconDeposit.blockID, 10)).generate(world, rand,
+(new WorldGenMinable(Fallout.SiliconDeposit.blockID, 10)).generate(world, rand,
 randPosX, randPosY, randPosZ);
 }
 }

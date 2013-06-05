@@ -3,11 +3,11 @@ package blfngl.fallout.handler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class FoodHandler extends FalloutMain
+public class FoodHandler extends Fallout
 {
 	public static void init()
 	{

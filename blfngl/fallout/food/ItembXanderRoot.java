@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ItembXanderRoot extends Item
 {
@@ -67,10 +67,10 @@ public class ItembXanderRoot extends Item
         }
         else
         {
-            if (FalloutMain.XanderRoot.canPlaceBlockAt(par3World, par4, par5, par6))
+            if (Fallout.XanderRoot.canPlaceBlockAt(par3World, par4, par5, par6))
             {
                 --par1ItemStack.stackSize;
-                par3World.setBlock(par4, par5, par6, FalloutMain.XanderRoot.blockID);
+                par3World.setBlock(par4, par5, par6, Fallout.XanderRoot.blockID);
             }
 
             return true;

@@ -7,7 +7,7 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class BlockAlien extends BlockOre
 {
@@ -27,6 +27,6 @@ public class BlockAlien extends BlockOre
 
 	public int idDropped(int par1, Random random, int par2)
 	{
-		return FalloutMain.blockAlien.blockID;
+		return Fallout.blockAlien.blockID;
 	}
 }

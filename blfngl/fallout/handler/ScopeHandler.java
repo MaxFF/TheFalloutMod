@@ -2,7 +2,7 @@ package blfngl.fallout.handler;
 
 import java.util.EnumSet;
 
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 import net.minecraft.client.settings.KeyBinding;
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
@@ -25,12 +25,12 @@ public class ScopeHandler extends KeyHandler
 
     public void keyDown(EnumSet var1, KeyBinding var2, boolean var3, boolean var4)
     {
-        FalloutMain.isScoped = true;
+        Fallout.isScoped = true;
     }
 
     public void keyUp(EnumSet var1, KeyBinding var2, boolean var3)
     {
-    	FalloutMain.isScoped = false;
+    	Fallout.isScoped = false;
     }
 
     public EnumSet ticks()

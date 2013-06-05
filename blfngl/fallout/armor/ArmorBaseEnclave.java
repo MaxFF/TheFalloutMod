@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ArmorBaseEnclave extends ItemArmor implements IArmorTextureProvider
 {
@@ -22,11 +22,11 @@ public class ArmorBaseEnclave extends ItemArmor implements IArmorTextureProvider
 
 	public String getArmorTextureFile(ItemStack par1)
 	{
-		if ( par1.itemID==FalloutMain.EnclaveHelm.itemID|| par1.itemID==FalloutMain.EnclaveChest.itemID|| par1.itemID==FalloutMain.EnclaveBoots.itemID)
+		if ( par1.itemID==Fallout.EnclaveHelm.itemID|| par1.itemID==Fallout.EnclaveChest.itemID|| par1.itemID==Fallout.EnclaveBoots.itemID)
 		{
 			return "/blfngl/fallout/textures/ADV1_1.png";
 		}
-		if(par1.itemID==FalloutMain.EnclaveLegs.itemID)
+		if(par1.itemID==Fallout.EnclaveLegs.itemID)
 		{
 			return "/blfngl/fallout/textures/ADV1_2.png";
 		}

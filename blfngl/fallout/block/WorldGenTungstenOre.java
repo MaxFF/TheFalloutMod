@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenTungstenOre implements IWorldGenerator {
@@ -29,7 +29,7 @@ public class WorldGenTungstenOre implements IWorldGenerator {
 			int randPosY = rand.nextInt(48);
 			int randPosZ = chunkZ + rand.nextInt(16);
 
-			(new WorldGenMinable(FalloutMain.TungstenOre.blockID, 10)).generate(world, rand, randPosX, randPosY, randPosZ);
+			(new WorldGenMinable(Fallout.TungstenOre.blockID, 10)).generate(world, rand, randPosX, randPosY, randPosZ);
 		}
 	}
 }

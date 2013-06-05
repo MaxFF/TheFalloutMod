@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ArmorBaseHellfire extends ItemArmor implements IArmorTextureProvider
 {
@@ -22,11 +22,11 @@ public class ArmorBaseHellfire extends ItemArmor implements IArmorTextureProvide
 
 	public String getArmorTextureFile(ItemStack par1)
 	{
-		if ( par1.itemID==FalloutMain.HellHelm.itemID|| par1.itemID==FalloutMain.HellChest.itemID|| par1.itemID==FalloutMain.HellBoots.itemID)
+		if ( par1.itemID==Fallout.HellHelm.itemID|| par1.itemID==Fallout.HellChest.itemID|| par1.itemID==Fallout.HellBoots.itemID)
 		{
 			return "/blfngl/fallout/textures/ADV2_1.png";
 		}
-		if(par1.itemID==FalloutMain.HellLegs.itemID)
+		if(par1.itemID==Fallout.HellLegs.itemID)
 		{
 			return "/blfngl/fallout/textures/ADV2_2.png";
 		}

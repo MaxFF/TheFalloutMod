@@ -1,6 +1,6 @@
 package blfngl.fallout.handler;
 
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import blfngl.fallout.block.WorldGenAsbestosDeposit;
 import blfngl.fallout.block.WorldGenCarbonDeposit;
 import blfngl.fallout.block.WorldGenSatOre;
@@ -15,7 +15,7 @@ public class BiomeHandler
 {
 	public static void init()
 	{
-		GameRegistry.addBiome(FalloutMain.Wasteland);
+		GameRegistry.addBiome(Fallout.Wasteland);
 		GameRegistry.registerWorldGenerator(new WorldGenTungstenOre());
 		GameRegistry.registerWorldGenerator(new WorldGenTechOre());
 		GameRegistry.registerWorldGenerator(new WorldGenSatOre());

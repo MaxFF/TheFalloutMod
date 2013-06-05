@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ItemSyringe extends Item
 {
@@ -23,6 +23,6 @@ public class ItemSyringe extends Item
 	
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
 	{
-		return new ItemStack(FalloutMain.syringeBloody, 1);
+		return new ItemStack(Fallout.syringeBloody, 1);
 	}
 }

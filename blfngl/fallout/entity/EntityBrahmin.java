@@ -13,7 +13,7 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class EntityBrahmin extends EntityAnimal
 {
@@ -105,7 +105,7 @@ public class EntityBrahmin extends EntityAnimal
 
         for (var4 = 0; var4 < var3; ++var4)
         {
-            this.dropItem(FalloutMain.BrahminMeat.itemID, 1);
+            this.dropItem(Fallout.BrahminMeat.itemID, 1);
         }
 
         var3 = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
@@ -114,11 +114,11 @@ public class EntityBrahmin extends EntityAnimal
         {
             if (this.isBurning())
             {
-                this.dropItem(FalloutMain.BrahminSteak.itemID, 1);
+                this.dropItem(Fallout.BrahminSteak.itemID, 1);
             }
             else
             {
-                this.dropItem(FalloutMain.BrahminMeat.itemID, 1);
+                this.dropItem(Fallout.BrahminMeat.itemID, 1);
             }
         }
     }

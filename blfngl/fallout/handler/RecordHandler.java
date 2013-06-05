@@ -1,6 +1,6 @@
 package blfngl.fallout.handler;
 
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import blfngl.fallout.item.ItemFalloutRecord;
 import net.minecraft.item.Item;
 
@@ -36,9 +36,9 @@ public class RecordHandler
 
 	public static void init()
 	{
-		Track1 = new ItemFalloutRecord(10000, "Blue Moon").setUnlocalizedName("Blue Moon").setCreativeTab(FalloutMain.TabFalloutMusic);
-		Track2 = new ItemFalloutRecord(10001, "Hallo Mr X").setUnlocalizedName("Hallo Mr X").setCreativeTab(FalloutMain.TabFalloutMusic);
-		Track3 = new ItemFalloutRecord(10002, "Strahlende Trompete").setUnlocalizedName("Strahlende Trompete").setCreativeTab(FalloutMain.TabFalloutMusic);
+		Track1 = new ItemFalloutRecord(10000, "Blue Moon").setUnlocalizedName("Blue Moon").setCreativeTab(Fallout.TabFalloutMusic);
+		Track2 = new ItemFalloutRecord(10001, "Hallo Mr X").setUnlocalizedName("Hallo Mr X").setCreativeTab(Fallout.TabFalloutMusic);
+		Track3 = new ItemFalloutRecord(10002, "Strahlende Trompete").setUnlocalizedName("Strahlende Trompete").setCreativeTab(Fallout.TabFalloutMusic);
 		Track4 = new ItemFalloutRecord(10003, "Aint That A Kick In The Head").setUnlocalizedName("Aint That A Kick In The Head");
 		Track5 = new ItemFalloutRecord(10004, "American Swing").setUnlocalizedName("American Swing");
 		Track6 = new ItemFalloutRecord(10005, "Big Iron").setUnlocalizedName("Big Iron");

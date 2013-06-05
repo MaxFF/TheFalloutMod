@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class EntityNightStalker extends EntityMob
 {
@@ -66,7 +66,7 @@ public class EntityNightStalker extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.NightstalkerTail.itemID;
+		return Fallout.NightstalkerTail.itemID;
 	}
 
 	protected void dropRareDrop(int par1)
@@ -74,15 +74,15 @@ public class EntityNightStalker extends EntityMob
 		switch (this.rand.nextInt(3))
 		{
 		case 0:
-			this.dropItem(FalloutMain.BloodSausage.itemID, 1);
+			this.dropItem(Fallout.BloodSausage.itemID, 1);
 			break;
 
 		case 1:
-			this.dropItem(FalloutMain.BlackBloodSausage.itemID, 1);
+			this.dropItem(Fallout.BlackBloodSausage.itemID, 1);
 			break;
 			
 		case 2:
-			this.dropItem(FalloutMain.nightstalkerBlood.itemID, 2);
+			this.dropItem(Fallout.nightstalkerBlood.itemID, 2);
 			return;
 		}
 	}

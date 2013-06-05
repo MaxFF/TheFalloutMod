@@ -3,11 +3,11 @@ package blfngl.fallout.handler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class BlockHandler extends FalloutMain
+public class BlockHandler extends Fallout
 {
 	public static void init()
 	{

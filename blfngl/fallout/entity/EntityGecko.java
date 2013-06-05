@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class EntityGecko extends EntityMob
 {
@@ -58,7 +58,7 @@ public class EntityGecko extends EntityMob
 
 	protected int getDropItemId()
 	{
-		return FalloutMain.bottleCap.itemID;
+		return Fallout.bottleCap.itemID;
 	}
 
 	protected void dropRareDrop(int par1)
@@ -66,15 +66,15 @@ public class EntityGecko extends EntityMob
 		switch (this.rand.nextInt(3))
 		{
 		case 0:
-			this.dropItem(FalloutMain.geckoHide.itemID, 2);
+			this.dropItem(Fallout.geckoHide.itemID, 2);
 			break;
 
 		case 1:
-			this.dropItem(FalloutMain.geckoHide.itemID, 3);
+			this.dropItem(Fallout.geckoHide.itemID, 3);
 			break;
 
 		case 2:
-			this.dropItem(FalloutMain.geckoHide.itemID, 1);
+			this.dropItem(Fallout.geckoHide.itemID, 1);
 		}
 	}
 } 

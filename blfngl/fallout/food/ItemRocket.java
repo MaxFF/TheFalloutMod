@@ -1,6 +1,6 @@
 package blfngl.fallout.food;
 
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -20,7 +20,7 @@ public class ItemRocket extends Item
 	{
 		par3.addPotionEffect(new PotionEffect(Potion.digSpeed.id, 1 * 120, 0));
 		par3.addPotionEffect(new PotionEffect(Potion.moveSpeed.id, 1 * 120, 0));
-		par3.inventory.consumeInventoryItem(FalloutMain.Rocket.itemID);
+		par3.inventory.consumeInventoryItem(Fallout.Rocket.itemID);
 		return par1;
 	}
 

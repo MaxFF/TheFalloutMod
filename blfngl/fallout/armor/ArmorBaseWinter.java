@@ -5,7 +5,7 @@ import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ArmorBaseWinter extends ItemArmor implements IArmorTextureProvider
 {
@@ -22,11 +22,11 @@ public class ArmorBaseWinter extends ItemArmor implements IArmorTextureProvider
 
 	public String getArmorTextureFile(ItemStack par1)
 	{
-		if ( par1.itemID==FalloutMain.WinterHelm.itemID|| par1.itemID==FalloutMain.WinterChest.itemID|| par1.itemID==FalloutMain.WinterBoots.itemID)
+		if ( par1.itemID==Fallout.WinterHelm.itemID|| par1.itemID==Fallout.WinterChest.itemID|| par1.itemID==Fallout.WinterBoots.itemID)
 		{
 			return "/blfngl/fallout/textures/Winter.png";
 		}
-		if(par1.itemID==FalloutMain.WinterLegs.itemID)
+		if(par1.itemID==Fallout.WinterLegs.itemID)
 		{
 			return "/blfngl/fallout/textures/Winter.png";
 		}

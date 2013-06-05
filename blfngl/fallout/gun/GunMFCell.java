@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import blfngl.fallout.entity.EntityBullet;
 
 public class GunMFCell extends ItemSword
@@ -74,13 +74,13 @@ public class GunMFCell extends ItemSword
 				var1.damageItem(1, var3);
 			}
 		}
-		else if (!var2.isRemote && var3.inventory.hasItem(FalloutMain.cellMF.itemID) && var1.getItemDamage() == ammo)
+		else if (!var2.isRemote && var3.inventory.hasItem(Fallout.cellMF.itemID) && var1.getItemDamage() == ammo)
 		{
 			if (reloadTime == reloadTotal)
 			{
 				reloadTime = 0;
 				var2.playSoundAtEntity(var3, reloadsound, 1.0F, 1.0F);
-				var3.inventory.consumeInventoryItem(FalloutMain.cellMF.itemID);
+				var3.inventory.consumeInventoryItem(Fallout.cellMF.itemID);
 				count += 1;
 				var1.setItemDamage(0);
 				count = 0;

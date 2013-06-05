@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class ItemPipboy extends Item
 {
@@ -24,7 +24,7 @@ public class ItemPipboy extends Item
 
 		if (!world.isRemote)
 		{
-			entityPlayer.openGui(FalloutMain.instance, 0, entityPlayer.worldObj, (int) entityPlayer.posX, (int) entityPlayer.posY, (int) entityPlayer.posZ);
+			entityPlayer.openGui(Fallout.instance, 0, entityPlayer.worldObj, (int) entityPlayer.posX, (int) entityPlayer.posY, (int) entityPlayer.posZ);
 		}
 
 		return itemStack;

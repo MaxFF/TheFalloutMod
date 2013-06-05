@@ -2,7 +2,7 @@ package blfngl.fallout.gun;
 
 import javax.swing.text.html.parser.Entity;
 
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,9 +34,9 @@ public class GunIncinerator extends ItemSword
 	}
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
 	{         
-		if (!world.isRemote && entityplayer.inventory.hasItem(FalloutMain.homemadeFuel.itemID))
+		if (!world.isRemote && entityplayer.inventory.hasItem(Fallout.homemadeFuel.itemID))
 		{
-			entityplayer.inventory.consumeInventoryItem(FalloutMain.homemadeFuel.itemID);
+			entityplayer.inventory.consumeInventoryItem(Fallout.homemadeFuel.itemID);
 			Vec3 look = entityplayer.getLookVec();
 			EntitySmallFireball fireball2 = new EntitySmallFireball(world, entityplayer, 1, 1, 1);
 			fireball2.setPosition(

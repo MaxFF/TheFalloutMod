@@ -7,7 +7,7 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class BlockCarbonDeposit extends BlockOre {
         public BlockCarbonDeposit(int id, int texture, Material material) {
@@ -25,6 +25,6 @@ public class BlockCarbonDeposit extends BlockOre {
     	}
         
         public int idDropped(int par1, Random random, int par2) {
-                return FalloutMain.carbon.itemID;
+                return Fallout.carbon.itemID;
         }
 }

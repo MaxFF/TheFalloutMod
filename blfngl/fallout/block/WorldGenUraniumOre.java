@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenUraniumOre implements IWorldGenerator {
@@ -37,7 +37,7 @@ int randPosX = chunkX + rand.nextInt(16);
 int randPosY = rand.nextInt(32);
 int randPosZ = chunkZ + rand.nextInt(16);
 
-(new WorldGenMinable(FalloutMain.UraniumOre.blockID, 4)).generate(world, rand,
+(new WorldGenMinable(Fallout.UraniumOre.blockID, 4)).generate(world, rand,
 randPosX, randPosY, randPosZ);
 }
 }

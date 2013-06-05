@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 
 public class BlockCaveFungus extends BlockFlower{
 
@@ -15,7 +15,7 @@ public class BlockCaveFungus extends BlockFlower{
 	}
 
 	public int idDropped(int i, Random random, int j){
-		return FalloutMain.bCaveFungus.itemID;
+		return Fallout.bCaveFungus.itemID;
 	}
 
 	public void func_94332_a(IconRegister iconRegister)

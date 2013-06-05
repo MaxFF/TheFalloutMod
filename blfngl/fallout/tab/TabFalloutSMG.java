@@ -1,7 +1,7 @@
 package blfngl.fallout.tab;
 
 import net.minecraft.creativetab.CreativeTabs;
-import blfngl.fallout.FalloutMain;
+import blfngl.fallout.Fallout;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -15,7 +15,7 @@ public final class TabFalloutSMG extends CreativeTabs
 	@SideOnly(Side.CLIENT)
 	public int getTabIconItemIndex()
 	{
-		return FalloutMain.smg9mm.itemID;
+		return Fallout.smg9mm.itemID;
 	}
 
 	public String getTranslatedTabLabel()
