@@ -17,9 +17,10 @@ public class ItemFixer extends Item
 		setMaxDamage(1);
 	}
 
-	public ItemStack onItemRightClick(ItemStack par1, World par2, EntityPlayer par3) //, PotionID pot, PotionLevel potl, PotionDuration potd)
+	public ItemStack onItemRightClick(ItemStack par1, World par2, EntityPlayer par3)
 	{
 		par3.clearActivePotions();
+		par1.damageItem(1, par3);
 		return par1;
 	}
 	

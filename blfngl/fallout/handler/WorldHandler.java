@@ -15,7 +15,7 @@ public class WorldHandler
 {
 	public static void init()
 	{
-		GameRegistry.addBiome(Fallout.Wasteland);
+		//GameRegistry.addBiome(Fallout.Wasteland);
 		GameRegistry.registerWorldGenerator(new WorldGenTungstenOre());
 		GameRegistry.registerWorldGenerator(new WorldGenTechOre());
 		GameRegistry.registerWorldGenerator(new WorldGenSatOre());

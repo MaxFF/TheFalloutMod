@@ -18,7 +18,7 @@ public class GunHandler extends Fallout
 		LanguageRegistry.addName(pistolCompliance, "Compliance Regulator");
 		GameRegistry.addRecipe(new ItemStack(pistolCompliance), new Object [] {" X ", "X*X", " X ", 'X', Block.slowSand, '*', pistolLaser});
 		LanguageRegistry.addName(rifleLaser, "AER7 Laser Rifle");
-		GameRegistry.addRecipe(new ItemStack(rifleLaser), new Object [] {"$X*", "!&#", '!', carbonFiberHousing, 'X', energyRifleBarrel, '$', magnifier, '*', stockMetal, '&', ingotTungsten, '#', grip});
+		GameRegistry.addRecipe(new ItemStack(rifleLaser), new Object [] {"$X*", "!&#", '!', carbonFiberHousing, 'X', energyRifleBarrel, '$', crystalArray, '*', stockMetal, '&', ingotTungsten, '#', grip});
 		LanguageRegistry.addName(pistol357, ".357 Magnum");
 		GameRegistry.addRecipe(new ItemStack(pistol357), new Object [] {"*X^", " !#", "  &", '!', cylinder, '#', Item.ingotIron, '*', barrel, 'X', ingotTungsten, '&', grip, '^', hammer});
 		LanguageRegistry.addName(pistol44, ".44 Magnum");
@@ -29,7 +29,7 @@ public class GunHandler extends Fallout
 		GameRegistry.addRecipe(new ItemStack(rifleSniper), new Object [] {"XX*", " #&", " %&", 'X', barrel, '*', stockMetal, '&', ingotTechnetium, '%', grip, '#', tungstenPlate});
 
 		LanguageRegistry.addName(rifleTriBeam, "Tri-Beam Laser Rifle");
-		GameRegistry.addRecipe(new ItemStack(rifleTriBeam), new Object [] {"X*^", " &%", " # ", 'X', magnifier, '*', magRail, '^', Item.redstoneRepeater, '&', grip, '%', stockMetal, '#', cellMF});
+		GameRegistry.addRecipe(new ItemStack(rifleTriBeam), new Object [] {"X*^", " &%", " # ", 'X', crystalArray, '*', magRail, '^', Item.redstoneRepeater, '&', grip, '%', stockMetal, '#', cellMF});
 		LanguageRegistry.addName(rifleMultiplas, "Multiplas Rifle");
 		//GameRegistry.addRecipe(new ItemStack(rifleMultiplas), new Object [] {});
 		LanguageRegistry.addName(rifleLAER, "LAER");

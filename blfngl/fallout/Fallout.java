@@ -404,7 +404,7 @@ public class Fallout
 	public static final Item grip = new BaseItem(566).setUnlocalizedName("Grip").setCreativeTab(TabFalloutPistol);
 	public static final Item barrel = new BaseItem(567).setUnlocalizedName("Barrel").setCreativeTab(TabFalloutPistol);
 	public static final Item stockWood = new BaseItem(568).setUnlocalizedName("Stock").setCreativeTab(TabFalloutPistol);
-	public static final Item magnifier = new BaseItem(569).setUnlocalizedName("Magnifier").setCreativeTab(TabFalloutPistol);
+	public static final Item crystalArray = new BaseItem(569).setUnlocalizedName("Magnifier").setCreativeTab(TabFalloutPistol);
 	public static final Item hammer = new BaseItem(570).setUnlocalizedName("Hammer").setCreativeTab(TabFalloutPistol);
 	public static final Item gasTank = new BaseItem(571).setUnlocalizedName("GasTank").setCreativeTab(TabFalloutMisc);
 

@@ -131,15 +131,15 @@ public class ItemHandler extends Fallout
 		GameRegistry.addRecipe(new ItemStack(stockWood), new Object [] {"XXX", " XX", 'X', Block.planks});
 		LanguageRegistry.addName(barrel, "Gun Barrel");
 		GameRegistry.addRecipe(new ItemStack(barrel), new Object [] {"XXX", "   ", "XXX", 'X', Item.ingotIron});
-		LanguageRegistry.addName(magnifier, "Crystal Array");
-		GameRegistry.addRecipe(new ItemStack(magnifier), new Object [] {"X X", " * ", "X X", 'X', ingotTechnetium, '*', Item.diamond});
+		LanguageRegistry.addName(crystalArray, "Crystal Array");
+		GameRegistry.addRecipe(new ItemStack(crystalArray), new Object [] {"X X", " * ", "X X", 'X', ingotTechnetium, '*', Item.diamond});
 		LanguageRegistry.addName(hammer, "Hammer");
 		GameRegistry.addRecipe(new ItemStack(hammer), new Object [] {"  X", "XX ", " X ", 'X', Item.ingotIron});
 		LanguageRegistry.addName(gasTank, "Motorcycle Gas Tank");
 		GameRegistry.addRecipe(new ItemStack(gasTank), new Object [] {" X ", "X*X", "XXX", 'X', ingotTungsten, '*', homemadeFuel});
 
 		LanguageRegistry.addName(magRail, "Magnifier Rail");
-		GameRegistry.addRecipe(new ItemStack(magRail), new Object [] {"XXX", 'X', magnifier});
+		GameRegistry.addRecipe(new ItemStack(magRail), new Object [] {"XXX", 'X', crystalArray});
 		LanguageRegistry.addName(powderRifle, "Powder - Rifle");
 		GameRegistry.addShapelessRecipe(new ItemStack(powderRifle, 5), new Object [] {Item.gunpowder, Item.gunpowder});
 		LanguageRegistry.addName(primerRifle, "Primer - Rifle");
@@ -186,11 +186,15 @@ public class ItemHandler extends Fallout
 		LanguageRegistry.addName(superConductor, "Super Conductor");
 		GameRegistry.addRecipe(new ItemStack(superConductor), new Object [] {"X*X", "X*X", 'X', Item.ingotIron, '*', Item.ingotGold});
 		LanguageRegistry.addName(plasmaChamber, "Plasma Chamber");
+		GameRegistry.addRecipe(new ItemStack(plasmaChamber), new Object [] {"XXX", "* *", "XXX", 'X', technetiumPlate, '*', ingotTungsten});
 		LanguageRegistry.addName(electroMagnet, "Electromagnet");
 		LanguageRegistry.addName(magnetClaws, "Electromagnetic Claws");
 		LanguageRegistry.addName(particleDiverter, "Particle Diverter");
+		GameRegistry.addRecipe(new ItemStack(particleDiverter), new Object [] {"X X", "   ", " X ", 'X', crystalArray});
 		LanguageRegistry.addName(carbonFiberHousing, "Carbon Fiber Housing");
+		GameRegistry.addRecipe(new ItemStack(carbonFiberHousing), new Object [] {" X ", "X*X", "&&&", 'X', carbon, '*', Item.diamond, '&', tungstenPlate});
 		LanguageRegistry.addName(energyRifleBarrel, "Energy Rifle Barrel");
+		GameRegistry.addRecipe(new ItemStack(energyRifleBarrel), new Object [] {"X*&", "^  ", 'X', particleDiverter, '^', carbonFiberHousing, '*', plasmaChamber, '&', superConductor});
 		LanguageRegistry.addName(drum, "Drum");
 		GameRegistry.addRecipe(new ItemStack(drum), new Object [] {"X*X", "* *", "X*X", 'X', Item.leather, '*', Item.ingotIron});
 		LanguageRegistry.addName(cylinder, "Cylinder");
