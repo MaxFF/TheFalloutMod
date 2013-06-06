@@ -1,4 +1,4 @@
-package blfngl.fallout.handler;
+package blfngl.fallout.world;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.biome.BiomeGenBase;

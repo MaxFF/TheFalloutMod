@@ -2,6 +2,7 @@ package blfngl.fallout;
 
 import java.util.Arrays;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
@@ -11,6 +12,7 @@ import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
 import blfngl.fallout.armor.ArmorBaseEnclave;
 import blfngl.fallout.armor.ArmorBaseGecko1;
@@ -19,6 +21,7 @@ import blfngl.fallout.armor.ArmorBaseT45;
 import blfngl.fallout.armor.ArmorBaseT51;
 import blfngl.fallout.armor.ArmorBaseWinter;
 import blfngl.fallout.block.BlockAlien;
+import blfngl.fallout.block.BlockWastelandPortal;
 import blfngl.fallout.block.BlockAsbestosDeposit;
 import blfngl.fallout.block.BlockBPGlass;
 import blfngl.fallout.block.BlockBananaYucca;
@@ -28,6 +31,7 @@ import blfngl.fallout.block.BlockBuffaloGourd;
 import blfngl.fallout.block.BlockCarbonDeposit;
 import blfngl.fallout.block.BlockCaveFungus;
 import blfngl.fallout.block.BlockJalapeno;
+import blfngl.fallout.block.BlockPortalActivator;
 import blfngl.fallout.block.BlockSaturniteOre;
 import blfngl.fallout.block.BlockSiliconDeposit;
 import blfngl.fallout.block.BlockTechnetiumOre;
@@ -58,8 +62,6 @@ import blfngl.fallout.gun.GunTesla;
 import blfngl.fallout.gun.GunTripleMFCell;
 import blfngl.fallout.gun.ItemGun;
 import blfngl.fallout.handler.ArmorHandler;
-import blfngl.fallout.handler.BiomeHandler;
-import blfngl.fallout.handler.BiomeWasteland;
 import blfngl.fallout.handler.BlockHandler;
 import blfngl.fallout.handler.EntityHandler;
 import blfngl.fallout.handler.FoodHandler;
@@ -68,10 +70,13 @@ import blfngl.fallout.handler.ItemHandler;
 import blfngl.fallout.handler.RecordHandler;
 import blfngl.fallout.handler.ThrowingHandler;
 import blfngl.fallout.handler.WeaponHandler;
+import blfngl.fallout.handler.WorldHandler;
 import blfngl.fallout.item.BaseDrink;
 import blfngl.fallout.item.BaseFood;
 import blfngl.fallout.item.BaseItem;
 import blfngl.fallout.item.ItemPipboy;
+import blfngl.fallout.item.ItemPortalActivator;
+import blfngl.fallout.item.ItemPortalPlacer;
 import blfngl.fallout.item.ItemSyringe;
 import blfngl.fallout.melee.BaseMelee;
 import blfngl.fallout.melee.WeapBallisticFist;
@@ -100,6 +105,8 @@ import blfngl.fallout.tab.TabFalloutSMG;
 import blfngl.fallout.tab.TabFalloutShotgun;
 import blfngl.fallout.tab.TabFalloutWeap;
 import blfngl.fallout.throwing.ItemThrowingExplosive;
+import blfngl.fallout.world.BiomeWasteland;
+import blfngl.fallout.world.DimensionWastelandWorldHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -136,7 +143,7 @@ public class Fallout
 	public static ClientProxy cproxy;
 
 	public static boolean isScoped = false;
-	public static int dimensionAlien = 18;
+	public static int dimensionWasteland = 18;
 
 	public static CreativeTabs TabFalloutArmor = new TabFalloutArmor(CreativeTabs.getNextID(), "TabFalloutArmor");
 	public static CreativeTabs TabFalloutPistol = new TabFalloutPistol(CreativeTabs.getNextID(), "TabFalloutPistol");
@@ -558,6 +565,13 @@ public class Fallout
 	public static final Item energyRifleBarrel = new BaseItem(721).setUnlocalizedName("ERBarrel").setCreativeTab(TabFalloutParts);
 	public static final Item drum = new BaseItem(722).setUnlocalizedName("Drum").setCreativeTab(TabFalloutParts);
 	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Cylinder").setCreativeTab(TabFalloutParts);
+	
+	public static BlockPortalActivator blockPortalActivator = (BlockPortalActivator) new BlockPortalActivator(2008).setUnlocalizedName("PortalActivator");
+	public static BlockWastelandPortal portalWateland = (BlockWastelandPortal) new BlockWastelandPortal(2009).setUnlocalizedName("WastelandPortal");
+	
+	/** Items **/
+	public static Item itemPortalActivator = new ItemPortalActivator(724).setUnlocalizedName("PortalActivator");
+	public static Item portalPlacer = new ItemPortalPlacer(725).setUnlocalizedName("PortalPlacer");
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
@@ -588,7 +602,7 @@ public class Fallout
 
 		BlockHandler.init();
 
-		BiomeHandler.init();
+		WorldHandler.init();
 
 		GunHandler.init();
 
@@ -621,8 +635,8 @@ public class Fallout
 		LanguageRegistry.addName(RecordHandler.Track15, "Streets Of New Reno");
 		LanguageRegistry.addName(RecordHandler.Track16, "Why Don't You Do Right");
 
-		//TODO DimensionManager.registerProviderType(FalloutMain.dimensionAlien, DimensionAlienHandler.class, true);
-		//TODO DimensionManager.registerDimension(FalloutMain.dimensionAlien , FalloutMain.dimensionAlien);
+		DimensionManager.registerProviderType(dimensionWasteland, DimensionWastelandWorldHandler.class, true);
+		DimensionManager.registerDimension(dimensionWasteland , dimensionWasteland);
 
 		proxy.registerRenderers();
 	}

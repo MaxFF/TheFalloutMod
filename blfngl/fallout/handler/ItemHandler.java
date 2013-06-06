@@ -44,7 +44,7 @@ public class ItemHandler extends Fallout
 		GameRegistry.addRecipe(new ItemStack(technetiumPlate, 1), new Object [] {"XX", "XX", 'X', ingotTechnetium});
 		LanguageRegistry.addName(RAP, "Reinforced Alloy Plate");
 		GameRegistry.addRecipe(new ItemStack(RAP, 2), new Object [] {"X*", "*X", 'X', tungstenPlate, '*', technetiumPlate});
-		LanguageRegistry.addName(cellMF, "MicroFusion Cell");
+		LanguageRegistry.addName(cellMF, "Microfusion Cell");
 		GameRegistry.addRecipe(new ItemStack(cellMF, 6), new Object [] {" * ", "*&*", " * ", '&', ingotUranium, '*', tungstenPlate});
 		LanguageRegistry.addName(MFPack, "MicroFusion Pack");
 		GameRegistry.addRecipe(new ItemStack(MFPack),new Object [] {" X ", "&&&", " X ", 'X', RAP, '&', cellMF});
@@ -197,6 +197,9 @@ public class ItemHandler extends Fallout
 		GameRegistry.addRecipe(new ItemStack(cylinder), new Object [] {"XXX", "X*X", 'X', Item.ingotIron, '*', ingotTungsten});
 
 		LanguageRegistry.addName(aGauge20, "20 Gauge Shotgun Shells");
+		
+		LanguageRegistry.addName(itemPortalActivator, "Portal Activator");
+		LanguageRegistry.addName(portalPlacer, "Portal Placer");
 
 	}
 }

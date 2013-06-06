@@ -1,4 +1,4 @@
-package blfngl.fallout.block;
+package blfngl.fallout.world;
 
 import java.util.Random;
 
@@ -8,7 +8,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import blfngl.fallout.Fallout;
 import cpw.mods.fml.common.IWorldGenerator;
 
-public class WorldGenTechOre implements IWorldGenerator {
+public class WorldGenSiliconDeposit implements IWorldGenerator {
 
 @Override
 public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider
@@ -24,10 +24,10 @@ break;
 public void generateSurface(World world, Random rand, int chunkX, int chunkZ) {
 for (int i = 0; i < 16; i++) {
 int randPosX = chunkX + rand.nextInt(16);
-int randPosY = rand.nextInt(32);
+int randPosY = rand.nextInt(80);
 int randPosZ = chunkZ + rand.nextInt(16);
 
-(new WorldGenMinable(Fallout.TechnetiumOre.blockID, 7)).generate(world, rand,
+(new WorldGenMinable(Fallout.SiliconDeposit.blockID, 10)).generate(world, rand,
 randPosX, randPosY, randPosZ);
 }
 }

@@ -1,17 +1,17 @@
 package blfngl.fallout.handler;
 
 import blfngl.fallout.Fallout;
-import blfngl.fallout.block.WorldGenAsbestosDeposit;
-import blfngl.fallout.block.WorldGenCarbonDeposit;
-import blfngl.fallout.block.WorldGenSatOre;
-import blfngl.fallout.block.WorldGenSiliconDeposit;
-import blfngl.fallout.block.WorldGenTechOre;
-import blfngl.fallout.block.WorldGenTungstenOre;
-import blfngl.fallout.block.WorldGenUraniumOre;
 import blfngl.fallout.food.WorldGenBrocFlower;
+import blfngl.fallout.world.WorldGenAsbestosDeposit;
+import blfngl.fallout.world.WorldGenCarbonDeposit;
+import blfngl.fallout.world.WorldGenSatOre;
+import blfngl.fallout.world.WorldGenSiliconDeposit;
+import blfngl.fallout.world.WorldGenTechOre;
+import blfngl.fallout.world.WorldGenTungstenOre;
+import blfngl.fallout.world.WorldGenUraniumOre;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class BiomeHandler
+public class WorldHandler
 {
 	public static void init()
 	{

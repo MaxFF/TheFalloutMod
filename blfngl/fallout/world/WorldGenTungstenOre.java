@@ -1,4 +1,4 @@
-package blfngl.fallout.block;
+package blfngl.fallout.world;
 
 import java.util.Random;
 
