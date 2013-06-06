@@ -57,11 +57,8 @@ import blfngl.fallout.food.ItemTurbo;
 import blfngl.fallout.food.ItemWeaponBinding;
 import blfngl.fallout.food.ItembCaveFungus;
 import blfngl.fallout.food.ItembXanderRoot;
-import blfngl.fallout.gun.GunGauss;
 import blfngl.fallout.gun.GunIncinerator;
 import blfngl.fallout.gun.GunMFCell;
-import blfngl.fallout.gun.GunTesla;
-import blfngl.fallout.gun.GunTripleMFCell;
 import blfngl.fallout.gun.ItemGun;
 import blfngl.fallout.handler.ArmorHandler;
 import blfngl.fallout.handler.BlockHandler;
@@ -418,7 +415,7 @@ public class Fallout
 	public static final Item a10mm = new BaseItem(575).setUnlocalizedName("10mmRound").setCreativeTab(TabFalloutAmmo);
 	public static final Item pistol10mm = new ItemGun(574, 3, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload", a10mm).setUnlocalizedName("10mmPistol").setCreativeTab(TabFalloutPistol);
 	public static final Item shiskebabFlaming = new WeapFlamingShish(576).setUnlocalizedName("Shishkebabf").setCreativeTab(TabFalloutWeap);
-	public static final Item rifleGauss = new GunGauss(577, 12, 1, 4, 3, "blfngl.GaussFire", "blfngl.GaussReload", GUN).setUnlocalizedName("GaussRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleGauss = new ItemGun(577, 12, 1, 4, 3, "blfngl.GaussFire", "blfngl.GaussReload", cellMF).setUnlocalizedName("GaussRifle").setCreativeTab(TabFalloutEnergy);
 	public static final Item bubbleGum = new BaseFood(578, 1, 0.3F, false).setUnlocalizedName("BubbleGum").setCreativeTab(TabFalloutFood);
 	public static final Item beer = new BaseDrink(579, 2, 0.3F, false).setUnlocalizedName("Beer").setCreativeTab(TabFalloutFood);
 	public static final Item fiendStew = new BaseFood(580, 12, 0.3F, false).setUnlocalizedName("FiendStew").setCreativeTab(TabFalloutFood);
@@ -432,8 +429,8 @@ public class Fallout
 
 	//TODO version 1.7.2
 	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
-	public static final Item rifleTriBeam = new GunTripleMFCell(589, 10, 24, 2, 4, "blfngl.TriBeamFire", "Blfngl.TriBeamReload", GUN).setUnlocalizedName("TriBeamRifle").setCreativeTab(TabFalloutEnergy);
-	public static final Item rifleMultiplas = new GunTripleMFCell(590, 13, 30, 3, 4, "blfngl.MultiplasFire", "Blfngl.PlasmaRifleReload", GUN).setUnlocalizedName("MultiplasRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleTriBeam = new ItemGun(589, 10, 24, 2, 4, "blfngl.TriBeamFire", "Blfngl.TriBeamReload", cellMF).setUnlocalizedName("TriBeamRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleMultiplas = new ItemGun(590, 13, 30, 3, 4, "blfngl.MultiplasFire", "Blfngl.PlasmaRifleReload", cellMF).setUnlocalizedName("MultiplasRifle").setCreativeTab(TabFalloutEnergy);
 	public static final Item rifleLAER = new GunMFCell(591, 8, 20, 3, 2, "blfngl.PulseFire", "Blfngl.PlasmaRifleReload", GUN, 3).setUnlocalizedName("LAER").setCreativeTab(TabFalloutEnergy);
 	public static final Item rifleHolo = new GunMFCell(592, 13, 4, 2, 3, "blfngl.HoloFire", "Blfngl.PlasmaRifleReload", GUN, 3).setUnlocalizedName("Holorifle").setCreativeTab(TabFalloutEnergy);
 	public static final Item minigun = new ItemGun(593, 3, 240, 4, 0.3, "blfngl.MinigunFire", "Blfngl.MinigunReload", a5mm).setUnlocalizedName("Minigun").setCreativeTab(TabFalloutHeavy);
@@ -448,7 +445,7 @@ public class Fallout
 	public static final Item pistolLaser = new ItemGun(602, 4, 24, 3, 1, "blfngl.LaserPistolFire", "Blfngl.PlasmaRifleReload", cellEnergy).setUnlocalizedName("LaserPistol").setCreativeTab(TabFalloutEnergy);
 	public static final Item pistolDefender = new ItemGun(603, 6, 32, 2, 2, "blfngl.DefenderFire", "Blfngl.PlasmaPistolReload", cellEnergy).setUnlocalizedName("PlasmaDefender").setCreativeTab(TabFalloutEnergy);
 	public static final Item pistolPlasma = new ItemGun(604, 5, 32, 2, 1, "blfngl.PlasmaPistolFire", "Blfngl.PlasmaPistolReload", cellEnergy).setUnlocalizedName("PlasmaPistol").setCreativeTab(TabFalloutEnergy);
-	public static final Item teslaCannon = new GunTesla(605, 13, 5, 4, 3, "blfngl.TeslaFire", "Blfngl.TeslaReload", GUN).setUnlocalizedName("TeslaCannon").setCreativeTab(TabFalloutHeavy);
+	public static final Item teslaCannon = new ItemGun(605, 13, 5, 4, 3, "blfngl.TeslaFire", "Blfngl.TeslaReload", cellMF).setUnlocalizedName("TeslaCannon").setCreativeTab(TabFalloutHeavy);
 	public static final Item rifleRecharger = new ItemGun(606, 3, 7, 3, 2, "blfngl.RechargerFire", "Blfngl.PlasmaRifleReload", a556).setUnlocalizedName("RechargerRifle").setCreativeTab(TabFalloutEnergy);
 	public static final Item pistolRecharger = new ItemGun(607, 4, 20, 3, 1, "blfngl.RechargerFire", "Blfngl.PlasmaRifleReload", a556).setUnlocalizedName("RechargerPistol").setCreativeTab(TabFalloutEnergy);
 

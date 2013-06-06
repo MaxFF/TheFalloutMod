@@ -13,6 +13,9 @@ import net.minecraft.world.World;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import blfngl.fallout.entity.EntityBullet;
 
 public class ItemGun extends Item
@@ -31,7 +34,7 @@ public class ItemGun extends Item
 	private int critChance;
 	private int critDamage;
 	public int rounds;
-	public double CND;
+	public double gunHealth;
 
 	Random rand = new Random();
 
@@ -138,27 +141,28 @@ public class ItemGun extends Item
 
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
-		CND = var1.getItemDamage()/var1.getMaxDamage();
-		var3.add("\u00a74DAM: " + (double)damage/2/*((double)damage/2)*((double)0.54 + CND * (1-(double)0.54D))*/); //TODO After fixed condition appearance
-		var3.add("§9Clip size: " + rounds + "/" + clipSize + " Ammo Loaded");
-		var3.add("§9Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
+		gunHealth = var1.getItemDamage()/var1.getMaxDamage();
+		var3.add("\u00A74DAM: " + (double)damage/2/*((double)damage/2)*((double)0.54 + CND * (1-(double)0.54D))*/); //TODO After fixed condition appearance
+		var3.add("\u00A79Clip size: " + rounds + "/" + clipSize + " Ammo Loaded");
+		var3.add("\u00A72Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
 		//var3.add("§9CND: "+CND*100+"%"); //TODO Fix condition appearance
 		if(name!=null)
 		{
-			var3.add("§eCrafted by: " + name);
+			var3.add("\u00A7eCrafted by: " + name);
 		}
 		else
 		{
-			var3.add("§eNot crafted.");
+			var3.add("\u00A7eNot crafted.");
 		}
 	}
 
 	boolean reloading = false;
 
+	//@SideOnly(Side.CLIENT)
 	public void onUpdate(ItemStack par1ItemStack, World var2, Entity par3Entity, int par4, boolean par5) 
 	{
 		EntityPlayer var3 = (EntityPlayer)par3Entity;
-		CND = par1ItemStack.getItemDamage()/par1ItemStack.getMaxDamage();
+		gunHealth = par1ItemStack.getItemDamage()/par1ItemStack.getMaxDamage();
 		if (!var2.isRemote && var3.inventory.hasItem(ammoType.itemID) && rounds<clipSize && Keyboard.isKeyDown(Keyboard.KEY_R) && !reloading)
 		{
 			reloading=true;
