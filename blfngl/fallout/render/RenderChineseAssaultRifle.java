@@ -11,7 +11,7 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import blfngl.fallout.model.ModelChineseAssaultRifle;
+import blfngl.fallout.gun.model.ModelChineseAssaultRifle;
 
 public class RenderChineseAssaultRifle implements IItemRenderer
 {

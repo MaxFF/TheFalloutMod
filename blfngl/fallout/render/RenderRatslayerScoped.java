@@ -11,7 +11,7 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import blfngl.fallout.model.ModelRatslayer;
+import blfngl.fallout.gun.model.ModelRatslayer;
 
 
 import cpw.mods.fml.client.TextureHelper;

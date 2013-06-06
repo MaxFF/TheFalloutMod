@@ -234,7 +234,7 @@ public class EntityBullet extends Entity
 		{
 			if (var3.entityHit != null)
 			{
-				if (var3.entityHit.attackEntityFrom(DamageSource.generic, this.damage))
+				if (var3.entityHit.attackEntityFrom(DamageSource.magic, this.damage))
 				{
 					this.worldObj.playSoundAtEntity(this, "BulletHit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.setDead();

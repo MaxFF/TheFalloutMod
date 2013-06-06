@@ -11,13 +11,11 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import blfngl.fallout.gun.model.ModelBozar;
+import blfngl.fallout.gun.model.Model9mmPistol;
 
-import cpw.mods.fml.client.TextureHelper;
-
-public class RenderBozar implements IItemRenderer
+public class Render9mmPistol implements IItemRenderer
 {
-	protected ModelBozar model = new ModelBozar();
+	protected Model9mmPistol model = new Model9mmPistol();
 
 	public boolean handleRenderType(ItemStack var1, ItemRenderType var2)
 	{
@@ -55,18 +53,15 @@ public class RenderBozar implements IItemRenderer
 					var5 = 0.7F;
 					GL11.glTranslatef(1.0F, 0.7F, 0.6F);
 					GL11.glScalef(var5, var5, var5);
-					GL11.glRotatef(205.0F, 0.0F, 0.0F, 1.0F);
-					GL11.glRotatef(100.0F, 0.0F, 1.0F, 0.0F);
-					GL11.glRotatef(-5.0F, 1.0F, 0.0F, 0.0F);
+					GL11.glRotatef(215.0F, 15.0F, 0.0F, 1.0F);
 				}
+				
 				else
 				{
 					var5 = 0.3F;
 					GL11.glTranslatef(0.5F, 0.5F, 0.1F);
 					GL11.glScalef(var5, var5, var5);
 					GL11.glRotatef(190.0F, 0.0F, 0.0F, 1.0F);
-					GL11.glRotatef(100.0F, 0.0F, 1.0F, 0.0F);
-					GL11.glRotatef(-5.0F, 1.0F, 0.0F, 0.0F);
 				}
 			}
 

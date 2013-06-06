@@ -11,7 +11,7 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import blfngl.fallout.model.ModelBozar;
+import blfngl.fallout.gun.model.ModelBozar;
 
 
 import cpw.mods.fml.client.TextureHelper;

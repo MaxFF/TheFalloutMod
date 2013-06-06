@@ -474,7 +474,7 @@ public class Fallout
 	public static final Item pipboy = new ItemPipboy(642).setUnlocalizedName("Pipboy").setCreativeTab(TabFalloutMisc);
 	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
 	public static final Item rifleAntiMateriel = new ItemGun(643, 20, 8, (int) 2.5, 4, "blfngl.MaterielFire", "Blfngl.MaterielReload", a50MG).setUnlocalizedName("AntiMaterielRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleAssaultCarbine = new ItemGun(645, 6, 24, 2, (int) 0.5, "blfngl.AssaultFire", "Blfngl.AssaultReload", a5mm).setUnlocalizedName("AssaultCarbine").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleAssaultCarbine = new ItemGun(645, 6, 24, 2, (int) 0.5, "blfngl.AssaultFire", "Blfngl.AssaultReload", a5mm).setFull3D().setUnlocalizedName("AssaultCarbine").setCreativeTab(TabFalloutRifle);
 	public static final Item rifleLMG = new ItemGun(646, 6, 90, (int) 2.2, (int) 0.5, "blfngl.LMGFire", "Blfngl.LMGReload", a556).setUnlocalizedName("LMG").setCreativeTab(TabFalloutRifle);
 	public static final Item rifleBozar = new ItemGun(647, 7, 30, (int) 2.2, (int) 0.5, "blfngl.LMGFire", "Blfngl.LMGReload", a556).setFull3D().setUnlocalizedName("Bozar").setCreativeTab(TabFalloutRifle);
 	public static final Item rifleMarksmanCarbine = new ItemGun(648, 7, 20, (int) 2.5, 1, "blfngl.MarksmanFire", "Blfngl.MarksmanReload", a556).setUnlocalizedName("MarksmanCarbine").setCreativeTab(TabFalloutRifle);
