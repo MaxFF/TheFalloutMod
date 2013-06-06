@@ -6,6 +6,7 @@ import java.util.Random;
 import blfngl.fallout.Fallout;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
@@ -180,7 +181,7 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 									var14 = 0;
 
 									/** change to custom dirt **/
-									var15 = (byte)Block.stone.blockID;//
+									var15 = (byte)Block.dirt.blockID;//
 								}
 								else if ((var16 >= var5 - 4) && (var16 <= var5 + 1))
 								{
@@ -413,56 +414,90 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 		return true;
 	}
 
-	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
-	{
-		net.minecraft.block.BlockSand.fallInstantly = true;
-		int var4 = par2 * 16;
-		int var5 = par3 * 16;
-		BiomeGenBase var6 = this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
-		this.rand.setSeed(this.worldObj.getSeed());
-		long var7 = this.rand.nextLong() / 2L * 2L + 1L;
-		long var9 = this.rand.nextLong() / 2L * 2L + 1L;
-		this.rand.setSeed(par2 * var7 + par3 * var9 ^ this.worldObj.getSeed());
-		boolean var11 = false;
+	//	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
+	//	{
+	//		net.minecraft.block.BlockSand.fallInstantly = true;
+	//		int var4 = par2 * 16;
+	//		int var5 = par3 * 16;
+	//		BiomeGenBase var6 = this.worldObj.getBiomeGenForCoords(var4 + 16, var5 + 16);
+	//		this.rand.setSeed(this.worldObj.getSeed());
+	//		long var7 = this.rand.nextLong() / 2L * 2L + 1L;
+	//		long var9 = this.rand.nextLong() / 2L * 2L + 1L;
+	//		this.rand.setSeed(par2 * var7 + par3 * var9 ^ this.worldObj.getSeed());
+	//		boolean var11 = false;
+	//
+	//		if (this.mapFeaturesEnabled)
+	//		{
+	//			this.mineshaftGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
+	//			var11 = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
+	//			this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
+	//			this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
+	//		}
+	//
+	//		if ((!var11) && (this.rand.nextInt(4) == 0))
+	//		{
+	//			int var12 = var4 + this.rand.nextInt(16) + 8;
+	//			int var13 = this.rand.nextInt(128);
+	//			int var14 = var5 + this.rand.nextInt(16) + 8;
+	//			new WorldGenLakes(Block.waterStill.blockID).generate(this.worldObj, this.rand, var12, var13, var14);
+	//		}
+	//
+	//		var6.decorate(this.worldObj, this.rand, var4, var5);
+	//		SpawnerAnimals.performWorldGenSpawning(this.worldObj, var6, var4 + 8, var5 + 8, 16, 16, this.rand);
+	//		var4 += 8;
+	//		var5 += 8;
+	//
+	//		for (int var12 = 0; var12 < 16; var12++)
+	//		{
+	//			for (int var13 = 0; var13 < 16; var13++)
+	//			{
+	//				int var14 = this.worldObj.getPrecipitationHeight(var4 + var12, var5 + var13);
+	//				if (this.worldObj.isBlockFreezable(var12 + var4, var14 - 1, var13 + var5))
+	//				{
+	//					this.worldObj.setBlock(var12 + var4, var14 - 1, var13 + var5, Block.ice.blockID);
+	//				}
+	//				if (this.worldObj.canSnowAt(var12 + var4, var14, var13 + var5))
+	//				{
+	//					this.worldObj.setBlock(var12 + var4, var14, var13 + var5, Block.snow.blockID);
+	//				}
+	//			}
+	//		}
+	//
+	//		net.minecraft.block.BlockSand.fallInstantly = false;
+	//	}
 
-		if (this.mapFeaturesEnabled)
-		{
-			this.mineshaftGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-			var11 = this.villageGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-			this.strongholdGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-			this.scatteredFeatureGenerator.generateStructuresInChunk(this.worldObj, this.rand, par2, par3);
-		}
+	public void populate(IChunkProvider ichunkprovider, int i, int j)
+	{
+		BlockSand.fallInstantly = true;
+		int k = i * 16;
+		int l = j * 16;
+		rand.setSeed(worldObj.getSeed());
+		long l1 = (rand.nextLong() / 2L) * 2L + 1L;
+		long l2 = (rand.nextLong() / 2L) * 2L + 1L;
+		rand.setSeed((long)i * l1 + (long)j * l2 ^ worldObj.getSeed());
+		double d = 0.25D;
+		boolean var11 = false;
 
 		if ((!var11) && (this.rand.nextInt(4) == 0))
 		{
-			int var12 = var4 + this.rand.nextInt(16) + 8;
+			int var12 = k + this.rand.nextInt(16) + 8;
 			int var13 = this.rand.nextInt(128);
-			int var14 = var5 + this.rand.nextInt(16) + 8;
+			int var14 = l + this.rand.nextInt(16) + 8;
 			new WorldGenLakes(Block.waterStill.blockID).generate(this.worldObj, this.rand, var12, var13, var14);
 		}
 
-		var6.decorate(this.worldObj, this.rand, var4, var5);
-		SpawnerAnimals.performWorldGenSpawning(this.worldObj, var6, var4 + 8, var5 + 8, 16, 16, this.rand);
-		var4 += 8;
-		var5 += 8;
-
-		for (int var12 = 0; var12 < 16; var12++)
+		if(rand.nextInt(32) < 16)
 		{
-			for (int var13 = 0; var13 < 16; var13++)
-			{
-				int var14 = this.worldObj.getPrecipitationHeight(var4 + var12, var5 + var13);
-				if (this.worldObj.isBlockFreezable(var12 + var4, var14 - 1, var13 + var5))
-				{
-					this.worldObj.setBlock(var12 + var4, var14 - 1, var13 + var5, Block.ice.blockID);
-				}
-				if (this.worldObj.canSnowAt(var12 + var4, var14, var13 + var5))
-				{
-					this.worldObj.setBlock(var12 + var4, var14, var13 + var5, Block.snow.blockID);
-				}
-			}
+			int i1 = k + rand.nextInt(16);
+			int j5 = rand.nextInt(64) + 32;
+			int j10 = l + rand.nextInt(16);
+			new OreGenMinable(Fallout.TungstenOre.blockID, 10).generate(worldObj, rand, i1, j5, j10);
+			new OreGenMinable(Fallout.UraniumOre.blockID, 4).generate(worldObj, rand, i1, j5, j10);
+			new OreGenMinable(Fallout.TechnetiumOre.blockID, 7).generate(worldObj, rand, i1, j5, j10);
+			new OreGenMinable(Fallout.SiliconDeposit.blockID, 10).generate(worldObj, rand, i1, j5, j10);
+			new OreGenMinable(Fallout.SaturniteOre.blockID, 3).generate(worldObj, rand, i1, j5, j10);
+			new OreGenMinable(Fallout.CarbonDeposit.blockID, 10).generate(worldObj, rand, i1, j5, j10);
 		}
-
-		net.minecraft.block.BlockSand.fallInstantly = false;
 	}
 
 	public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)

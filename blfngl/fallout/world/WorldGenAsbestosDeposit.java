@@ -2,6 +2,7 @@ package blfngl.fallout.world;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockSand;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
