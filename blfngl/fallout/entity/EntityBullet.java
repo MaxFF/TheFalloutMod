@@ -248,6 +248,7 @@ public class EntityBullet extends Entity
 					this.setDead();
 				}
 			}
+
 			else
 			{
 				this.xTile = var3.blockX;

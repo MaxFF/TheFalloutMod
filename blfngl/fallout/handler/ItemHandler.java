@@ -71,7 +71,7 @@ public class ItemHandler extends Fallout
 		LanguageRegistry.addName(cardboard, "Cardboard");
 		GameRegistry.addRecipe(new ItemStack(cardboard, 4), new Object [] {"XXX", "X X", "XXX", 'X', Item.paper});
 		LanguageRegistry.addName(tinCan, "Tin Can");
-		GameRegistry.addRecipe(new ItemStack(cardboard, 4), new Object [] {"X X", " X ", 'X', ingotTungsten});
+		GameRegistry.addRecipe(new ItemStack(tinCan, 4), new Object [] {"X X", " X ", 'X', ingotTungsten});
 		LanguageRegistry.addName(chunkSaturnite, "Saturnite Rod");
 		LanguageRegistry.addName(ingotSaturnite, "Saturnite Ingot");
 		GameRegistry.addRecipe(new ItemStack(ingotSaturnite), new Object [] {"XXX", "XXX", 'X', chunkSaturnite});
