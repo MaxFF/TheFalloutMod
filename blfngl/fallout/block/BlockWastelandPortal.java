@@ -27,7 +27,6 @@ public class BlockWastelandPortal extends BlockBreakable
 		this.setHardness(-1.0F);
 		this.setStepSound(soundGlassFootstep);
 		this.setLightValue(0.75F);
-		this.setCreativeTab(CreativeTabs.tabBlock);
 	}
 	/**
 	 * Ticks the block if it's been scheduled

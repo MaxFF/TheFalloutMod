@@ -117,7 +117,7 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 							{
 								if ((d16 += d15) > 0.0D)
 								{
-									par3ArrayOfByte[j2 += short1] = (byte)Fallout.blockAlien.blockID;
+									par3ArrayOfByte[j2 += short1] = (byte)Block.stone.blockID;
 								}
 								else if (k1 * 8 + l1 < b2)
 								{
@@ -171,7 +171,7 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 							var13 = -1;
 						}
 
-						else if (var18 != Fallout.blockAlien.blockID)
+						else if (var18 != Block.stone.blockID)
 						{
 							if (var13 == -1)
 							{
@@ -180,7 +180,7 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 									var14 = 0;
 
 									/** change to custom dirt **/
-									var15 = (byte)Fallout.blockAlien.blockID;//
+									var15 = (byte)Block.stone.blockID;//
 								}
 								else if ((var16 >= var5 - 4) && (var16 <= var5 + 1))
 								{

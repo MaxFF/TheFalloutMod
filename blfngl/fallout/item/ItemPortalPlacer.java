@@ -14,7 +14,6 @@ public class ItemPortalPlacer extends Item
 	public ItemPortalPlacer(int par1)
 	{
 		super(par1);
-		setCreativeTab(CreativeTabs.tabTools);
 	}
 	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int X, int Y, int Z, int par7, float par8, float par9, float par10)
 	{

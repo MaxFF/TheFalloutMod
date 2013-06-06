@@ -2,7 +2,6 @@ package blfngl.fallout;
 
 import java.util.Arrays;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
@@ -10,8 +9,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
 import blfngl.fallout.armor.ArmorBaseEnclave;
@@ -21,7 +23,6 @@ import blfngl.fallout.armor.ArmorBaseT45;
 import blfngl.fallout.armor.ArmorBaseT51;
 import blfngl.fallout.armor.ArmorBaseWinter;
 import blfngl.fallout.block.BlockAlien;
-import blfngl.fallout.block.BlockWastelandPortal;
 import blfngl.fallout.block.BlockAsbestosDeposit;
 import blfngl.fallout.block.BlockBPGlass;
 import blfngl.fallout.block.BlockBananaYucca;
@@ -37,6 +38,7 @@ import blfngl.fallout.block.BlockSiliconDeposit;
 import blfngl.fallout.block.BlockTechnetiumOre;
 import blfngl.fallout.block.BlockTungstenOre;
 import blfngl.fallout.block.BlockUraniumOre;
+import blfngl.fallout.block.BlockWastelandPortal;
 import blfngl.fallout.block.BlockXanderRoot;
 import blfngl.fallout.food.ItemFixer;
 import blfngl.fallout.food.ItemHealingPowder;
@@ -584,12 +586,12 @@ public class Fallout
 				"I am 100% dedicated to this mod and one day it will be completed. After looking around for a Fallout mod and finding some, " +
 				"but none that were fully completed or updated to the current version, I was very disappointed and hoped for one to be updated eventually. " +
 				"Alas, none of that was true. So I took matters into my own hands and this was the product.";
-		var2.version = "1.7.3";
+		var2.version = "1.7.5";
 		var2.credits = "Mojang, MinecraftForge and everyone that uses this mod :)";
 		var2.logoFile = "/blfngl/fallout/textures/blflogo.png";
-		var2.url = "http://www.minecraftforum.net/topic/1667023-/";
+		var2.url = "http://www.minecraftforum.net/topic/1667023-";
 		System.out.println("Blfngl's Fallout Mod Loaded. Lololololol.");
-
+		
 		proxy.registerSoundHandler();
 	}
 
@@ -635,6 +637,8 @@ public class Fallout
 
 		DimensionManager.registerProviderType(dimensionWasteland, DimensionWastelandWorldHandler.class, true);
 		DimensionManager.registerDimension(dimensionWasteland , dimensionWasteland);
+
+		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(itemPortalActivator), 1, 1, 1));
 
 		proxy.registerRenderers();
 	}

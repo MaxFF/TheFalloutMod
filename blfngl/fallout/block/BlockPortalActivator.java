@@ -25,7 +25,6 @@ public class BlockPortalActivator extends BlockFire
 	{
 		super(par1);
 		setTickRandomly(true);
-		setCreativeTab(CreativeTabs.tabMaterials);
 	}
 	public Icon getIcon(int par1, int par2)
 	{

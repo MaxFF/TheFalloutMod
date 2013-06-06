@@ -3,6 +3,7 @@ package blfngl.fallout.item;
 import java.util.Random;
 
 import blfngl.fallout.Fallout;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -67,5 +68,10 @@ public class ItemPortalActivator extends Item
 		
 		par1ItemStack.damageItem(1, par2EntityPlayer);
 		return true;
+	}
+	
+	public void func_94581_a(IconRegister iconRegister)
+	{
+		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
 }

@@ -41,7 +41,7 @@ public class DimensionWastelandWorldHandler extends WorldProvider
 
 	public String getDimensionName()
 	{
-		return "Alien";
+		return "Wasteland";
 	}
 
 	public boolean renderStars()
