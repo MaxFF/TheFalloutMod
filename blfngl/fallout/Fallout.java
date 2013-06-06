@@ -565,11 +565,9 @@ public class Fallout
 	public static final Item energyRifleBarrel = new BaseItem(721).setUnlocalizedName("ERBarrel").setCreativeTab(TabFalloutParts);
 	public static final Item drum = new BaseItem(722).setUnlocalizedName("Drum").setCreativeTab(TabFalloutParts);
 	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Cylinder").setCreativeTab(TabFalloutParts);
-	
-	public static BlockPortalActivator blockPortalActivator = (BlockPortalActivator) new BlockPortalActivator(2008).setUnlocalizedName("PortalActivator");
+
+	public static BlockPortalActivator blockPortalActivator = (BlockPortalActivator) new BlockPortalActivator(2008).setUnlocalizedName("BlockPortalActivator");
 	public static BlockWastelandPortal portalWateland = (BlockWastelandPortal) new BlockWastelandPortal(2009).setUnlocalizedName("WastelandPortal");
-	
-	/** Items **/
 	public static Item itemPortalActivator = new ItemPortalActivator(724).setUnlocalizedName("PortalActivator");
 	public static Item portalPlacer = new ItemPortalPlacer(725).setUnlocalizedName("PortalPlacer");
 
