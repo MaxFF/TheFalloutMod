@@ -3,18 +3,17 @@ package blfngl.fallout.gun;
 import java.util.List;
 import java.util.Random;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.world.World;
-import blfngl.fallout.FalloutMain;
-import blfngl.fallout.model.EntityBullet;
+
+import org.lwjgl.input.Keyboard;
+
+import blfngl.fallout.entity.EntityBullet;
 
 public class ItemGun extends Item
 {
@@ -33,18 +32,18 @@ public class ItemGun extends Item
 	private int critDamage;
 	public int rounds;
 	public double CND;
-	
-    Random rand = new Random();
-	
-    /**
-     * Returns True is the item is renderer in full 3D when hold.
-     */
-    public boolean isFull3D()
-    {
-        return true;
-    }
 
-	public ItemGun(int var1, int var2, int var3, double var4, double var5, String var6, String var7, EnumToolMaterial var8, Item var9)
+	Random rand = new Random();
+
+	/**
+	 * Returns True is the item is renderer in full 3D when hold.
+	 */
+	public boolean isFull3D()
+	{
+		return true;
+	}
+
+	public ItemGun(int var1, int var2, int var3, double var4, double var5, String var6, String var7, Item var9)
 	{
 		super(var1);
 		damage = var2;
@@ -53,7 +52,6 @@ public class ItemGun extends Item
 		reloadmax = 50;
 		reloadtick = var4;
 		//rounds = var3;
-		clipid = var4;
 		firesound = var6;
 		reloadsound = var7;
 		setMaxStackSize(1);
@@ -63,8 +61,8 @@ public class ItemGun extends Item
 		critChance = 5;
 		critDamage = 4;
 	}
-	
-	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, EnumToolMaterial var8, Item var9, int var10, int var11, int var12)
+
+	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, Item var9, int var10, int var11, int var12)
 	{
 		super(var1);
 		damage = var2;
@@ -73,7 +71,6 @@ public class ItemGun extends Item
 		reloadmax = 50;
 		reloadtick = var4;
 		//rounds = var3;
-		clipid = var4;
 		firesound = var6;
 		reloadsound = var7;
 		setMaxStackSize(1);
@@ -97,25 +94,28 @@ public class ItemGun extends Item
 				{
 					var2.spawnEntityInWorld(new EntityBullet(var2, var3, damage+rand.nextInt(critDamage)+1, 1));
 				}
+				
 				else
 				{
 					var2.spawnEntityInWorld(new EntityBullet(var2, var3, damage, 1));
 				}
+				
 				var2.playSoundAtEntity(var3, firesound, 1.0F, 1.0F);
 				var1.damageItem(1, var3);
+				
 				if(!var3.capabilities.isCreativeMode){rounds-=1;}
 				firetick = 0;
-				var3.cameraPitch -= 7.0F;
+				//var3.cameraPitch -= 7.0F;
 			}
 			else
 			{
 				//++firetick;
 			}
 		}
-		
+
 		if (firetick == firemax && firemax != 0 && rounds > 0)
 		{
-			var3.cameraPitch -= 7.0F;
+			//var3.cameraPitch -= 7.0F;
 		}
 
 		return var1;
@@ -125,44 +125,40 @@ public class ItemGun extends Item
 	{
 		itemIcon = iconRegister.registerIcon("blfngl" + ":" + this.getUnlocalizedName().substring(this.getUnlocalizedName().indexOf(".") + 1));
 	}
-	
+
 	public String name;
-	
+
 	/**
-     * Called when item is crafted/smelted. Used only by maps so far.
-     */
-    public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-    	name = par3EntityPlayer.username;
-    }
+	 * Called when item is crafted/smelted. Used only by maps so far.
+	 */
+	public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	{
+		name = par3EntityPlayer.username;
+	}
 
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
 		CND = var1.getItemDamage()/var1.getMaxDamage();
-		var3.add("Â§cDAM: " + (double)damage/2/*((double)damage/2)*((double)0.54 + CND * (1-(double)0.54D))*/); //TODO After fixed condition appearance
-		var3.add("Â§9Clip size: " + rounds + "/" + clipSize + " Ammo Loaded");
-		var3.add("Â§9Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
-		//var3.add("Â§9CND: "+CND*100+"%"); //TODO Fix condition appearance
+		var3.add("\u00a74DAM: " + (double)damage/2/*((double)damage/2)*((double)0.54 + CND * (1-(double)0.54D))*/); //TODO After fixed condition appearance
+		var3.add("§9Clip size: " + rounds + "/" + clipSize + " Ammo Loaded");
+		var3.add("§9Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
+		//var3.add("§9CND: "+CND*100+"%"); //TODO Fix condition appearance
 		if(name!=null)
 		{
-			var3.add("Â§eCrafted by: " + name);
+			var3.add("§eCrafted by: " + name);
 		}
 		else
 		{
-			var3.add("Â§eNot crafted.");
+			var3.add("§eNot crafted.");
 		}
 	}
-	
+
 	boolean reloading = false;
-	
-	/**
-     * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
-     * update it's contents.
-     */
-    public void onUpdate(ItemStack par1ItemStack, World var2, Entity par3Entity, int par4, boolean par5) 
-    {
-    	EntityPlayer var3 = (EntityPlayer)par3Entity;
-    	CND = par1ItemStack.getItemDamage()/par1ItemStack.getMaxDamage();
+
+	public void onUpdate(ItemStack par1ItemStack, World var2, Entity par3Entity, int par4, boolean par5) 
+	{
+		EntityPlayer var3 = (EntityPlayer)par3Entity;
+		CND = par1ItemStack.getItemDamage()/par1ItemStack.getMaxDamage();
 		if (!var2.isRemote && var3.inventory.hasItem(ammoType.itemID) && rounds<clipSize && Keyboard.isKeyDown(Keyboard.KEY_R) && !reloading)
 		{
 			reloading=true;
@@ -184,13 +180,13 @@ public class ItemGun extends Item
 			}
 			reloading=false;
 		}
-    	if(reloadtick<reloadmax)
-    	{
-    		reloadtick+=1;
-    	}
-    	if(firetick<firemax)
-    	{
-    		firetick+=1;
-    	}
-    }
+		if(reloadtick<reloadmax)
+		{
+			reloadtick+=1;
+		}
+		if(firetick<firemax)
+		{
+			firetick+=1;
+		}
+	}
 }

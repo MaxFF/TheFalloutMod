@@ -118,7 +118,7 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 							{
 								if ((d16 += d15) > 0.0D)
 								{
-									par3ArrayOfByte[j2 += short1] = (byte)Block.stone.blockID;
+									par3ArrayOfByte[j2 += short1] = (byte)Block.dirt.blockID;
 								}
 								else if (k1 * 8 + l1 < b2)
 								{
@@ -196,7 +196,7 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 									}
 									else
 									{
-										var14 = (byte)Block.waterStill.blockID;
+										var14 = (byte)Block.lavaStill.blockID;
 									}
 								}
 								var13 = var12;
@@ -483,14 +483,15 @@ public class DimensionWastelandChunkHandler implements IChunkProvider
 			int var12 = k + this.rand.nextInt(16) + 8;
 			int var13 = this.rand.nextInt(128);
 			int var14 = l + this.rand.nextInt(16) + 8;
-			new WorldGenLakes(Block.waterStill.blockID).generate(this.worldObj, this.rand, var12, var13, var14);
+			new WorldGenLakes(Block.lavaStill.blockID).generate(this.worldObj, this.rand, var12, var13, var14);
 		}
 
-		if(rand.nextInt(32) < 16)
+		if(rand.nextInt(4) == 0)
 		{
-			int i1 = k + rand.nextInt(16);
-			int j5 = rand.nextInt(64) + 32;
-			int j10 = l + rand.nextInt(16);
+			int i1 = k + rand.nextInt(16) + 8;
+			int j5 = rand.nextInt(128);
+			int j10 = l + rand.nextInt(16) + 8;
+			
 			new OreGenMinable(Fallout.TungstenOre.blockID, 10).generate(worldObj, rand, i1, j5, j10);
 			new OreGenMinable(Fallout.UraniumOre.blockID, 4).generate(worldObj, rand, i1, j5, j10);
 			new OreGenMinable(Fallout.TechnetiumOre.blockID, 7).generate(worldObj, rand, i1, j5, j10);
