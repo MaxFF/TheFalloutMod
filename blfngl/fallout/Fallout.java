@@ -2,19 +2,17 @@ package blfngl.fallout;
 
 import java.util.Arrays;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
+import net.minecraft.block.BlockFluid;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.EnumHelper;
 import blfngl.fallout.armor.ArmorBaseEnclave;
 import blfngl.fallout.armor.ArmorBaseGecko1;
@@ -25,21 +23,20 @@ import blfngl.fallout.armor.ArmorBaseWinter;
 import blfngl.fallout.block.BlockAlien;
 import blfngl.fallout.block.BlockAsbestosDeposit;
 import blfngl.fallout.block.BlockBPGlass;
-import blfngl.fallout.block.BlockBananaYucca;
-import blfngl.fallout.block.BlockBarrelCactus;
-import blfngl.fallout.block.BlockBrocFlower;
-import blfngl.fallout.block.BlockBuffaloGourd;
 import blfngl.fallout.block.BlockCarbonDeposit;
-import blfngl.fallout.block.BlockCaveFungus;
-import blfngl.fallout.block.BlockJalapeno;
-import blfngl.fallout.block.BlockPortalActivator;
+import blfngl.fallout.block.BlockRadiation;
 import blfngl.fallout.block.BlockSaturniteOre;
 import blfngl.fallout.block.BlockSiliconDeposit;
 import blfngl.fallout.block.BlockTechnetiumOre;
 import blfngl.fallout.block.BlockTungstenOre;
 import blfngl.fallout.block.BlockUraniumOre;
-import blfngl.fallout.block.BlockWastelandPortal;
-import blfngl.fallout.block.BlockXanderRoot;
+import blfngl.fallout.food.BlockBananaYucca;
+import blfngl.fallout.food.BlockBarrelCactus;
+import blfngl.fallout.food.BlockBrocFlower;
+import blfngl.fallout.food.BlockBuffaloGourd;
+import blfngl.fallout.food.BlockCaveFungus;
+import blfngl.fallout.food.BlockJalapeno;
+import blfngl.fallout.food.BlockXanderRoot;
 import blfngl.fallout.food.ItemFixer;
 import blfngl.fallout.food.ItemHealingPowder;
 import blfngl.fallout.food.ItemHydra;
@@ -57,10 +54,15 @@ import blfngl.fallout.food.ItemTurbo;
 import blfngl.fallout.food.ItemWeaponBinding;
 import blfngl.fallout.food.ItembCaveFungus;
 import blfngl.fallout.food.ItembXanderRoot;
+import blfngl.fallout.gun.GunGauss;
 import blfngl.fallout.gun.GunIncinerator;
 import blfngl.fallout.gun.GunMFCell;
+import blfngl.fallout.gun.GunTesla;
+import blfngl.fallout.gun.GunTripleMFCell;
 import blfngl.fallout.gun.ItemGun;
 import blfngl.fallout.handler.ArmorHandler;
+import blfngl.fallout.handler.BiomeHandler;
+import blfngl.fallout.handler.BiomeWasteland;
 import blfngl.fallout.handler.BlockHandler;
 import blfngl.fallout.handler.EntityHandler;
 import blfngl.fallout.handler.FoodHandler;
@@ -69,13 +71,10 @@ import blfngl.fallout.handler.ItemHandler;
 import blfngl.fallout.handler.RecordHandler;
 import blfngl.fallout.handler.ThrowingHandler;
 import blfngl.fallout.handler.WeaponHandler;
-import blfngl.fallout.handler.WorldHandler;
 import blfngl.fallout.item.BaseDrink;
 import blfngl.fallout.item.BaseFood;
 import blfngl.fallout.item.BaseItem;
 import blfngl.fallout.item.ItemPipboy;
-import blfngl.fallout.item.ItemPortalActivator;
-import blfngl.fallout.item.ItemPortalPlacer;
 import blfngl.fallout.item.ItemSyringe;
 import blfngl.fallout.melee.BaseMelee;
 import blfngl.fallout.melee.WeapBallisticFist;
@@ -104,8 +103,6 @@ import blfngl.fallout.tab.TabFalloutSMG;
 import blfngl.fallout.tab.TabFalloutShotgun;
 import blfngl.fallout.tab.TabFalloutWeap;
 import blfngl.fallout.throwing.ItemThrowingExplosive;
-import blfngl.fallout.world.BiomeWasteland;
-import blfngl.fallout.world.DimensionWastelandWorldHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -123,7 +120,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  * The Fallout Mod
  * 
  * @Author blfngl
- * @Partners Max_FF, TechSkeleton, Earthdog_Gir
  * @License Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  * The code in this repository, in any form, is the copyright of blfngl
  **/
@@ -131,18 +127,18 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @Mod(modid = "fallout", name = "The Fallout Mod", version = "MC1.5.2 - TFMv1.7.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 
-public class Fallout
+public class FalloutMain
 {
 
 	@Instance("fallout")
-	public static Fallout instance;
+	public static FalloutMain instance;
 
 	@SidedProxy(clientSide="blfngl.fallout.proxy.ClientProxy", serverSide="blfngl.fallout.proxy.CommonProxy")
 	public static CommonProxy proxy;
 	public static ClientProxy cproxy;
 
 	public static boolean isScoped = false;
-	public static int dimensionWasteland = 18;
+	public static int dimensionAlien = 18;
 
 	public static CreativeTabs TabFalloutArmor = new TabFalloutArmor(CreativeTabs.getNextID(), "TabFalloutArmor");
 	public static CreativeTabs TabFalloutPistol = new TabFalloutPistol(CreativeTabs.getNextID(), "TabFalloutPistol");
@@ -157,6 +153,8 @@ public class Fallout
 	public static CreativeTabs TabFalloutAmmo = new TabFalloutAmmo(CreativeTabs.getNextID(), "TabFalloutAmmo");
 	public static CreativeTabs TabFalloutMusic = new TabFalloutMusic(CreativeTabs.getNextID(), "TabFalloutMusic");
 	public static CreativeTabs TabFalloutParts = new TabFalloutParts(CreativeTabs.getNextID(), "TabFalloutParts");
+
+	//========================================Enums========================================================
 
 	public static EnumToolMaterial SATHEAT = EnumHelper.addToolMaterial("SATHEAT", 0, 595, 10.0F, 8, 27);
 	public static EnumToolMaterial PFIST = EnumHelper.addToolMaterial("PFIST", 0, 395, 10.0F, 7, 25);
@@ -176,6 +174,7 @@ public class Fallout
 	public static EnumArmorMaterial HELLFIRE = EnumHelper.addArmorMaterial("HELLFIRE", 41, new int []{2, 6, 5, 2}, 35);
 	public static EnumArmorMaterial WINTER = EnumHelper.addArmorMaterial("WINTER", 42, new int []{2, 6, 5, 2}, 35);
 
+	//Ammo needs to be up here
 	public static final Item cellEnergy = (new BaseItem(448)).setUnlocalizedName("ECell").setCreativeTab(TabFalloutAmmo);
 	public static final Item a22LR = (new BaseItem(443)).setUnlocalizedName("22LRRound").setCreativeTab(TabFalloutAmmo);
 	public static final Item a308 = (new BaseItem(444)).setUnlocalizedName("308Round").setCreativeTab(TabFalloutAmmo);
@@ -196,16 +195,16 @@ public class Fallout
 	public static final Item aGauge20 = new BaseItem(674).setUnlocalizedName("20Gauge").setCreativeTab(TabFalloutAmmo);
 	public static final Item aNail = new BaseItem(665).setUnlocalizedName("Nails").setCreativeTab(TabFalloutAmmo);
 	public static final Item a50MG = new BaseItem(644).setUnlocalizedName("50MG").setCreativeTab(TabFalloutAmmo);
-	public static final Item cellMF = (new BaseItem(413)).setUnlocalizedName("MFCell").setCreativeTab(TabFalloutAmmo);
 
+	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
 	public static final Item incinerator = new GunIncinerator(509).setUnlocalizedName("Incinerator").setCreativeTab(TabFalloutHeavy);
-	public static final Item rifleLaserRCW = new ItemGun(510, 3, 60, 2, (int) 0.2, "blfngl.LaserFire", "blfngl.RCWReload", cellMF, 1995).setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutEnergy);
-	public static final Item pistolCompliance = new ItemGun(511, 2, 30, 2, 1, "blfngl.LaserPistolFire", "blfngl.ComplianceReload", cellEnergy, 995).setUnlocalizedName("Compliance").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleLaserRCW = new GunMFCell(510, 3, 60, 2, (int) 0.2, "blfngl.LaserFire", "blfngl.RCWReload", GUN, 0.1F).setUnlocalizedName("LaserRCW").setCreativeTab(TabFalloutEnergy);
+	public static final Item pistolCompliance = new ItemGun(511, 2, 30, 2, 1, "blfngl.LaserPistolFire", "blfngl.ComplianceReload", GUN, cellEnergy).setUnlocalizedName("Compliance").setCreativeTab(TabFalloutEnergy);
 	public static final Item rifleLaser = new GunMFCell(512, 6, 24, 3, 1, "blfngl.LaserFire", "blfngl.LaserReload", GUN, -1.0F).setUnlocalizedName("LaserRifle").setCreativeTab(TabFalloutEnergy);
-	public static final Item pistol44 = new ItemGun(513, 5, 6, 3, 3, "blfngl.44Fire", "blfngl.44Reload", a44, 1245).setUnlocalizedName("Pistol44").setCreativeTab(TabFalloutPistol);
-	public static final Item pistol357 = new ItemGun(514, 4, 6, 1, 2, "blfngl.357Fire", "blfngl.357Reload", a357, 995).setUnlocalizedName("Pistol357").setCreativeTab(TabFalloutPistol);
-	public static final Item pistol22 = new ItemGun(515, 2, 12, 2, 1, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire", a22LR, 495).setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutPistol);
-	public static final Item rifleSniper = new ItemGun(516, 11, 5, 3, 2, "blfngl.SniperFire", "blfngl.SniperReload", a308, 395).setUnlocalizedName("Sniper308").setCreativeTab(TabFalloutRifle);
+	public static final Item pistol44 = new ItemGun(513, 5, 6, 3, 3, "blfngl.44Fire", "blfngl.44Reload", GUN, a44).setUnlocalizedName("Pistol44").setCreativeTab(TabFalloutPistol);
+	public static final Item pistol357 = new ItemGun(514, 4, 6, 1, 2, "blfngl.357Fire", "blfngl.357Reload", GUN, a357).setUnlocalizedName("Pistol357").setCreativeTab(TabFalloutPistol);
+	public static final Item pistol22 = new ItemGun(515, 2, 12, 2, 1, "blfngl.Silenced22Fire", "blfngl.Silenced22Fire", GUN, a22LR).setUnlocalizedName("Silenced22").setCreativeTab(TabFalloutPistol);
+	public static final Item rifleSniper = new ItemGun(516, 11, 5, 3, 2, "blfngl.SniperFire", "blfngl.SniperReload", GUN, a308).setUnlocalizedName("Sniper308").setCreativeTab(TabFalloutRifle);
 
 	public static final Item BotE = new WeapBotE(517, BOTE).setUnlocalizedName("BotE").setCreativeTab(TabFalloutWeap);
 	public static final Item BumperSword = new WeapBotE(518, EnumToolMaterial.EMERALD).setUnlocalizedName("BumperSword").setCreativeTab(TabFalloutWeap);
@@ -247,6 +246,7 @@ public class Fallout
 	public static final Item tungstenPlate = (new BaseItem(410)).setUnlocalizedName("TungstenPlate").setCreativeTab(TabFalloutMisc);
 	public static final Item technetiumPlate = (new BaseItem(411)).setUnlocalizedName("TechnetiumPlate").setCreativeTab(TabFalloutMisc);
 	public static final Item RAP = (new BaseItem(412)).setUnlocalizedName("RAP").setCreativeTab(CreativeTabs.tabMaterials).setCreativeTab(TabFalloutMisc);
+	public static final Item cellMF = (new BaseItem(413)).setUnlocalizedName("MFCell").setCreativeTab(TabFalloutAmmo);
 	public static final Item MFPack = (new BaseItem(414)).setUnlocalizedName("MFPack").setCreativeTab(TabFalloutMisc);
 	public static final Item carbon = (new BaseItem(415)).setUnlocalizedName("Carbon").setCreativeTab(TabFalloutMisc);
 	public static final Item teflon = (new BaseItem(416)).setUnlocalizedName("Teflon").setCreativeTab(TabFalloutMisc);
@@ -362,6 +362,7 @@ public class Fallout
 	public static final Item HellLegs = (new ArmorBaseHellfire(556, HELLFIRE, 1, 2)).setUnlocalizedName("HellLegs").setCreativeTab(TabFalloutArmor);
 	public static final Item HellBoots = (new ArmorBaseHellfire(557, HELLFIRE, 1, 3)).setUnlocalizedName("HellBoots").setCreativeTab(TabFalloutArmor);
 
+	//Skins creds: BillSkins
 	public static final Item WinterHelm = (new ArmorBaseWinter(558, WINTER, 1, 0)).setUnlocalizedName("WinterHelm").setCreativeTab(TabFalloutArmor);
 	public static final Item WinterChest = (new ArmorBaseWinter(559, WINTER, 1, 1)).setUnlocalizedName("WinterChest").setCreativeTab(TabFalloutArmor);
 	public static final Item WinterLegs = (new ArmorBaseWinter(560, WINTER, 1, 2)).setUnlocalizedName("WinterLegs").setCreativeTab(TabFalloutArmor);
@@ -371,6 +372,8 @@ public class Fallout
 	public static final Item EnclaveChest = (new ArmorBaseEnclave(563, ENCLAVE, 1, 1)).setUnlocalizedName("EnclaveChest").setCreativeTab(TabFalloutArmor);
 	public static final Item EnclaveLegs = (new ArmorBaseEnclave(564, ENCLAVE, 1, 2)).setUnlocalizedName("EnclaveLegs").setCreativeTab(TabFalloutArmor);
 	public static final Item EnclaveBoots = (new ArmorBaseEnclave(565, ENCLAVE, 1, 3)).setUnlocalizedName("EnclaveBoots").setCreativeTab(TabFalloutArmor);
+
+	//============================================Blocks=========================================================
 
 	public static final BlockOre TungstenOre = (new BlockTungstenOre(170, 0, Material.rock));
 	public static final BlockOre TechnetiumOre = (new BlockTechnetiumOre(171, 1, Material.rock));
@@ -389,125 +392,135 @@ public class Fallout
 	public static final BlockFlower Jalapeno = (BlockFlower) new BlockJalapeno(184, 14).setUnlocalizedName("Jalapeno");
 	//public static final Block benchReload = new BlockReloadBench(185).setCreativeTab(CreativeTabs.tabBlock);
 	public static final BlockOre blockAlien = (BlockOre) new BlockAlien(185, 15, Material.rock).setUnlocalizedName("AlienBlock");
-
+	public static final Block blockRadiation = new BlockRadiation(186).setUnlocalizedName("RadiationBlock").setCreativeTab(CreativeTabs.tabBlock);
+	
 	public static final BiomeGenBase Wasteland = (new BiomeWasteland(100)).setColor(16421912).setBiomeName("Wasteland").setDisableRain().setTemperatureRainfall(2.0F, 0.0F).setMinMaxHeight(0.1F, 0.2F);
 
-	public static final Item grip = new BaseItem(566).setUnlocalizedName("Grip").setCreativeTab(TabFalloutMisc);
-	public static final Item barrel = new BaseItem(567).setUnlocalizedName("Barrel").setCreativeTab(TabFalloutMisc);
-	public static final Item stockWood = new BaseItem(568).setUnlocalizedName("Stock").setCreativeTab(TabFalloutMisc);
-	public static final Item crystalArray = new BaseItem(569).setUnlocalizedName("Magnifier").setCreativeTab(TabFalloutMisc);
-	public static final Item hammer = new BaseItem(570).setUnlocalizedName("Hammer").setCreativeTab(TabFalloutMisc);
+	//TODO Version 1.7
+	public static final Item grip = new BaseItem(566).setUnlocalizedName("Grip").setCreativeTab(TabFalloutPistol);
+	public static final Item barrel = new BaseItem(567).setUnlocalizedName("Barrel").setCreativeTab(TabFalloutPistol);
+	public static final Item stockWood = new BaseItem(568).setUnlocalizedName("Stock").setCreativeTab(TabFalloutPistol);
+	public static final Item magnifier = new BaseItem(569).setUnlocalizedName("Magnifier").setCreativeTab(TabFalloutPistol);
+	public static final Item hammer = new BaseItem(570).setUnlocalizedName("Hammer").setCreativeTab(TabFalloutPistol);
 	public static final Item gasTank = new BaseItem(571).setUnlocalizedName("GasTank").setCreativeTab(TabFalloutMisc);
 
+	//TODO Version 1.7.1
+	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
 	public static final Item aGauge12 = new BaseItem(583).setUnlocalizedName("Gauge12").setCreativeTab(TabFalloutAmmo);
-	public static final Item riflePlasma = new ItemGun(572, 7, 24, 2, 2, "blfngl.PlasmaRifleFire", "Blfngl.PlasmaRifleReload", cellMF, 370).setUnlocalizedName("PlasmaRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item riflePlasma = new GunMFCell(572, 7, 24, 2, 2, "blfngl.PlasmaRifleFire", "Blfngl.PlasmaRifleReload", GUN, 3).setUnlocalizedName("PlasmaRifle").setCreativeTab(TabFalloutEnergy);
 	public static final Item magRail = new BaseItem(573).setUnlocalizedName("MagRail").setCreativeTab(TabFalloutMisc);
 	public static final Item a10mm = new BaseItem(575).setUnlocalizedName("10mmRound").setCreativeTab(TabFalloutAmmo);
-	public static final Item pistol10mm = new ItemGun(574, 3, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload", a10mm, 395).setUnlocalizedName("10mmPistol").setCreativeTab(TabFalloutPistol);
+	public static final Item pistol10mm = new ItemGun(574, 3, 12, 1, 1, "blfngl.10MMFire", "blfngl.10MMReload", GUN, a10mm).setUnlocalizedName("10mmPistol").setCreativeTab(TabFalloutPistol);
 	public static final Item shiskebabFlaming = new WeapFlamingShish(576).setUnlocalizedName("Shishkebabf").setCreativeTab(TabFalloutWeap);
-	public static final Item rifleGauss = new ItemGun(577, 12, 1, 4, 3, "blfngl.GaussFire", "blfngl.GaussReload", cellMF, 395).setUnlocalizedName("GaussRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleGauss = new GunGauss(577, 12, 1, 4, 3, "blfngl.GaussFire", "blfngl.GaussReload", GUN).setUnlocalizedName("GaussRifle").setCreativeTab(TabFalloutEnergy);
 	public static final Item bubbleGum = new BaseFood(578, 1, 0.3F, false).setUnlocalizedName("BubbleGum").setCreativeTab(TabFalloutFood);
 	public static final Item beer = new BaseDrink(579, 2, 0.3F, false).setUnlocalizedName("Beer").setCreativeTab(TabFalloutFood);
 	public static final Item fiendStew = new BaseFood(580, 12, 0.3F, false).setUnlocalizedName("FiendStew").setCreativeTab(TabFalloutFood);
-	public static final Item shotgunCombat = new ItemGun(581, 7, 12, 2, 2, "blfngl.ShotgunFire", "blfngl.ShotgunReload", aGauge12, 145).setUnlocalizedName("CombatShotgun").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunRiot = new ItemGun(582, 7, 12, 2, 1, "blfngl.HuntingShotgunFire", "blfngl.ShotgunReload", aGauge12, 870).setUnlocalizedName("RiotShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunCombat = new ItemGun(581, 7, 12, 2, 2, "blfngl.ShotgunFire", "blfngl.ShotgunReload", GUN, aGauge12).setUnlocalizedName("CombatShotgun").setCreativeTab(TabFalloutRifle);
+	public static final Item shotgunRiot = new ItemGun(582, 7, 12, 2, 1, "blfngl.HuntingShotgunFire", "blfngl.ShotgunReload", GUN, aGauge12).setUnlocalizedName("RiotShotgun").setCreativeTab(TabFalloutRifle);
 	public static final Item powderRifle = new BaseItem(584).setUnlocalizedName("PowderRifle").setCreativeTab(TabFalloutMisc);
 	public static final Item primerRifle = new BaseItem(585).setUnlocalizedName("PrimerRifle").setCreativeTab(TabFalloutMisc);
 	public static final Item lead = new BaseItem(586).setUnlocalizedName("Lead").setCreativeTab(TabFalloutMisc);
 	public static final Item powderPistol = new BaseItem(587).setUnlocalizedName("PowderPistol").setCreativeTab(TabFalloutMisc);
 	public static final Item primerPistol = new BaseItem(588).setUnlocalizedName("PrimerPistol").setCreativeTab(TabFalloutMisc);
 
-	public static final Item rifleTriBeam = new ItemGun(589, 10, 24, 2, 4, "blfngl.TriBeamFire", "Blfngl.TriBeamReload", cellMF, 245).setUnlocalizedName("TriBeamRifle").setCreativeTab(TabFalloutEnergy);
-	public static final Item rifleMultiplas = new ItemGun(590, 13, 30, 3, 4, "blfngl.MultiplasFire", "Blfngl.PlasmaRifleReload", cellMF, 245).setUnlocalizedName("MultiplasRifle").setCreativeTab(TabFalloutEnergy);
-	public static final Item rifleLAER = new ItemGun(591, 8, 20, 3, 2, "blfngl.PulseFire", "Blfngl.PlasmaRifleReload", cellMF, 370).setUnlocalizedName("LAER").setCreativeTab(TabFalloutEnergy);
-	public static final Item rifleHolo = new ItemGun(592, 13, 4, 2, 3, "blfngl.HoloFire", "Blfngl.PlasmaRifleReload", cellMF, 495).setUnlocalizedName("Holorifle").setCreativeTab(TabFalloutEnergy);
-	public static final Item minigun = new ItemGun(593, 3, 240, 4, 0.3, "blfngl.MinigunFire", "Blfngl.MinigunReload", a5mm, 5995).setUnlocalizedName("Minigun").setCreativeTab(TabFalloutHeavy);
-	public static final Item cyberdog = new ItemGun(594, 3, 50, 4, 0.5, "blfngl.357Fire", "Blfngl.MinigunReload", a357, 2495).setUnlocalizedName("CyberdogGun").setCreativeTab(TabFalloutHeavy);
-	public static final Item FIDO = new ItemGun(595, 4, 50, 4, 0.5, "blfngl.44Fire", "Blfngl.MinigunReload", a44, 2495).setUnlocalizedName("FIDO").setCreativeTab(TabFalloutHeavy);
-	public static final Item plasmaCaster = new ItemGun(596, 14, 10, 3, 4, "blfngl.PlasmaCasterFire", "Blfngl.MinigunReload", cellMF, 395).setUnlocalizedName("PlasmaCaster").setCreativeTab(TabFalloutHeavy);
-	public static final Item missileLauncher = new ItemGun(597, 14, 1, 4, 2, "blfngl.MissileFire", "Blfngl.MissileReload", aMissile, 245).setUnlocalizedName("MissileLauncher").setCreativeTab(TabFalloutHeavy);
-	public static final Item redGlare = new ItemGun(598, 5, 13, 3, 2, "blfngl.RedGlareFire", "Blfngl.RedGlareReload", aRocket, 2245).setUnlocalizedName("RedGlare").setCreativeTab(TabFalloutHeavy);
-	public static final Item pistol556 = new ItemGun(599, 5, 5, 2, 1, "blfngl.Pistol556Fire", "Blfngl.Pistol556Reload", a556, 870).setUnlocalizedName("556Pistol").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolThatGun = new ItemGun(600, 6, 7, 3, 1, "blfngl.Pistol556Fire", "Blfngl.Pistol556Reload", a556, 1120).setUnlocalizedName("ThatGun").setCreativeTab(TabFalloutPistol);
-	public static final Item pistol127 = new ItemGun(601, 7, 7, 2, 1, "blfngl.44Fire", "Blfngl.9mmReload", a127, 395).setUnlocalizedName("127Pistol").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolLaser = new ItemGun(602, 4, 24, 3, 1, "blfngl.LaserPistolFire", "Blfngl.PlasmaRifleReload", cellEnergy, 995).setUnlocalizedName("LaserPistol").setCreativeTab(TabFalloutEnergy);
-	public static final Item pistolDefender = new ItemGun(603, 6, 32, 2, 2, "blfngl.DefenderFire", "Blfngl.PlasmaPistolReload", cellEnergy, 495).setUnlocalizedName("PlasmaDefender").setCreativeTab(TabFalloutEnergy);
-	public static final Item pistolPlasma = new ItemGun(604, 5, 32, 2, 1, "blfngl.PlasmaPistolFire", "Blfngl.PlasmaPistolReload", cellEnergy, 745).setUnlocalizedName("PlasmaPistol").setCreativeTab(TabFalloutEnergy);
-	public static final Item teslaCannon = new ItemGun(605, 13, 5, 4, 3, "blfngl.TeslaFire", "Blfngl.TeslaReload", cellMF, 395).setUnlocalizedName("TeslaCannon").setCreativeTab(TabFalloutHeavy);
-	public static final Item rifleRecharger = new ItemGun(606, 3, 7, 3, 2, "blfngl.RechargerFire", "Blfngl.PlasmaRifleReload", a556, 370).setUnlocalizedName("RechargerRifle").setCreativeTab(TabFalloutEnergy);
-	public static final Item pistolRecharger = new ItemGun(607, 4, 20, 3, 1, "blfngl.RechargerFire", "Blfngl.PlasmaRifleReload", a556, 1495).setUnlocalizedName("RechargerPistol").setCreativeTab(TabFalloutEnergy);
-
-	public static final Item shotgunHunting = new ItemGun(613, 13, 7, 3, 4, "blfngl.HuntingShotgunFire", "Blfngl.HuntingShotgunReload", aGauge12, 995).setUnlocalizedName("HuntingShotgun").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunDinnerBell = new ItemGun(614, 13, 7, 3, 4, "blfngl.HuntingShotgunFire", "Blfngl.HuntingShotgunReload", aGauge12, 745).setUnlocalizedName("DinnerBell").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistol9mm = new ItemGun(615, 2, 13, 3, 1, "blfngl.9mmFire", "Blfngl.9mmReload", a9mm, 745).setUnlocalizedName("9mmPistol").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolAlienBlaster = new ItemGun(616, 13, 10, 2, 1, "blfngl.AlienBlasterFire", "Blfngl.AlienBlasterReload", aAlien, 2495).setUnlocalizedName("AlienBlaster").setCreativeTab(TabFalloutPistol);
-	public static final Item rifleHunting = new ItemGun(617, 6, 24, 3, 3, "blfngl.HuntingRifleFire", "Blfngl.HuntingRifleReload", a308, 1495).setUnlocalizedName("HuntingRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item pistolLucky = new ItemGun(620, 6, 6, 1, 2, "blfngl.357Fire", "Blfngl.357Reload", a357, 1120).setUnlocalizedName("Lucky").setCreativeTab(TabFalloutPistol);
-	public static final Item pistol45Auto = new ItemGun(621, 5, 7, 2, 1, "blfngl.45Fire", "Blfngl.9mmReload", a45Auto, 745).setUnlocalizedName("45AutoPistol").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolLightDarkness = new ItemGun(622, 7, 7, 2, 1, "blfngl.45Fire", "Blfngl.9mmReload", a45Auto, 1245).setUnlocalizedName("LightDarkness").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolMaria = new ItemGun(623, 5, 13, 2, 2, "blfngl.9mmFire", "Blfngl.9mmReload", a9mm, 995).setUnlocalizedName("Maria").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolHuntingRevolver = new ItemGun(624, 8, 5, 3, 3, "blfngl.HuntingFire", "Blfngl.HuntingReload", aGovt, 545).setUnlocalizedName("HuntingRevolver").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolRangerSequoia = new ItemGun(625, 10, 5, 3, 3, "blfngl.RangerSequoiaFire", "Blfngl.HuntingReload", aGovt, 395).setUnlocalizedName("RangerSequoia").setCreativeTab(TabFalloutPistol);
-	public static final Item pistolPolice = new ItemGun(626, 6, 6, 3, 2, "blfngl.357Fire", "Blfngl.357Reload", a357, 1120).setUnlocalizedName("PolicePistol").setCreativeTab(TabFalloutPistol);
-
-	public static final Item rifleAutomatic = new ItemGun(627, 8, 20, 3, 0.5, "blfngl.AutomaticRifleFire", "Blfngl.PlasmaRifleReload", a308, 995).setUnlocalizedName("AutomaticRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleBattle = new ItemGun(628, 6, 8, 2, 3, "blfngl.BattleRifleFire", "Blfngl.BattleRifleReload", a308, 1495).setUnlocalizedName("BattleRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleThisMachine = new ItemGun(629, 7, 8, 2, 3, "blfngl.BattleRifleFire", "Blfngl.BattleRifleReload", a308, 2995).setUnlocalizedName("ThisMachine").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleBBGun = new ItemGun(630, 1, 100, 3, 1, "blfngl.BBGunFire", "Blfngl.BBGunReload", aBB, 245).setUnlocalizedName("BBGun").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleAbileneKid = new ItemGun(631, 2, 100, 3, 1, "blfngl.BBGunFire", "Blfngl.BBGunReload", aBB, 495).setUnlocalizedName("ABBGun").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleBrushGun = new ItemGun(632, 8, 6, 3, 2, "blfngl.BrushGunFire", "Blfngl.RepeaterReload", a308, 745).setUnlocalizedName("BrushGun").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleMedicineStick = new ItemGun(633, 9, 6, 3, 2, "blfngl.BrushGunFire", "Blfngl.RepeaterReload", aGovt, 995).setUnlocalizedName("MedicineStick").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleCowboyRepeater = new ItemGun(634, 4, 7, 3, 2, "blfngl.CowboyRepeaterFire", "Blfngl.RepeaterReload", a357, 595).setUnlocalizedName("CowboyRepeater").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleLongueCarabine = new ItemGun(635, 5, 11, 3, 2, "blfngl.BrushGunFire", "Blfngl.RepeaterReload", a357, 745).setUnlocalizedName("LongueCarabine").setCreativeTab(TabFalloutRifle);
-	public static final Item riflePaciencia = new ItemGun(636, 7, 3, 3, 2, "blfngl.HuntingRifleFire", "Blfngl.HuntingRifleReload", a308, 1745).setUnlocalizedName("Paciencia").setCreativeTab(TabFalloutRifle);
-	public static final Item stockMetal = new BaseItem(641).setUnlocalizedName("MetalStock").setCreativeTab(TabFalloutMisc);
-
-	public static final Item pipboy = new ItemPipboy(642).setUnlocalizedName("Pipboy").setCreativeTab(TabFalloutMisc);
-	public static final Item rifleAntiMateriel = new ItemGun(643, 20, 8, 2.5, 4, "blfngl.MaterielFire", "Blfngl.MaterielReload", a50MG, 470).setUnlocalizedName("AntiMaterielRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleAssaultCarbine = new ItemGun(645, 6, 24, 2, 0.5, "blfngl.AssaultFire", "Blfngl.AssaultReload", a5mm, 3745).setUnlocalizedName("AssaultCarbine").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleLMG = new ItemGun(646, 6, 90, 2.2, 0.5, "blfngl.LMGFire", "Blfngl.LMGReload", a556, 3995).setUnlocalizedName("LMG").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleBozar = new ItemGun(647, 7, 30, 2.2, 0.5, "blfngl.LMGFire", "Blfngl.LMGReload", a556, 3995).setFull3D().setUnlocalizedName("Bozar").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleMarksmanCarbine = new ItemGun(648, 7, 20, 2.5, 1, "blfngl.MarksmanFire", "Blfngl.MarksmanReload", a556, 1995).setUnlocalizedName("MarksmanCarbine").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleAllAmerican = new ItemGun(649, 8, 24, 2.5, 1, "blfngl.MarksmanFire", "Blfngl.MarksmanReload", a556, 1995).setUnlocalizedName("AllAmerican").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleService = new ItemGun(650, 3, 20, 2, 0.7, "blfngl.AutomaticRifleFire", "Blfngl.MarksmanReload", a556, 1995).setUnlocalizedName("ServiceRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleSurvival = new ItemGun(651, 7, 10, 2, 0.7, "blfngl.AutomaticRifleFire", "Blfngl.MarksmanReload", a127, 2495).setUnlocalizedName("SurvivalistsRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleChristine = new ItemGun(652, 15, 5, 2, 3, "blfngl.ChristineFire", "Blfngl.ChristineReload", a308, 420).setUnlocalizedName("ChristinesRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleGobi = new ItemGun(653, 14, 6, 2, 3, "blfngl.SniperFire", "Blfngl.SniperReload", a308, 795).setUnlocalizedName("GobiRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleTrailCarbine = new ItemGun(654, 10, 8, 2, 2, "blfngl.TrailCarbineFire", "Blfngl.RepeaterReload", a44, 2495).setUnlocalizedName("TrailCarbine").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleVarmint = new ItemGun(655, 3, 5, 2.2, 2, "blfngl.VarmintRifleFire", "Blfngl.PlasmaRifleReload", a556, 595).setUnlocalizedName("VarmintRifle").setCreativeTab(TabFalloutRifle);
-	public static final Item rifleRatslayer = new ItemGun(656, 5, 5, 2.2, 2, "blfngl.RatslayerFire", "Blfngl.PlasmaRifleReload", a556, 995).setUnlocalizedName("Ratslayer").setCreativeTab(TabFalloutRifle);
-
-	public static final Item smg45Auto = new ItemGun(657, 4, 30, 2.2, 0.5, "blfngl.45Fire", "Blfngl.AssaultReload", a45Auto, 2995).setUnlocalizedName("45AutoSub").setCreativeTab(TabFalloutSMG);
-	public static final Item smg9mm = new ItemGun(658, 2, 30, 2.7, 0.5, "blfngl.9mmFire", "Blfngl.9mmReload", a9mm, 2745).setUnlocalizedName("9mmSub").setCreativeTab(TabFalloutSMG);
-	public static final Item smgVance = new ItemGun(659, 4, 60, 2.2, 0.5, "blfngl.9mmFire", "Blfngl.9mmReload", a9mm, 3745).setUnlocalizedName("VancesSub").setCreativeTab(TabFalloutSMG);
-	public static final Item smg10mm = new ItemGun(660, 3, 30, 2.7, 0.5, "blfngl.10MMFire", "Blfngl.10MMReload", a10mm, 2495).setUnlocalizedName("10mmSub").setCreativeTab(TabFalloutSMG);
-	public static final Item smgSleepytyme = new ItemGun(661, 5, 40, 2.7, 0.5, "blfngl.SleepytymeFire", "Blfngl.10MMReload", a10mm, 2495).setUnlocalizedName("Sleepytyme").setCreativeTab(TabFalloutSMG);
-	public static final Item smg127 = new ItemGun(662, 4, 21, 2, 0.5, "blfngl.357Fire", "Blfngl.127SmgReload", a127, 2495).setUnlocalizedName("127Sub").setCreativeTab(TabFalloutSMG);
-	public static final Item smgNailGun = new ItemGun(663, 2, 90, 2.7, 0.3, "blfngl.NailgunFire", "Blfngl.9mmReload", aNail, 2745).setUnlocalizedName("NailGun").setCreativeTab(TabFalloutSMG);
-	public static final Item smg22 = new ItemGun(664, 1, 180, 2.3, 0.5, "blfngl.Silenced22Fire", "Blfngl.10MMReload", a22LR, 4995).setUnlocalizedName("22Sub").setCreativeTab(TabFalloutSMG);
-	public static final Item CZ57 = new ItemGun(666, 5, 120, 4, 0.3, "blfngl.MinigunFire", "Blfngl.MinigunReload", a5mm, 7995).setUnlocalizedName("CZ57").setCreativeTab(TabFalloutHeavy);
-	public static final Item pistolWeathered10mm = new ItemGun(667, 5, 12, 1.3, 1, "blfngl.10mmFire", "Blfngl.10MMReload", a10mm, 545).setUnlocalizedName("Weathered10mm").setCreativeTab(TabFalloutPistol);
+	//TODO version 1.7.2
+	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
+	public static final Item rifleTriBeam = new GunTripleMFCell(589, 10, 24, 2, 4, "blfngl.TriBeamFire", "Blfngl.TriBeamReload", GUN).setUnlocalizedName("TriBeamRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleMultiplas = new GunTripleMFCell(590, 13, 30, 3, 4, "blfngl.MultiplasFire", "Blfngl.PlasmaRifleReload", GUN).setUnlocalizedName("MultiplasRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleLAER = new GunMFCell(591, 8, 20, 3, 2, "blfngl.PulseFire", "Blfngl.PlasmaRifleReload", GUN, 3).setUnlocalizedName("LAER").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleHolo = new GunMFCell(592, 13, 4, 2, 3, "blfngl.HoloFire", "Blfngl.PlasmaRifleReload", GUN, 3).setUnlocalizedName("Holorifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item minigun = new ItemGun(593, 3, 240, 4, 0.3, "blfngl.MinigunFire", "Blfngl.MinigunReload", GUN, a5mm).setUnlocalizedName("Minigun").setCreativeTab(TabFalloutHeavy);
+	public static final Item cyberdog = new ItemGun(594, 3, 50, 4, 0.5, "blfngl.357Fire", "Blfngl.MinigunReload", GUN, a357).setUnlocalizedName("CyberdogGun").setCreativeTab(TabFalloutHeavy);
+	public static final Item FIDO = new ItemGun(595, 4, 50, 4, 0.5, "blfngl.44Fire", "Blfngl.MinigunReload", GUN, a44).setUnlocalizedName("FIDO").setCreativeTab(TabFalloutHeavy);
+	public static final Item plasmaCaster = new GunMFCell(596, 14, 10, 3, 4, "blfngl.PlasmaCasterFire", "Blfngl.MinigunReload", GUN, 3).setUnlocalizedName("PlasmaCaster").setCreativeTab(TabFalloutHeavy);
+	public static final Item missileLauncher = new ItemGun(597, 14, 1, 4, 2, "blfngl.MissileFire", "Blfngl.MissileReload", GUN, aMissile).setUnlocalizedName("MissileLauncher").setCreativeTab(TabFalloutHeavy);
+	public static final Item redGlare = new ItemGun(598, 5, 13, 3, 2, "blfngl.RedGlareFire", "Blfngl.RedGlareReload", GUN, aRocket).setUnlocalizedName("RedGlare").setCreativeTab(TabFalloutHeavy);
+	public static final Item pistol556 = new ItemGun(599, 5, 5, 2, 1, "blfngl.Pistol556Fire", "Blfngl.Pistol556Reload", GUN, a556).setUnlocalizedName("556Pistol").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolThatGun = new ItemGun(600, 6, 7, 3, 1, "blfngl.Pistol556Fire", "Blfngl.Pistol556Reload", GUN, a556).setUnlocalizedName("ThatGun").setCreativeTab(TabFalloutPistol);
+	public static final Item pistol127 = new ItemGun(601, 7, 7, 2, 1, "blfngl.44Fire", "Blfngl.9mmReload", GUN, a127).setUnlocalizedName("127Pistol").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolLaser = new ItemGun(602, 4, 24, 3, 1, "blfngl.LaserPistolFire", "Blfngl.PlasmaRifleReload", GUN, cellEnergy).setUnlocalizedName("LaserPistol").setCreativeTab(TabFalloutEnergy);
+	public static final Item pistolDefender = new ItemGun(603, 6, 32, 2, 2, "blfngl.DefenderFire", "Blfngl.PlasmaPistolReload", GUN, cellEnergy).setUnlocalizedName("PlasmaDefender").setCreativeTab(TabFalloutEnergy);
+	public static final Item pistolPlasma = new ItemGun(604, 5, 32, 2, 1, "blfngl.PlasmaPistolFire", "Blfngl.PlasmaPistolReload", GUN, cellEnergy).setUnlocalizedName("PlasmaPistol").setCreativeTab(TabFalloutEnergy);
+	public static final Item teslaCannon = new GunTesla(605, 13, 5, 4, 3, "blfngl.TeslaFire", "Blfngl.TeslaReload", GUN).setUnlocalizedName("TeslaCannon").setCreativeTab(TabFalloutHeavy);
+	public static final Item rifleRecharger = new ItemGun(606, 3, 7, 3, 2, "blfngl.RechargerFire", "Blfngl.PlasmaRifleReload", GUN, a556).setUnlocalizedName("RechargerRifle").setCreativeTab(TabFalloutEnergy);
+	public static final Item pistolRecharger = new ItemGun(607, 4, 20, 3, 1, "blfngl.RechargerFire", "Blfngl.PlasmaRifleReload", GUN, a556).setUnlocalizedName("RechargerPistol").setCreativeTab(TabFalloutEnergy);
 
 	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
-	public static final Item shotgunCaravan = new ItemGun(668, 5, 2, 1.5, 1, "blfngl.CaravanShotgunFire", "Blfngl.CaravanShotgunReload", aGauge20, 695).setUnlocalizedName("CaravanShotgun").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunSturdyCaravan = new ItemGun(669, 7, 2, 1.5, 1, "blfngl.CaravanShotgunFire", "Blfngl.CaravanShotgunReload", aGauge20, 1495).setUnlocalizedName("SturdyCaravanShotgun").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunLever = new ItemGun(670, 6, 5, 2.5, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", aGauge20, 495).setUnlocalizedName("LeverActionShotgun").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunSawed = new ItemGun(671, 8, 1, 3.1, 2, "blfngl.HuntingShotgunFire", "Blfngl.LeverShotgunReload", aGauge12, 395).setUnlocalizedName("SawedOffShotgun").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunBigBoomer = new ItemGun(672, 10, 1, 3.1, 2, "blfngl.HuntingShotgunFire", "Blfngl.LeverShotgunReload", aGauge12, 395).setUnlocalizedName("BigBoomer").setCreativeTab(TabFalloutShotgun);
-	public static final Item shotgunSingle = new ItemGun(673, 4, 1, 2, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", aGauge20, 995).setUnlocalizedName("SingleShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunHunting = new ItemGun(613, 13, 7, 3, 4, "blfngl.HuntingShotgunFire", "Blfngl.HuntingShotgunReload", GUN, aGauge12).setUnlocalizedName("HuntingShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunDinnerBell = new ItemGun(614, 13, 7, 3, 4, "blfngl.HuntingShotgunFire", "Blfngl.HuntingShotgunReload", GUN, aGauge12).setUnlocalizedName("DinnerBell").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistol9mm = new ItemGun(615, 2, 13, 3, 1, "blfngl.9mmFire", "Blfngl.9mmReload", GUN, a9mm).setUnlocalizedName("9mmPistol").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolAlienBlaster = new ItemGun(616, 13, 10, 2, 1, "blfngl.AlienBlasterFire", "Blfngl.AlienBlasterReload", GUN, aAlien).setUnlocalizedName("AlienBlaster").setCreativeTab(TabFalloutPistol);
+	public static final Item rifleHunting = new ItemGun(617, 6, 24, 3, 3, "blfngl.HuntingRifleFire", "Blfngl.HuntingRifleReload", GUN, a308).setUnlocalizedName("HuntingRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item pistolLucky = new ItemGun(620, 6, 6, 1, 2, "blfngl.357Fire", "Blfngl.357Reload", GUN, a357).setUnlocalizedName("Lucky").setCreativeTab(TabFalloutPistol);
+	public static final Item pistol45Auto = new ItemGun(621, 5, 7, 2, 1, "blfngl.45Fire", "Blfngl.9mmReload", GUN, a45Auto).setUnlocalizedName("45AutoPistol").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolLightDarkness = new ItemGun(622, 7, 7, 2, 1, "blfngl.45Fire", "Blfngl.9mmReload", GUN, a45Auto).setUnlocalizedName("LightDarkness").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolMaria = new ItemGun(623, 5, 13, 2, 2, "blfngl.9mmFire", "Blfngl.9mmReload", GUN, a9mm).setUnlocalizedName("Maria").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolHuntingRevolver = new ItemGun(624, 8, 5, 3, 3, "blfngl.HuntingFire", "Blfngl.HuntingReload", GUN, aGovt).setUnlocalizedName("HuntingRevolver").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolRangerSequoia = new ItemGun(625, 10, 5, 3, 3, "blfngl.RangerSequoiaFire", "Blfngl.HuntingReload", GUN, aGovt).setUnlocalizedName("RangerSequoia").setCreativeTab(TabFalloutPistol);
+	public static final Item pistolPolice = new ItemGun(626, 6, 6, 3, 2, "blfngl.357Fire", "Blfngl.357Reload", GUN, a357).setUnlocalizedName("PolicePistol").setCreativeTab(TabFalloutPistol);
 
-	public static final Item rifleChineseAssault = new ItemGun(675, 4, 24, 2.2, 0.5, "blfngl.ChineseAssaultFire", "Blfngl.ChineseAssaultReload", a556, 1212).setUnlocalizedName("ChineseAssaultRifle").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolFlareGun = new ItemGun(676, 1, 1, 2.3, 2, "blfngl.FlareGunFire", "Blfngl.FlareGunReload", homemadeFuel, 245).setUnlocalizedName("FlareGun").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolPewPew = new ItemGun(677, 6, 2, 3, 1, "blfngl.LaserFire", "Blfngl.LaserPistolReload", cellEnergy, 395).setUnlocalizedName("PewPew").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolPulseGun = new ItemGun(678, 3, 5, 2, 3, "blfngl.PulseFire", "Blfngl.PulseGunReload", cellEnergy, 495).setUnlocalizedName("PulseGun").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolHyperbreederAlpha = new ItemGun(679, 4, 10, 3, 1, "blfngl.RechargerFire", "Blfngl.LeverShotgunReload", aGauge20, 3995).setUnlocalizedName("HyperbreederAlpha").setCreativeTab(TabFalloutShotgun);
-	public static final Item pistolSonicEmitter = new ItemGun(680, 4, 24, 2, 2, "blfngl.PulseFire", "Blfngl.PulseGunReload", cellEnergy, 3500).setUnlocalizedName("SonicEmitter").setCreativeTab(TabFalloutShotgun);
+	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound, zoom distance
+	public static final Item rifleAutomatic = new ItemGun(627, 8, 20, 3, 0.5, "blfngl.AutomaticRifleFire", "Blfngl.PlasmaRifleReload", GUN, a308).setUnlocalizedName("AutomaticRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleBattle = new ItemGun(628, 6, 8, 2, 3, "blfngl.BattleRifleFire", "Blfngl.BattleRifleReload", GUN, a308).setUnlocalizedName("BattleRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleThisMachine = new ItemGun(629, 7, 8, 2, 3, "blfngl.BattleRifleFire", "Blfngl.BattleRifleReload", GUN, a308).setUnlocalizedName("ThisMachine").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleBBGun = new ItemGun(630, 1, 100, 3, 1, "blfngl.BBGunFire", "Blfngl.BBGunReload", GUN, aBB).setUnlocalizedName("BBGun").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleAbileneKid = new ItemGun(631, 2, 100, 3, 1, "blfngl.BBGunFire", "Blfngl.BBGunReload", GUN, aBB).setUnlocalizedName("ABBGun").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleBrushGun = new ItemGun(632, 8, 6, 3, 2, "blfngl.BrushGunFire", "Blfngl.RepeaterReload", GUN, a308).setUnlocalizedName("BrushGun").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleMedicineStick = new ItemGun(633, 9, 6, 3, 2, "blfngl.BrushGunFire", "Blfngl.RepeaterReload", GUN, aGovt).setUnlocalizedName("MedicineStick").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleCowboyRepeater = new ItemGun(634, 4, 7, 3, 2, "blfngl.CowboyRepeaterFire", "Blfngl.RepeaterReload", GUN, a357).setUnlocalizedName("CowboyRepeater").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleLongueCarabine = new ItemGun(635, 5, 11, 3, 2, "blfngl.BrushGunFire", "Blfngl.RepeaterReload", GUN, a357).setUnlocalizedName("LongueCarabine").setCreativeTab(TabFalloutRifle);
+	public static final Item riflePaciencia = new ItemGun(636, 7, 3, 3, 2, "blfngl.HuntingRifleFire", "Blfngl.HuntingRifleReload", GUN, a308).setUnlocalizedName("Paciencia").setCreativeTab(TabFalloutRifle);
+	public static final Item stockMetal = new BaseItem(641).setUnlocalizedName("MetalStock").setCreativeTab(TabFalloutMisc);
+
+	//TODO Version 1.7.3
+	public static final Item pipboy = new ItemPipboy(642).setUnlocalizedName("Pipboy").setCreativeTab(TabFalloutMisc);
+	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
+	public static final Item rifleAntiMateriel = new ItemGun(643, 20, 8, 2.5, 4, "blfngl.MaterielFire", "Blfngl.MaterielReload", GUN, a50MG).setUnlocalizedName("AntiMaterielRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleAssaultCarbine = new ItemGun(645, 6, 24, 2, 0.5, "blfngl.AssaultFire", "Blfngl.AssaultReload", GUN, a5mm).setUnlocalizedName("AssaultCarbine").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleLMG = new ItemGun(646, 6, 90, 2.2, 0.5, "blfngl.LMGFire", "Blfngl.LMGReload", GUN, a556).setUnlocalizedName("LMG").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleBozar = new ItemGun(647, 7, 30, 2.2, 0.5, "blfngl.LMGFire", "Blfngl.LMGReload", GUN, a556).setFull3D().setUnlocalizedName("Bozar").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleMarksmanCarbine = new ItemGun(648, 7, 20, 2.5, 1, "blfngl.MarksmanFire", "Blfngl.MarksmanReload", GUN, a556).setUnlocalizedName("MarksmanCarbine").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleAllAmerican = new ItemGun(649, 8, 24, 2.5, 1, "blfngl.MarksmanFire", "Blfngl.MarksmanReload", GUN, a556).setUnlocalizedName("AllAmerican").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleService = new ItemGun(650, 3, 20, 2, 0.7, "blfngl.AutomaticRifleFire", "Blfngl.MarksmanReload", GUN, a556).setUnlocalizedName("ServiceRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleSurvival = new ItemGun(651, 7, 10, 2, 0.7, "blfngl.AutomaticRifleFire", "Blfngl.MarksmanReload", GUN, a127).setUnlocalizedName("SurvivalistsRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleChristine = new ItemGun(652, 15, 5, 2, 3, "blfngl.ChristineFire", "Blfngl.ChristineReload", GUN, a308).setUnlocalizedName("ChristinesRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleGobi = new ItemGun(653, 14, 6, 2, 3, "blfngl.SniperFire", "Blfngl.SniperReload", GUN, a308).setUnlocalizedName("GobiRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleTrailCarbine = new ItemGun(654, 10, 8, 2, 2, "blfngl.TrailCarbineFire", "Blfngl.RepeaterReload", GUN, a44).setUnlocalizedName("TrailCarbine").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleVarmint = new ItemGun(655, 3, 5, 2.2, 2, "blfngl.VarmintRifleFire", "Blfngl.PlasmaRifleReload", GUN, a556).setUnlocalizedName("VarmintRifle").setCreativeTab(TabFalloutRifle);
+	public static final Item rifleRatslayer = new ItemGun(656, 5, 5, 2.2, 2, "blfngl.RatslayerFire", "Blfngl.PlasmaRifleReload", GUN, a556).setUnlocalizedName("Ratslayer").setCreativeTab(TabFalloutRifle);
+
+	public static final Item smg45Auto = new ItemGun(657, 4, 30, 2.2, 0.5, "blfngl.45Fire", "Blfngl.AssaultReload", GUN, a45Auto).setUnlocalizedName("45AutoSub").setCreativeTab(TabFalloutSMG);
+	public static final Item smg9mm = new ItemGun(658, 2, 30, 2.7, 0.5, "blfngl.9mmFire", "Blfngl.9mmReload", GUN, a9mm).setUnlocalizedName("9mmSub").setCreativeTab(TabFalloutSMG);
+	public static final Item smgVance = new ItemGun(659, 4, 60, 2.2, 0.5, "blfngl.9mmFire", "Blfngl.9mmReload", GUN, a9mm).setUnlocalizedName("VancesSub").setCreativeTab(TabFalloutSMG);
+	public static final Item smg10mm = new ItemGun(660, 3, 30, 2.7, 0.5, "blfngl.10MMFire", "Blfngl.10MMReload", GUN, FalloutMain.a10mm).setUnlocalizedName("10mmSub").setCreativeTab(TabFalloutSMG);
+	public static final Item smgSleepytyme = new ItemGun(661, 5, 40, 2.7, 0.5, "blfngl.SleepytymeFire", "Blfngl.10MMReload", GUN, FalloutMain.a10mm).setUnlocalizedName("Sleepytyme").setCreativeTab(TabFalloutSMG);
+	public static final Item smg127 = new ItemGun(662, 4, 21, 2, 0.5, "blfngl.357Fire", "Blfngl.127SmgReload", GUN, a127).setUnlocalizedName("127Sub").setCreativeTab(TabFalloutSMG);
+	public static final Item smgNailGun = new ItemGun(663, 2, 90, 2.7, 0.3, "blfngl.NailgunFire", "Blfngl.9mmReload", GUN, aNail).setUnlocalizedName("NailGun").setCreativeTab(TabFalloutSMG);
+	public static final Item smg22 = new ItemGun(664, 1, 180, 2.3, 0.5, "blfngl.Silenced22Fire", "Blfngl.10MMReload", GUN, a22LR).setUnlocalizedName("22Sub").setCreativeTab(TabFalloutSMG);
+	public static final Item CZ57 = new ItemGun(666, 5, 120, 4, 0.3, "blfngl.MinigunFire", "Blfngl.MinigunReload", GUN, a5mm).setUnlocalizedName("CZ57").setCreativeTab(TabFalloutHeavy);
+	public static final Item pistolWeathered10mm = new ItemGun(667, 5, 12, 1.3, 1, "blfngl.10mmFire", "Blfngl.10MMReload", GUN, FalloutMain.a10mm).setUnlocalizedName("Weathered10mm").setCreativeTab(TabFalloutPistol);
+
+	//KEY: ID, damage, clip size, reload time, fire time, fire sound, reload sound
+	public static final Item shotgunCaravan = new ItemGun(668, 5, 2, 1.5, 1, "blfngl.CaravanShotgunFire", "Blfngl.CaravanShotgunReload", GUN, aGauge20).setUnlocalizedName("CaravanShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunSturdyCaravan = new ItemGun(669, 7, 2, 1.5, 1, "blfngl.CaravanShotgunFire", "Blfngl.CaravanShotgunReload", GUN, aGauge20).setUnlocalizedName("SturdyCaravanShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunLever = new ItemGun(670, 6, 5, 2.5, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN, aGauge20).setUnlocalizedName("LeverActionShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunSawed = new ItemGun(671, 8, 1, 3.1, 2, "blfngl.HuntingShotgunFire", "Blfngl.LeverShotgunReload", GUN, aGauge12).setUnlocalizedName("SawedOffShotgun").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunBigBoomer = new ItemGun(672, 10, 1, 3.1, 2, "blfngl.HuntingShotgunFire", "Blfngl.LeverShotgunReload", GUN, aGauge12).setUnlocalizedName("BigBoomer").setCreativeTab(TabFalloutShotgun);
+	public static final Item shotgunSingle = new ItemGun(673, 4, 1, 2, 2, "blfngl.LeverShotgunFire", "Blfngl.LeverShotgunReload", GUN, aGauge20).setUnlocalizedName("SingleShotgun").setCreativeTab(TabFalloutShotgun);
+
+	public static final Item rifleChineseAssault = new ItemGun(675, 4, 24, 2.2, 0.5, "blfngl.ChineseAssaultFire", "Blfngl.ChineseAssaultReload", GUN, a556).setUnlocalizedName("ChineseAssaultRifle").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolFlareGun = new ItemGun(676, 1, 1, 2.3, 2, "blfngl.FlareGunFire", "Blfngl.FlareGunReload", GUN, homemadeFuel).setUnlocalizedName("FlareGun").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolPewPew = new ItemGun(677, 6, 2, 3, 1, "blfngl.LaserFire", "Blfngl.LaserPistolReload", GUN, cellEnergy).setUnlocalizedName("PewPew").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolPulseGun = new ItemGun(678, 3, 5, 2, 3, "blfngl.PulseFire", "Blfngl.PulseGunReload", GUN, cellEnergy).setUnlocalizedName("PulseGun").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolHyperbreederAlpha = new ItemGun(679, 4, 10, 3, 1, "blfngl.RechargerFire", "Blfngl.LeverShotgunReload", GUN, aGauge20).setUnlocalizedName("HyperbreederAlpha").setCreativeTab(TabFalloutShotgun);
+	public static final Item pistolSonicEmitter = new ItemGun(680, 4, 24, 2, 2, "blfngl.PulseFire", "Blfngl.PulseGunReload", GUN, cellEnergy).setUnlocalizedName("SonicEmitter").setCreativeTab(TabFalloutShotgun);
 
 	public static final Item fixer = new ItemFixer(681).setUnlocalizedName("Fixer").setCreativeTab(TabFalloutFood);
 
-	public static final Item rifleYCS186 = new ItemGun(682, 14, 1, 2.3, 2.5, "blfngl.GaussFire", "Blfngl.GaussReload", cellMF, 495).setUnlocalizedName("YCS186").setCreativeTab(TabFalloutEnergy);
-	public static final Item rifleAdvancedLAER = new ItemGun(683, 10, 15, 3, 1.5, "blfngl.PulseFire", "Blfngl.PlasmaRifleReload", cellMF, 245).setUnlocalizedName("AdvancedLAER").setCreativeTab(TabFalloutEnergy);
-	public static final Item rifleAER14 = new ItemGun(684, 10, 12, 2.5, 1, "blfngl.LaserFire", "Blfngl.LaserReload", cellMF, 495).setUnlocalizedName("AER14Proto").setCreativeTab(TabFalloutEnergy);
+	public static final Item rifleYCS186 = new GunMFCell(682, 14, 1, (int) 2.3, (int) 2.5, "blfngl.GaussFire", "Blfngl.GaussReload", GUN, -3.5F).setUnlocalizedName("YCS186").setCreativeTab(TabFalloutShotgun);
+	public static final Item rifleAdvancedLAER = new GunMFCell(683, 10, 15, 3, (int) 1.5, "blfngl.PulseFire", "Blfngl.PlasmaRifleReload", GUN, -1.5F).setUnlocalizedName("AdvancedLAER").setCreativeTab(TabFalloutShotgun);
+	public static final Item rifleAER14 = new GunMFCell(684, 10, 12, (int) 2.5, 1, "blfngl.LaserFire", "Blfngl.LaserReload", GUN, -1.0F).setUnlocalizedName("AER14Proto").setCreativeTab(TabFalloutShotgun);
 
 	public static final Item mod357LongBarrel = new BaseItem(685).setUnlocalizedName("357LongBarrel").setCreativeTab(TabFalloutParts);
 	public static final Item mod357HDCylinder = new BaseItem(686).setUnlocalizedName("357HDCylinder").setCreativeTab(TabFalloutParts);
@@ -549,16 +562,11 @@ public class Fallout
 	public static final Item drum = new BaseItem(722).setUnlocalizedName("Drum").setCreativeTab(TabFalloutParts);
 	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Cylinder").setCreativeTab(TabFalloutParts);
 
-	public static BlockPortalActivator blockPortalActivator = (BlockPortalActivator) new BlockPortalActivator(2008).setUnlocalizedName("BlockPortalActivator");
-	public static BlockWastelandPortal portalWateland = (BlockWastelandPortal) new BlockWastelandPortal(2009).setUnlocalizedName("WastelandPortal");
-	public static Item itemPortalActivator = new ItemPortalActivator(724).setUnlocalizedName("PortalActivator");
-	public static Item portalPlacer = new ItemPortalPlacer(725).setUnlocalizedName("PortalPlacer");
-
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		ModMetadata var2 = event.getModMetadata();
-		var2.authorList = Arrays.asList(new String[] {"Blfngl, with Max_FF, TechSkeleton and Earthdog_Gir"});
+		var2.authorList = Arrays.asList(new String[] {"Blfngl"});
 		var2.autogenerated = false;
 		var2.modId = "fallout";
 		var2.name = "The Fallout Mod";
@@ -567,12 +575,12 @@ public class Fallout
 				"I am 100% dedicated to this mod and one day it will be completed. After looking around for a Fallout mod and finding some, " +
 				"but none that were fully completed or updated to the current version, I was very disappointed and hoped for one to be updated eventually. " +
 				"Alas, none of that was true. So I took matters into my own hands and this was the product.";
-		var2.version = "1.7.5";
+		var2.version = "1.7.3";
 		var2.credits = "Mojang, MinecraftForge and everyone that uses this mod :)";
 		var2.logoFile = "/blfngl/fallout/textures/blflogo.png";
-		var2.url = "http://www.minecraftforum.net/topic/1667023-";
+		var2.url = "http://www.minecraftforum.net/topic/1667023-/";
 		System.out.println("Blfngl's Fallout Mod Loaded. Lololololol.");
-		
+
 		proxy.registerSoundHandler();
 	}
 
@@ -583,7 +591,7 @@ public class Fallout
 
 		BlockHandler.init();
 
-		WorldHandler.init();
+		BiomeHandler.init();
 
 		GunHandler.init();
 
@@ -616,10 +624,8 @@ public class Fallout
 		LanguageRegistry.addName(RecordHandler.Track15, "Streets Of New Reno");
 		LanguageRegistry.addName(RecordHandler.Track16, "Why Don't You Do Right");
 
-		DimensionManager.registerProviderType(dimensionWasteland, DimensionWastelandWorldHandler.class, true);
-		DimensionManager.registerDimension(dimensionWasteland , dimensionWasteland);
-
-		ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(itemPortalActivator), 1, 1, 1));
+		//TODO DimensionManager.registerProviderType(FalloutMain.dimensionAlien, DimensionAlienHandler.class, true);
+		//TODO DimensionManager.registerDimension(FalloutMain.dimensionAlien , FalloutMain.dimensionAlien);
 
 		proxy.registerRenderers();
 	}
