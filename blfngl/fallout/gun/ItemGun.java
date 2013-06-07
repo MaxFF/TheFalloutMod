@@ -34,7 +34,8 @@ public class ItemGun extends Item
 	private int critChance;
 	private int critDamage;
 	public int rounds;
-	public double gunHealth;
+	public int gunHealth;
+	public int cnd;
 
 	Random rand = new Random();
 
@@ -46,7 +47,7 @@ public class ItemGun extends Item
 		return true;
 	}
 
-	public ItemGun(int var1, int var2, int var3, double var4, double var5, String var6, String var7, Item var9)
+	public ItemGun(int var1, int var2, int var3, double var4, double var5, String var6, String var7, Item var8, int var9)
 	{
 		super(var1);
 		damage = var2;
@@ -58,11 +59,13 @@ public class ItemGun extends Item
 		firesound = var6;
 		reloadsound = var7;
 		setMaxStackSize(1);
-		setMaxDamage(256);
+		setMaxDamage(var9);
 		clipSize = var3;
-		ammoType = var9;
+		ammoType = var8;
 		critChance = 5;
 		critDamage = 4;
+		//gunHealth = var9;
+		cnd = var9;
 	}
 
 	public ItemGun(int var1, int var2, int var3, int var4, int var5, String var6, String var7, Item var9, int var10, int var11, int var12)
@@ -141,18 +144,21 @@ public class ItemGun extends Item
 
 	public void addInformation(ItemStack var1, EntityPlayer var2, List var3, boolean var4)
 	{
-		gunHealth = var1.getItemDamage()/var1.getMaxDamage();
-		var3.add("\u00A74DAM: " + (double)damage/2/*((double)damage/2)*((double)0.54 + CND * (1-(double)0.54D))*/); //TODO After fixed condition appearance
+		gunHealth = var1.getItemDamage(); // /cnd;
+		var3.add("\u00A74DAM: " + (double)damage/2/*((double)damage/2)*((double)0.54 + gunHealth * (1-(double)0.54D))*/); //TODO After fixed condition appearance
 		var3.add("\u00A79Clip size: " + rounds + "/" + clipSize + " Ammo Loaded");
 		var3.add("\u00A72Ammo type: " + ammoType.getItemDisplayName(new ItemStack(ammoType)));
-		//var3.add("§9CND: "+CND*100+"%"); //TODO Fix condition appearance
-		if(name!=null)
+		var3.add("\u00A76CND: " + (cnd - gunHealth));
+		//var3.add("CND: "+CND*100+"%"); //TODO Fix condition appearance
+		
+		if(name !=null)
 		{
 			var3.add("\u00A7eCrafted by: " + name);
 		}
+		
 		else
 		{
-			var3.add("\u00A7eNot crafted.");
+			var3.add("\u00A7eNo Owner.");
 		}
 	}
 
