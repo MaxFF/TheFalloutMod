@@ -539,15 +539,15 @@ public class Fallout
 	public static final Item modVarmintExtendedMags = new BaseItem(713).setUnlocalizedName("VarmintExtMag").setCreativeTab(TabFalloutParts);
 	public static final Item modVarmintSilencer = new BaseItem(714).setUnlocalizedName("VarmintSilencer").setCreativeTab(TabFalloutParts);
 
-	public static final Item superConductor = new BaseItem(715).setUnlocalizedName("SuperConductor").setCreativeTab(TabFalloutParts);
-	public static final Item plasmaChamber = new BaseItem(716).setUnlocalizedName("PlasmaChamber").setCreativeTab(TabFalloutParts);
-	public static final Item electroMagnet = new BaseItem(717).setUnlocalizedName("ElectroMagnet").setCreativeTab(TabFalloutParts);
-	public static final Item magnetClaws = new BaseItem(718).setUnlocalizedName("MagnetClaws").setCreativeTab(TabFalloutParts);
-	public static final Item particleDiverter = new BaseItem(719).setUnlocalizedName("ParticleDiverter").setCreativeTab(TabFalloutParts);
-	public static final Item carbonFiberHousing = new BaseItem(720).setUnlocalizedName("CFHousing").setCreativeTab(TabFalloutParts);
-	public static final Item energyRifleBarrel = new BaseItem(721).setUnlocalizedName("ERBarrel").setCreativeTab(TabFalloutParts);
-	public static final Item drum = new BaseItem(722).setUnlocalizedName("Drum").setCreativeTab(TabFalloutParts);
-	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Cylinder").setCreativeTab(TabFalloutParts);
+	public static final Item superConductor = new BaseItem(715).setUnlocalizedName("SuperConductor").setCreativeTab(TabFalloutMisc);
+	public static final Item plasmaChamber = new BaseItem(716).setUnlocalizedName("PlasmaChamber").setCreativeTab(TabFalloutMisc);
+	public static final Item electroMagnet = new BaseItem(717).setUnlocalizedName("ElectroMagnet").setCreativeTab(TabFalloutMisc);
+	public static final Item magnetClaws = new BaseItem(718).setUnlocalizedName("MagnetClaws").setCreativeTab(TabFalloutMisc);
+	public static final Item particleDiverter = new BaseItem(719).setUnlocalizedName("ParticleDiverter").setCreativeTab(TabFalloutMisc);
+	public static final Item carbonFiberHousing = new BaseItem(720).setUnlocalizedName("CFHousing").setCreativeTab(TabFalloutMisc);
+	public static final Item energyRifleBarrel = new BaseItem(721).setUnlocalizedName("ERBarrel").setCreativeTab(TabFalloutMisc);
+	public static final Item drum = new BaseItem(722).setUnlocalizedName("Drum").setCreativeTab(TabFalloutMisc);
+	public static final Item cylinder = new BaseItem(723).setUnlocalizedName("Cylinder").setCreativeTab(TabFalloutMisc);
 
 	public static BlockPortalActivator blockPortalActivator = (BlockPortalActivator) new BlockPortalActivator(2008).setUnlocalizedName("BlockPortalActivator");
 	public static BlockWastelandPortal portalWateland = (BlockWastelandPortal) new BlockWastelandPortal(2009).setUnlocalizedName("WastelandPortal");
